@@ -1,5 +1,6 @@
 class LearningObjective < ApplicationRecord
-  belongs_to :topic
+  belongs_to :node
 
-  validates :topic, presence: true
+  validates :node, presence: true
+  validates :text, presence: true
 end

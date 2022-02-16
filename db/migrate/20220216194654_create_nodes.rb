@@ -1,8 +1,8 @@
-class CreateTopics < ActiveRecord::Migration[7.0]
+class CreateNodes < ActiveRecord::Migration[7.0]
   def change
-    create_table :topics do |t|
+    create_table :nodes do |t|
       t.string :name, null: false, default: ''
-      t.string :colour, null: false, default: '#000'
+      t.belongs_to :area
       t.integer :hours, null: false, default: 0
 
       t.timestamps

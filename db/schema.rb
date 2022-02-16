@@ -21,48 +21,33 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_16_202523) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "edges", force: :cascade do |t|
+    t.bigint "area_id", null: false
+    t.bigint "priori_node_id", null: false
+    t.bigint "dependant_node_id", null: false
+    t.string "label", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["area_id"], name: "index_edges_on_area_id"
+    t.index ["dependant_node_id"], name: "index_edges_on_dependant_node_id"
+    t.index ["priori_node_id"], name: "index_edges_on_priori_node_id"
+  end
+
   create_table "learning_objectives", force: :cascade do |t|
-    t.bigint "topic_id", null: false
+    t.bigint "node_id", null: false
     t.text "text", default: "", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["topic_id"], name: "index_learning_objectives_on_topic_id"
+    t.index ["node_id"], name: "index_learning_objectives_on_node_id"
   end
 
-  create_table "level_topics", force: :cascade do |t|
-    t.bigint "level_id", null: false
-    t.bigint "topic_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["level_id"], name: "index_level_topics_on_level_id"
-    t.index ["topic_id"], name: "index_level_topics_on_topic_id"
-  end
-
-  create_table "levels", force: :cascade do |t|
+  create_table "nodes", force: :cascade do |t|
     t.string "name", default: "", null: false
+    t.bigint "area_id"
+    t.integer "hours", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "paper_topics", force: :cascade do |t|
-    t.bigint "paper_id", null: false
-    t.bigint "topic_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["paper_id"], name: "index_paper_topics_on_paper_id"
-    t.index ["topic_id"], name: "index_paper_topics_on_topic_id"
-  end
-
-  create_table "papers", force: :cascade do |t|
-    t.bigint "level_id", null: false
-    t.bigint "area_id", null: false
-    t.string "name", default: "", null: false
-    t.string "colour", default: "#000", null: false
-    t.integer "total_hours", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["area_id"], name: "index_papers_on_area_id"
-    t.index ["level_id"], name: "index_papers_on_level_id"
+    t.index ["area_id"], name: "index_nodes_on_area_id"
   end
 
   create_table "resources", force: :cascade do |t|
@@ -74,36 +59,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_16_202523) do
     t.index ["topic_id"], name: "index_resources_on_topic_id"
   end
 
-  create_table "sub_topics", force: :cascade do |t|
-    t.bigint "parent_topic_id", null: false
-    t.bigint "sub_topic_id", null: false
+  create_table "sub_nodes", force: :cascade do |t|
+    t.bigint "parent_node_id", null: false
+    t.bigint "sub_node_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["parent_topic_id"], name: "index_sub_topics_on_parent_topic_id"
-    t.index ["sub_topic_id"], name: "index_sub_topics_on_sub_topic_id"
+    t.index ["parent_node_id"], name: "index_sub_nodes_on_parent_node_id"
+    t.index ["sub_node_id"], name: "index_sub_nodes_on_sub_node_id"
   end
 
-  create_table "topic_links", force: :cascade do |t|
-    t.bigint "priori_id", null: false
-    t.bigint "dependant_id", null: false
-    t.string "label", default: "", null: false
-    t.string "colour", default: "#000", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["dependant_id"], name: "index_topic_links_on_dependant_id"
-    t.index ["priori_id"], name: "index_topic_links_on_priori_id"
-  end
-
-  create_table "topics", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.string "colour", default: "#000", null: false
-    t.integer "hours", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_foreign_key "sub_topics", "topics", column: "parent_topic_id"
-  add_foreign_key "sub_topics", "topics", column: "sub_topic_id"
-  add_foreign_key "topic_links", "topics", column: "dependant_id"
-  add_foreign_key "topic_links", "topics", column: "priori_id"
+  add_foreign_key "edges", "nodes", column: "dependant_node_id"
+  add_foreign_key "edges", "nodes", column: "priori_node_id"
+  add_foreign_key "sub_nodes", "nodes", column: "parent_node_id"
+  add_foreign_key "sub_nodes", "nodes", column: "sub_node_id"
 end

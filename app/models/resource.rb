@@ -1,5 +1,5 @@
 class Resource < ApplicationRecord
-  belongs_to :topic
+  belongs_to :node
 
-  validates :topic, presence: true
+  validates :node, presence: true
 end
