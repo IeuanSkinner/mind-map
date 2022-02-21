@@ -14,62 +14,66 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_16_202523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "areas", force: :cascade do |t|
+  create_table "branches", force: :cascade do |t|
+    t.bigint "mind_map_id", null: false
+    t.bigint "parent_branch_id"
+    t.string "label", default: "", null: false
+    t.bigint "topic_area_id"
+    t.string "position", default: "", null: false
+    t.integer "hours", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mind_map_id"], name: "index_branches_on_mind_map_id"
+    t.index ["parent_branch_id"], name: "index_branches_on_parent_branch_id"
+    t.index ["topic_area_id"], name: "index_branches_on_topic_area_id"
+  end
+
+  create_table "learning_objectives", force: :cascade do |t|
+    t.bigint "branch_id", null: false
+    t.text "text", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_learning_objectives_on_branch_id"
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.bigint "topic_area_id"
+    t.bigint "from_branch_id", null: false
+    t.bigint "to_branch_id", null: false
+    t.string "label", default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_branch_id"], name: "index_links_on_from_branch_id"
+    t.index ["to_branch_id"], name: "index_links_on_to_branch_id"
+    t.index ["topic_area_id"], name: "index_links_on_topic_area_id"
+  end
+
+  create_table "mind_maps", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.string "label", default: "", null: false
+    t.string "position", default: "", null: false
+    t.integer "hours", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "resources", force: :cascade do |t|
+    t.bigint "branch_id", null: false
+    t.string "type", default: "", null: false
+    t.json "data", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_resources_on_branch_id"
+  end
+
+  create_table "topic_areas", force: :cascade do |t|
     t.string "name", default: "", null: false
     t.string "colour", default: "#000", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "edges", force: :cascade do |t|
-    t.bigint "area_id", null: false
-    t.bigint "priori_node_id", null: false
-    t.bigint "dependant_node_id", null: false
-    t.string "label", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["area_id"], name: "index_edges_on_area_id"
-    t.index ["dependant_node_id"], name: "index_edges_on_dependant_node_id"
-    t.index ["priori_node_id"], name: "index_edges_on_priori_node_id"
-  end
-
-  create_table "learning_objectives", force: :cascade do |t|
-    t.bigint "node_id", null: false
-    t.text "text", default: "", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["node_id"], name: "index_learning_objectives_on_node_id"
-  end
-
-  create_table "nodes", force: :cascade do |t|
-    t.string "name", default: "", null: false
-    t.bigint "area_id"
-    t.integer "hours", default: 0, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["area_id"], name: "index_nodes_on_area_id"
-  end
-
-  create_table "resources", force: :cascade do |t|
-    t.bigint "topic_id", null: false
-    t.string "type", default: "", null: false
-    t.json "data", default: {}, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["topic_id"], name: "index_resources_on_topic_id"
-  end
-
-  create_table "sub_nodes", force: :cascade do |t|
-    t.bigint "parent_node_id", null: false
-    t.bigint "sub_node_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["parent_node_id"], name: "index_sub_nodes_on_parent_node_id"
-    t.index ["sub_node_id"], name: "index_sub_nodes_on_sub_node_id"
-  end
-
-  add_foreign_key "edges", "nodes", column: "dependant_node_id"
-  add_foreign_key "edges", "nodes", column: "priori_node_id"
-  add_foreign_key "sub_nodes", "nodes", column: "parent_node_id"
-  add_foreign_key "sub_nodes", "nodes", column: "sub_node_id"
+  add_foreign_key "branches", "branches", column: "parent_branch_id"
+  add_foreign_key "links", "branches", column: "from_branch_id"
+  add_foreign_key "links", "branches", column: "to_branch_id"
 end
