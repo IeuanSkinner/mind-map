@@ -15,9 +15,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_16_202523) do
   enable_extension "plpgsql"
 
   create_table "branches", force: :cascade do |t|
-    t.bigint "mind_map_id", null: false
+    t.bigint "mind_map_id"
     t.bigint "parent_branch_id"
+    t.string "name", default: "", null: false
     t.string "label", default: "", null: false
+    t.string "colour", default: "", null: false
     t.bigint "topic_area_id"
     t.string "position", default: "", null: false
     t.integer "hours", default: 0, null: false

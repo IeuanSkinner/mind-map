@@ -1,7 +1,7 @@
-class Edge < ApplicationRecord
-  :priori_node, class_name: 'Node', 
-  :dependant_node, class_name: 'Node'
+class Link < ApplicationRecord
+  has_one :from_branch, class_name: 'Branch'
+  has_one :to_branch, class_name: 'Branch'
 
-  validates :priori_node, presence: true
-  validates :dependant_node, presence: true
+  validates :from_branch, presence: true
+  validates :to_branch, presence: true
 end
