@@ -13,8 +13,13 @@ class Branch < ApplicationRecord
   validates :hours, presence: true
 
   after_create :inherit_mind_map, :inherit_topic_area, :inherit_colour, :inherit_position
+  after_save :set_colour, if: -> { saved_change_to_attribute?(topic_area) }
 
   private
+
+  def set_colour
+    update!(colour: topic_area.colour)
+  end
 
   def inherit_mind_map
     inherit_prop('mind_map_id')
@@ -22,6 +27,8 @@ class Branch < ApplicationRecord
 
   def inherit_topic_area
     inherit_prop('topic_area_id')
+
+    set_colour if topic_area.present?
   end
 
   def inherit_colour

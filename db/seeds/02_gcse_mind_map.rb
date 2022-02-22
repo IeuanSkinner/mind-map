@@ -1,4 +1,4 @@
-@gcse_mm = MindMap.create!(name: 'Maths GCSE', label: 'WJEC GCSE Mathematics', position: 'l')
+@gcse_mm = MindMap.create!(name: 'GCSE Maths', label: 'WJEC GCSE Mathematics', position: 'l')
 
 @general_branch = @gcse_mm.branches.create!(label: 'General', position: 'r', colour: '#b07aa1') # Purple
 @proof_branch = @general_branch.child_branches.create!(label: 'Proof')
