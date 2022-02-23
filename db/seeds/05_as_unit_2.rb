@@ -24,7 +24,7 @@
 
 @m2_2_7_branch = @m_as_u2_section_b_branch.child_branches.create!(label: 'M2.2.7 Kinematics')
 @m2_2_7a_branch = @m2_2_7_branch.child_branches.create!(label: 'M2.2.7a Language and Graphs')
-@m2_2_7b_branch = @m2_2_7_branch.child_branches.create!(label: 'M2.2.7b Constant acceleration forumlæ')
+@m2_2_7b_branch = @m2_2_7_branch.child_branches.create!(label: 'M2.2.7b Constant acceleration forumlae')
 @m2_2_7c_branch = @m2_2_7_branch.child_branches.create!(label: 'M2.2.7c Calculus for Motion in a Straight Line')
 
 @m2_2_8_branch = @m_as_u2_section_b_branch.child_branches.create!(label: "M2.2.8 Forces and Newton's laws")
