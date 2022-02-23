@@ -1,0 +1,1 @@
+@a_level_further_maths_mind_map = MindMap.create!(name: 'A-Level Further Maths', label: 'WJEC GCE Further Mathematics', position: 'r')
