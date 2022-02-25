@@ -11,6 +11,9 @@ m2_4_2_branch.child_branches.create!(name: 'M2.4.2a', label: 'M2.4.2a Understand
 m2_4_2_branch.child_branches.create!(name: 'M2.4.2b', label: 'M2.4.2b Calculating probabilities of continuous probability distributions')
 m2_4_2_branch.child_branches.create!(name: 'M2.4.2c', label: 'M2.4.2c Select appropriate probability distribution')
 
+m2_4_3_branch = m_a2_u4_section_a_branch.child_branches.create!(name: 'M2.4.3', label: 'M2.4.3 Statistical hypothesis testing')
+m2_4_3_branch.child_branches.create!(name: 'M2.4.3a', label: 'M2.4.3a Further Statistical hypothesis testing')
+
 m_a2_u4_section_b_branch = m_a2_u4_branch.child_branches.create!(label: 'Section B: Differential Equations and Mechanics', topic_area: @mechanics)
 
 m2_4_4_branch = m_a2_u4_section_b_branch.child_branches.create!(name: 'M2.4.4', label: 'M2.4.4 Trigonometry')
