@@ -5,6 +5,7 @@ class CreateLinks < ActiveRecord::Migration[7.0]
       t.references :from_branch, null: false, foreign_key: { to_table: :branches }
       t.references :to_branch, null: false, foreign_key: { to_table: :branches }
       t.string :label, null: false, default: ''
+      t.string :colour, null: false, default: '#000'
 
       t.timestamps
     end

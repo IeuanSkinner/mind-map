@@ -6,6 +6,7 @@ m2_2_1_branch.child_branches.create!(name: 'M2.2.1a', label: 'M2.2.1a Sampling -
 
 m2_2_2_branch = m_as_u2_section_a_branch.child_branches.create!(name: 'M2.2.2', label: 'M2.2.2 Data presentation and interpretation')
 m2_2_2_branch.child_branches.create!(name: 'M2.2.2a', label: 'M2.2.2a Statistical Diagrams')
+m2_2_2_branch.child_branches.create!(name: 'M2.2.2b', label: 'M2.2.2b Measures of Central Tendency & Variation')
 
 m2_2_3_branch = m_as_u2_section_a_branch.child_branches.create!(name: 'M2.2.3', label: 'M2.2.3 Probability')
 m2_2_3_branch.child_branches.create!(name: 'M2.2.3a', label: 'M2.2.3a Basic Probability')

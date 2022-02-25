@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_16_202523) do
     t.bigint "parent_branch_id"
     t.string "name", default: "", null: false
     t.string "label", default: "", null: false
-    t.string "colour", default: "", null: false
+    t.string "colour", default: "#000", null: false
     t.bigint "topic_area_id"
     t.string "position", default: "", null: false
     t.integer "hours", default: 0, null: false
@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_16_202523) do
     t.bigint "from_branch_id", null: false
     t.bigint "to_branch_id", null: false
     t.string "label", default: "", null: false
+    t.string "colour", default: "#000", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["from_branch_id"], name: "index_links_on_from_branch_id"
