@@ -33,7 +33,7 @@ m2_4_9_branch = m_a2_u4_section_b_branch.child_branches.create!(name: 'M2.4.9', 
 m2_4_9_branch.child_branches.create!(name: 'M2.4.9a', label: 'M2.4.9a Resolving Forces & Friction')
 
 m2_4_10_branch = m_a2_u4_section_b_branch.child_branches.create!(name: 'M2.4.10', label: 'M2.4.10 Moments')
-m2_4_10_branch.child_branches.create!(name: 'M2.4.10', label: 'M2.4.10a Moments')
+m2_4_10_branch.child_branches.create!(name: 'M2.4.10a', label: 'M2.4.10a Moments')
 
 m2_4_11_branch = m_a2_u4_section_b_branch.child_branches.create!(name: 'M2.4.11', label: 'M2.4.11 Vectors')
-m2_4_11_branch.child_branches.create!(name: 'M2.4.11', label: 'M2.4.11a Vectors in 3-D')
+m2_4_11_branch.child_branches.create!(name: 'M2.4.11a', label: 'M2.4.11a Vectors in 3-D')
