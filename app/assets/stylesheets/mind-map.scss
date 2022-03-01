@@ -1,0 +1,29 @@
+.mind-map {
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+
+  &,
+  .h-level,
+  .v-level {
+    display: flex;
+    align-items: center;
+  }
+
+  .h-level,
+  .v-level {
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .h-level {
+    height: 100vh;
+    margin: 0 1rem;
+  }
+
+  .node {
+    margin: 1rem 0;
+    padding: 1rem;
+    border: 1px solid #000;
+  }
+}

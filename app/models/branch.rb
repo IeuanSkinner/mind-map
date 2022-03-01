@@ -15,6 +15,17 @@ class Branch < ApplicationRecord
   after_create :inherit_mind_map, :inherit_topic_area, :inherit_colour, :inherit_position
   after_save :set_colour, if: -> { saved_change_to_attribute?(topic_area) }
 
+  def json
+    {
+      name: name || label,
+      label: label,
+      hours: hours,
+      position: position,
+      colour: colour,
+      children: child_branches.map(&:json)
+    }
+  end
+
   private
 
   def set_colour

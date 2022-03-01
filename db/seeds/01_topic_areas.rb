@@ -1,8 +1,8 @@
-@green = '#7f7f7f'
-@blue = '#17becf'
-@orange = '#bcbd22'
-@purple = '#b07aa1'
-@brown = '#9c755f'
+@green = '#59A14F'
+@blue = '#4E79A7'
+@orange = '#F28E2B'
+@purple = '#B07AA1'
+@brown = '#9C755F'
 
 @pure = TopicArea.create!(name: 'Pure', colour: @green) # Green 
 @statistics = TopicArea.create!(name: 'Statistics', colour: @blue) # Blue
