@@ -13,39 +13,52 @@ ActiveStorage.start();
 const padding = 0;
 
 class App {
-  constructor(width, height) {
+  constructor(width, height, gap = 300) {
     this.width = width;
     this.height = height;
+    this.gap = gap;
     this.mind_maps = [];
     this.$data = this.fetchData();
-
-    console.log(this.$data);
-
     this.$svg = d3
       .select("svg#visualization")
       .attr("width", width)
       .attr("height", height);
 
     this.build();
+    this.position();
 
-    this.$svg.attr("viewBox", [
-      -(width / 2),
-      -(height / 1.5),
-      width,
-      height * 1.5,
-    ]); // Need to calculate optimal view port after mind-maps are drawn...
+    this.$svg.attr("viewBox", [0, -(height / 1.5), width, height * 1.5]); // Need to calculate optimal view port after mind-maps are drawn...
   }
 
   fetchData() {
     return [...document.querySelectorAll("[data-mind-map]")].map(($el) =>
       JSON.parse($el.dataset.mindMap)
-    ); // data taken from DOM || localStorage
+    ); // fetch data from DOM || localStorage || remote?
   }
 
   build() {
-    this.mind_maps = this.$data.map(
-      (data, i) => new MindMap(this.$svg, data, i)
-    );
+    this.mind_maps = this.$data.map((data) => new MindMap(this, data));
+  }
+
+  position() {
+    let buffer = 0;
+
+    this.mind_maps.forEach((current, i) => {
+      const previous = this.mind_maps[i - 1];
+
+      if (previous) {
+        buffer +=
+          previous.width() / previous.sides +
+          this.gap +
+          current.width() / current.sides;
+
+        current.$mind_map.attr("transform", `translate(${buffer}, 0)`);
+      }
+    });
+  }
+
+  findMap(position) {
+    return this.mind_maps.find((m) => m.data.position === position);
   }
 }
 

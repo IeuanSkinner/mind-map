@@ -1,20 +1,13 @@
 import * as d3 from "d3";
 
 export default class MindMap {
-  constructor(
-    $svg,
-    data,
-    i /* shouldn't need i soon enough... */,
-    dx = 15,
-    dy = 75
-  ) {
-    this.$svg = $svg;
+  constructor(app, data, dx = 15, dy = 75) {
+    this.app = app;
     this.data = data;
     this.dx = dx;
     this.dy = dy;
-    this.mind_map = this.$svg
-      .append("g")
-      .attr("transform", `translate(${(i - 1) * 750}, 0)`);
+    this.$mind_map = this.app.$svg.append("g");
+    this.sides = 0;
 
     this.build("l");
     this.build("r");
@@ -35,6 +28,7 @@ export default class MindMap {
 
   hierarchy(position) {
     this[`${position}_tree`] = this.tree(position);
+    if (this[`${position}_tree`].children.length > 0) this.sides++;
     this[`${position}_hierarchy`] = d3.hierarchy(this[`${position}_tree`]);
   }
 
@@ -58,7 +52,7 @@ export default class MindMap {
   }
 
   branch_config() {
-    return this.mind_map
+    return this.$mind_map
       .append("g")
       .attr("fill", "none")
       .attr("stroke", "black")
@@ -66,5 +60,9 @@ export default class MindMap {
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")
       .attr("stroke-width", 2);
+  }
+
+  width() {
+    return this.$mind_map.node().getBBox().width;
   }
 }
