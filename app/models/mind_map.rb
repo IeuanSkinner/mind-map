@@ -6,13 +6,13 @@ class MindMap < ApplicationRecord
   validates :position, presence: true
   validates :hours, presence: true
   
-  def json
+  def to_json
     {
       name: name,
       label: label,
       position: position,
       hours: hours,
       children: branches.where(parent_branch_id: nil).map(&:json)
-    }
+    }.to_json
   end
 end

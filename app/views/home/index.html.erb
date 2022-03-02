@@ -2,7 +2,5 @@
 </svg>
 
 <% @mind_maps.each do |mind_map| %>
-  <div data-branches="<%= mind_map.json.to_json %>"></div>
-<% end%>
-
-<%= javascript_pack_tag 'mind-map' %>
+  <div data-mind-map="<%= mind_map.to_json %>"></div>
+<% end %>
