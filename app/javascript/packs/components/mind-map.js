@@ -62,7 +62,27 @@ export default class MindMap {
       .attr("stroke-width", 2);
   }
 
+  bbox() {
+    return this.$mind_map.node().getBBox();
+  }
+
+  boundingClientRect() {
+    return this.$mind_map.node().getBoundingClientRect();
+  }
+
   width() {
-    return this.$mind_map.node().getBBox().width;
+    return this.bbox().width;
+  }
+
+  height() {
+    return this.bbox().height;
+  }
+
+  relativeWidth() {
+    return this.boundingClientRect().width;
+  }
+
+  relativeHeight() {
+    return this.boundingClientRect().height;
   }
 }

@@ -10,8 +10,6 @@ Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
-const padding = 0;
-
 class App {
   constructor(width, height, gap = 300) {
     this.width = width;
@@ -26,8 +24,7 @@ class App {
 
     this.build();
     this.position();
-
-    this.$svg.attr("viewBox", [0, -(height / 1.5), width, height * 1.5]); // Need to calculate optimal view port after mind-maps are drawn...
+    this.fitViewBox();
   }
 
   fetchData() {
@@ -57,9 +54,23 @@ class App {
     });
   }
 
-  findMap(position) {
-    return this.mind_maps.find((m) => m.data.position === position);
+  fitViewBox() {
+    const padding = 100;
+    let width = 0;
+    let height = 0;
+
+    this.mind_maps.forEach((mind_map, i) => {
+      width += mind_map.relativeWidth() + (i > 0 ? this.gap : 0);
+
+      const mind_map_height = mind_map.relativeHeight();
+      if (mind_map_height > height) height = mind_map_height;
+    });
+
+    width += 2 * padding;
+    height += 2 * padding;
+
+    this.$svg.attr("viewBox", [-padding, -(height / 2), width, height]);
   }
 }
 
-window.app = new App(window.innerWidth - padding, window.innerHeight - padding);
+window.app = new App(window.innerWidth, window.innerHeight);
