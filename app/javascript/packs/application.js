@@ -5,6 +5,7 @@ import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import * as d3 from "d3";
 import MindMap from "./components/mind-map";
+import { min } from "d3";
 
 Rails.start();
 Turbolinks.start();
@@ -38,4 +39,7 @@ class App {
   }
 }
 
+window.nodes = [];
+window.mindMaps = [];
+window.branches = [];
 window.app = new App(window.innerWidth, window.innerHeight);
