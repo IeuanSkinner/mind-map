@@ -12,24 +12,51 @@ Turbolinks.start();
 ActiveStorage.start();
 
 class App {
-  constructor(width, height, gap = 100) {
+  constructor(width, height, gap = 200, sideWidth = 240) {
     this.width = width;
     this.height = height;
+    this.sideWidth = sideWidth;
+    this.initGap = gap;
     this.gap = gap;
     this.data = this.fetchData();
-    this.count = this.data.length;
     this.$svg = d3
       .select("svg#visualization")
       .attr("width", width)
       .attr("height", height);
 
-    this.availableWidth = this.width - this.gap * (this.count - 1);
-    this.maxWidth = this.availableWidth / this.count;
-
     this.mindMaps = [];
     this.data.forEach((data, i) =>
       this.mindMaps.push(new MindMap(this, data, i))
     );
+
+    // this.zoom = 1;
+    // this.initZoom = 1;
+    // this.zoomBtn = document.querySelector("#zoom");
+    // this.zoomIn = this.zoomBtn.querySelector("#in");
+    // this.zoomOut = this.zoomBtn.querySelector("#out");
+
+    // this.zoomIn.addEventListener("click", () => {
+    //   this.zoom += 0.1;
+    //   this.gap = this.initGap * this.zoom;
+    //   window.mindMaps.forEach((mindMap) =>
+    //     mindMap.handleZoom({ transform: { k: this.zoom } })
+    //   );
+    // });
+
+    // this.zoomOut.addEventListener("click", () => {
+    //   this.zoom -= 0.1;
+    //   this.gap = this.initGap * this.zoom;
+    //   window.mindMaps.forEach((mindMap) =>
+    //     mindMap.handleZoom({ transform: { k: this.zoom } })
+    //   );
+    // });
+
+    const zoom = d3.zoom().on("zoom", (e) => {
+      // this.zoom = this.initZoom * e.transform.k;
+      this.gap = this.initGap * e.transform.k;
+      window.mindMaps.forEach((mindMap) => mindMap.handleZoom(e));
+    });
+    this.$svg.call(zoom);
   }
 
   fetchData() {
@@ -41,5 +68,6 @@ class App {
 
 window.nodes = [];
 window.mindMaps = [];
+window.sides = [];
 window.branches = [];
 window.app = new App(window.innerWidth, window.innerHeight);

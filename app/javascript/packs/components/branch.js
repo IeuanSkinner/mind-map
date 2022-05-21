@@ -3,9 +3,9 @@ import * as d3 from "d3";
 export default class Branch {
   constructor(sourceNode, data) {
     this.sourceNode = sourceNode;
-    this.$svg = this.sourceNode.$svg;
+    this.$side = this.sourceNode.$side;
     this.data = data;
-    this.midPoint = this.sourceNode.mindMap.height / 2;
+    this.midPoint = this.sourceNode.mindMap.app.height / 2;
 
     this.defaultColour = "#000";
     this.colour = this.data.target.data.colour;
@@ -16,8 +16,8 @@ export default class Branch {
   }
 
   draw() {
-    this.$branch = this.$svg
-      .selectAll("svg")
+    this.$branch = this.$side
+      .selectAll("g")
       .data([this.data])
       .join("path")
       .attr("fill", "none")
@@ -29,7 +29,7 @@ export default class Branch {
       .attr(
         "d",
         d3
-          .linkHorizontal()
+          .link(d3.curveBumpX)
           .x((d) => d.y)
           .y((d) => (!d.depth ? this.midPoint : d.x))
       );
