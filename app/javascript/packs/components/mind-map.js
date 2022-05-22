@@ -1,4 +1,3 @@
-import * as d3 from "d3";
 import Side from "./side";
 
 export default class MindMap {
@@ -31,7 +30,7 @@ export default class MindMap {
   }
 
   getWidth() {
-    return this.left.getWidth() + this.right.getWidth();
+    return this.left.getWidth() || this.right.getWidth();
   }
 
   getHeight() {

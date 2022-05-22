@@ -29,30 +29,7 @@ class App {
       this.mindMaps.push(new MindMap(this, data, i))
     );
 
-    // this.zoom = 1;
-    // this.initZoom = 1;
-    // this.zoomBtn = document.querySelector("#zoom");
-    // this.zoomIn = this.zoomBtn.querySelector("#in");
-    // this.zoomOut = this.zoomBtn.querySelector("#out");
-
-    // this.zoomIn.addEventListener("click", () => {
-    //   this.zoom += 0.1;
-    //   this.gap = this.initGap * this.zoom;
-    //   window.mindMaps.forEach((mindMap) =>
-    //     mindMap.handleZoom({ transform: { k: this.zoom } })
-    //   );
-    // });
-
-    // this.zoomOut.addEventListener("click", () => {
-    //   this.zoom -= 0.1;
-    //   this.gap = this.initGap * this.zoom;
-    //   window.mindMaps.forEach((mindMap) =>
-    //     mindMap.handleZoom({ transform: { k: this.zoom } })
-    //   );
-    // });
-
     const zoom = d3.zoom().on("zoom", (e) => {
-      // this.zoom = this.initZoom * e.transform.k;
       this.gap = this.initGap * e.transform.k;
       window.mindMaps.forEach((mindMap) => mindMap.handleZoom(e));
     });
