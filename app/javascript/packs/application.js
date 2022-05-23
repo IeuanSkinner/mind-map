@@ -5,35 +5,26 @@ import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import * as d3 from "d3";
 import MindMap from "./components/mind-map";
-import { min } from "d3";
+import Zoom from "./components/zoom";
 
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
 class App {
-  constructor(width, height, gap = 200, sideWidth = 240) {
-    this.width = width;
-    this.height = height;
+  constructor(gap = 300, sideWidth = 400) {
+    this.data = this.fetchData();
+    this.$svg = d3.select("svg#visualization");
     this.sideWidth = sideWidth;
     this.initGap = gap;
     this.gap = gap;
-    this.data = this.fetchData();
-    this.$svg = d3
-      .select("svg#visualization")
-      .attr("width", width)
-      .attr("height", height);
 
     this.mindMaps = [];
     this.data.forEach((data, i) =>
       this.mindMaps.push(new MindMap(this, data, i))
     );
 
-    const zoom = d3.zoom().on("zoom", (e) => {
-      this.gap = this.initGap * e.transform.k;
-      window.mindMaps.forEach((mindMap) => mindMap.handleZoom(e));
-    });
-    this.$svg.call(zoom);
+    this.zoom = new Zoom(this);
   }
 
   fetchData() {
@@ -41,10 +32,28 @@ class App {
       JSON.parse($el.dataset.mindMap)
     ); // fetch data from DOM || localStorage || remote?
   }
+
+  getWidth() {
+    if (!this.$svg) return 0;
+
+    return Math.ceil(this.getBoundingClientRect().width);
+  }
+
+  getHeight() {
+    if (!this.$svg) return 0;
+
+    return Math.ceil(this.getBoundingClientRect().height);
+  }
+
+  getBoundingClientRect() {
+    if (!this.$svg) return;
+
+    return this.$svg.node().getBoundingClientRect();
+  }
 }
 
 window.nodes = [];
 window.mindMaps = [];
 window.sides = [];
 window.branches = [];
-window.app = new App(window.innerWidth, window.innerHeight);
+window.app = new App();

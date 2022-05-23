@@ -21,6 +21,18 @@ export default class MindMap {
   }
 
   handleZoom(e) {
+    console.log(
+      this.data.name,
+      "e.transform.x",
+      e.transform.x,
+      "x",
+      this.getX(),
+      "e.transform.y",
+      e.transform.y,
+      "e.transform.k",
+      e.transform.k
+    );
+
     this.$mindMap.attr(
       "transform",
       `translate(${e.transform.x + this.getX()}, ${e.transform.y}) scale(${
@@ -44,8 +56,6 @@ export default class MindMap {
         this.app.gap +
         this.left.getWidth()
       : 0;
-
-    console.log(this.data.name, x);
 
     return Math.ceil(x);
   }

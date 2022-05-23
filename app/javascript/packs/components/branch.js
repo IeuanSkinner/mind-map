@@ -5,7 +5,7 @@ export default class Branch {
     this.sourceNode = sourceNode;
     this.$side = this.sourceNode.$side;
     this.data = data;
-    this.midPoint = this.sourceNode.mindMap.app.height / 2;
+    this.midPoint = this.sourceNode.mindMap.app.getHeight() / 2;
 
     this.defaultColour = "#000";
     this.colour = this.data.target.data.colour;

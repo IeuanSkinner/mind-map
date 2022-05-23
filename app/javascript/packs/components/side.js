@@ -22,7 +22,7 @@ export default class Side {
     this.$side.attr("transform", `${this.side === "l" ? "scale(-1, 1)" : ""}`);
 
     const hierarchy = d3.hierarchy(this.data);
-    d3.tree().size([this.app.height, this.app.sideWidth])(hierarchy);
+    d3.tree().size([this.app.getHeight(), this.app.sideWidth])(hierarchy);
     this.root = new Node(this.mindMap, this.$side, hierarchy);
   }
 
