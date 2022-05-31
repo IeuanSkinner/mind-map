@@ -1,6 +1,8 @@
 $svg-margin: 1rem;
 
 body {
+  background: #eee;
+
   main {
     div[data-mind-map] {
       display: none;
@@ -9,7 +11,12 @@ body {
     svg#visualization {
       height: calc(100% - #{2 * $svg-margin});
       margin: $svg-margin;
+      cursor: all-scroll;
       border: 1px solid red;
+
+      text {
+        white-space: nowrap;
+      }
     }
   }
 }

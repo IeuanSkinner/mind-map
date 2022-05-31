@@ -3,7 +3,7 @@ import * as d3 from "d3";
 export default class Branch {
   constructor(sourceNode, data) {
     this.sourceNode = sourceNode;
-    this.$side = this.sourceNode.$side;
+    this.side = this.sourceNode.side;
     this.data = data;
     this.midPoint = this.sourceNode.mindMap.app.getHeight() / 2;
 
@@ -16,7 +16,7 @@ export default class Branch {
   }
 
   draw() {
-    this.$branch = this.$side
+    this.$branch = this.side.$side
       .selectAll("g")
       .data([this.data])
       .join("path")

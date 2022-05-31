@@ -23,11 +23,11 @@ export default class Side {
 
     const hierarchy = d3.hierarchy(this.data);
     d3.tree().size([this.app.getHeight(), this.app.sideWidth])(hierarchy);
-    this.root = new Node(this.mindMap, this.$side, hierarchy);
+    this.root = new Node(this.mindMap, this, hierarchy, 1);
   }
 
   hasChildren() {
-    return this.data.children.length > 0;
+    return !!this.data.children;
   }
 
   getWidth() {
