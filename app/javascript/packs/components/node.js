@@ -49,9 +49,9 @@ export default class Node {
       .attr("fill", "white");
 
     nodeText.map((text, i) => {
-      const xOffset = 15;
-      const yOffset = 20;
-      const spacing = i * yOffset;
+      const xOffset = 10;
+      const yOffset = 20 + (nodeText.length > 2 ? 3 : 0);
+      const spacing = i * 20;
 
       return this.$nodeGroup
         .append("text")
