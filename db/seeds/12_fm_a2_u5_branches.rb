@@ -1,4 +1,4 @@
-fm_a2_u5_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U5', label: 'A2 Unit 5:,Further,Statistics', display: 'node', topic_area: @statistics, position: 'r')
+fm_a2_u5_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U5', label: 'A2 Unit 5: Further Statistics', topic_area: @statistics, position: 'r')
 
 fm2_5_1_branch = fm_a2_u5_branch.child_branches.create!(name: 'FM2.5.1', label: 'FM2.5.1 Samples and Populations')
 fm2_5_1_branch.child_branches.create!(name: 'FM2.5.1a', label: 'FM2.5.1a Estimators')

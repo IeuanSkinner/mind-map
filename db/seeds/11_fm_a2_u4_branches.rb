@@ -1,7 +1,7 @@
-fm_a2_u4_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U4', label: 'A2 Unit 4:,Further Pure,Mathematics', display: 'node', topic_area: @pure, position: 'r')
+fm_a2_u4_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U4', label: 'A2 Unit 4: Further Pure Mathematics', topic_area: @pure, position: 'r')
 
 fm2_4_1_branch = fm_a2_u4_branch.child_branches.create!(name: 'FM2.4.1', label: 'FM2.4.1 Complex Numbers')
-fm2_4_1_branch.child_branches.create!(name: "FM2.4.1a", label: "FM2.4.1a De Molvre's Theorem")
+fm2_4_1_branch.child_branches.create!(name: 'FM2.4.1a', label: "FM2.4.1a De Molvre's Theorem")
 
 fm2_4_2_branch = fm_a2_u4_branch.child_branches.create!(name: 'FM2.4.2', label: 'FM2.4.2 Further Trigonometry')
 fm2_4_2_branch.child_branches.create!(name: 'FM2.4.2a', label: 'FM2.4.2a Further Trigonometry')
@@ -11,7 +11,7 @@ fm2_4_3_branch.child_branches.create!(name: 'FM2.4.3a', label: 'FM2.4.3a Inverse
 fm2_4_3_branch.child_branches.create!(name: 'FM2.4.3b', label: 'FM2.4.3b Using Matrices to Solve Simultaneous Equations')
 
 fm2_4_4_branch = fm_a2_u4_branch.child_branches.create!(name: 'FM2.4.4', label: 'FM2.4.4 Further Algebra and Functions')
-fm2_4_4_branch.child_branches.create!(name: "FM2.4.4a", label: "FM2.4.4a Maclaurin's Series")
+fm2_4_4_branch.child_branches.create!(name: 'FM2.4.4a', label: "FM2.4.4a Maclaurin's Series")
 fm2_4_4_branch.child_branches.create!(name: 'FM2.4.4b', label: 'FM2.4.4b Partial Fractions')
 
 fm2_4_5_branch = fm_a2_u4_branch.child_branches.create!(name: 'FM2.4.5', label: 'FM2.4.5 Further Calculus')

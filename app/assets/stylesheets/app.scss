@@ -15,8 +15,14 @@ body {
       cursor: all-scroll;
       border: 1px solid red;
 
-      text {
-        white-space: nowrap;
+      .node-label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        height: 100%;
+        font-size: 16px;
+        padding: 0 5px;
       }
     }
   }

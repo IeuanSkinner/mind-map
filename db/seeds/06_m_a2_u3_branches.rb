@@ -1,4 +1,4 @@
-m_a2_u3_branch = @a_level_maths_mind_map.branches.create!(name: 'M A2 U3', label: 'A2 Unit 3:,Pure Mathematics B', display: 'node', topic_area: @pure, position: 'r')
+m_a2_u3_branch = @a_level_maths_mind_map.branches.create!(name: 'M A2 U3', label: 'A2 Unit 3: Pure Mathematics B', topic_area: @pure, position: 'r')
 
 m2_3_1_branch = m_a2_u3_branch.child_branches.create!(name: 'M2.3.1', label: 'M2.3.1 Proof')
 m2_3_1_branch.child_branches.create!(name: 'M2.3.1a', label: 'M2.3.1a Proof by Contradiction')

@@ -1,4 +1,6 @@
 class Branch < ApplicationRecord
+  include Label
+
   belongs_to :mind_map, optional: true
   belongs_to :parent_branch, class_name: 'Branch', optional: true
   has_many :child_branches, class_name: 'Branch', foreign_key: 'parent_branch_id'
@@ -10,7 +12,6 @@ class Branch < ApplicationRecord
   has_many :resources
 
   validates :label, presence: true
-  validates :display, presence: true
   validates :hours, presence: true
 
   after_create :inherit_mind_map, :inherit_topic_area, :inherit_colour, :inherit_position
@@ -20,8 +21,7 @@ class Branch < ApplicationRecord
     {
       id: id,
       name: name || label,
-      label: label.split(','),
-      display: display,
+      label: format_label(label),
       hours: hours,
       position: position,
       colour: colour,

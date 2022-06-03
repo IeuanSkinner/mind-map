@@ -21,18 +21,6 @@ export default class MindMap {
   }
 
   handleZoom(e) {
-    // console.log(
-    //   this.data.name,
-    //   "e.transform.x",
-    //   e.transform.x,
-    //   "x",
-    //   this.getX(),
-    //   "e.transform.y",
-    //   e.transform.y,
-    //   "e.transform.k",
-    //   e.transform.k
-    // );
-
     this.$mindMap.attr(
       "transform",
       `translate(${e.transform.x + this.getX()}, ${e.transform.y}) scale(${

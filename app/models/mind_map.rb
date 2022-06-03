@@ -1,4 +1,5 @@
 class MindMap < ApplicationRecord
+  include Label
   has_many :branches
 
   validates :name, presence: true
@@ -9,10 +10,10 @@ class MindMap < ApplicationRecord
   def to_json
     {
       name: name,
-      label: label.split(','),
+      label: format_label(label),
       position: position,
       hours: hours,
       children: branches.where(parent_branch_id: nil).map(&:json)
     }.to_json
-  end
+  end 
 end
