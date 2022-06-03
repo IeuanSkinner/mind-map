@@ -1,4 +1,4 @@
-m_as_u2_branch = @a_level_maths_mind_map.branches.create!(name: 'M AS U2', label: 'AS Unit 2 Applied Mathematics A', position: 'l')
+m_as_u2_branch = @a_level_maths_mind_map.branches.create!(name: 'M AS U2', label: 'AS Unit 2: Applied Mathematics A', position: 'l')
 
 m_as_u2_section_a_branch = m_as_u2_branch.child_branches.create!(label: 'Section A: Statistics', topic_area: @statistics)
 m2_2_1_branch = m_as_u2_section_a_branch.child_branches.create!(name: 'M2.2.1', label: 'M2.2.1 Statistical Sampling')
