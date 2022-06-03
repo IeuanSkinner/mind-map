@@ -1,4 +1,4 @@
-m_as_u1_branch = @a_level_maths_mind_map.branches.create!(name: 'M AS U1', label: 'AS Unit 1: Pure Mathematics A', topic_area: @pure, position: 'l')
+m_as_u1_branch = @a_level_maths_mind_map.branches.create!(name: 'M AS U1', label: 'AS Unit 1:,Pure Mathematics A', display: 'node', topic_area: @pure, position: 'l')
 
 m2_1_1_branch = m_as_u1_branch.child_branches.create!(name: 'M2.1.1', label: 'M2.1.1 Proof')
 m2_1_1_branch.child_branches.create!(name: 'M2.1.1a', label: 'M2.1.1a Proof - Basics')

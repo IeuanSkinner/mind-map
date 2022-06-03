@@ -10,6 +10,7 @@ class Branch < ApplicationRecord
   has_many :resources
 
   validates :label, presence: true
+  validates :display, presence: true
   validates :hours, presence: true
 
   after_create :inherit_mind_map, :inherit_topic_area, :inherit_colour, :inherit_position
@@ -17,8 +18,10 @@ class Branch < ApplicationRecord
 
   def json
     {
+      id: id,
       name: name || label,
-      label: label,
+      label: label.split(','),
+      display: display,
       hours: hours,
       position: position,
       colour: colour,

@@ -1,6 +1,6 @@
-m_a2_u4_branch = @a_level_maths_mind_map.branches.create!(name: 'M A2 U4', label: 'A2 Unit 4: Applied Mathematics B', position: 'r')
+m_a2_u4_branch = @a_level_maths_mind_map.branches.create!(name: 'M A2 U4', label: 'A2 Unit 4:,Applied Mathematics B', display: 'node', position: 'r')
 
-m_a2_u4_section_a_branch = m_a2_u4_branch.child_branches.create!(label: 'Section A: Statistics', topic_area: @statistics)
+m_a2_u4_section_a_branch = m_a2_u4_branch.child_branches.create!(label: 'Section A:,Statistics', display: 'node', topic_area: @statistics)
 
 m2_4_1_branch = m_a2_u4_section_a_branch.child_branches.create!(name: 'M2.4.1', label: 'M2.4.1 Probability')
 m2_4_1_branch.child_branches.create!(name: 'M2.4.1a', label: 'M2.4.1a Conditional Probability')
@@ -14,7 +14,7 @@ m2_4_2_branch.child_branches.create!(name: 'M2.4.2c', label: 'M2.4.2c Select app
 m2_4_3_branch = m_a2_u4_section_a_branch.child_branches.create!(name: 'M2.4.3', label: 'M2.4.3 Statistical hypothesis testing')
 m2_4_3_branch.child_branches.create!(name: 'M2.4.3a', label: 'M2.4.3a Further Statistical hypothesis testing')
 
-m_a2_u4_section_b_branch = m_a2_u4_branch.child_branches.create!(label: 'Section B: Differential Equations and Mechanics', topic_area: @mechanics)
+m_a2_u4_section_b_branch = m_a2_u4_branch.child_branches.create!(label: 'Section B:,Differential Equations,and Mechanics', display: 'node', topic_area: @mechanics)
 
 m2_4_4_branch = m_a2_u4_section_b_branch.child_branches.create!(name: 'M2.4.4', label: 'M2.4.4 Trigonometry')
 m2_4_4_branch.child_branches.create!(name: 'M2.4.4a', label: 'M2.4.4a Trigonometry in mechanics')

@@ -1,6 +1,6 @@
-m_as_u2_branch = @a_level_maths_mind_map.branches.create!(name: 'M AS U2', label: 'AS Unit 2: Applied Mathematics A', position: 'l')
+m_as_u2_branch = @a_level_maths_mind_map.branches.create!(name: 'M AS U2', label: 'AS Unit 2:,Applied Mathematics A', display: 'node', position: 'l')
 
-m_as_u2_section_a_branch = m_as_u2_branch.child_branches.create!(label: 'Section A: Statistics', topic_area: @statistics)
+m_as_u2_section_a_branch = m_as_u2_branch.child_branches.create!(label: 'Section A:,Statistics', display: 'node', topic_area: @statistics)
 m2_2_1_branch = m_as_u2_section_a_branch.child_branches.create!(name: 'M2.2.1', label: 'M2.2.1 Statistical Sampling')
 m2_2_1_branch.child_branches.create!(name: 'M2.2.1a', label: 'M2.2.1a Sampling - Introduction & critiquing')
 
@@ -19,7 +19,7 @@ m2_2_4_branch.child_branches.create!(name: 'M2.2.4c', label: 'M2.2.4c Selecting 
 m2_2_5_branch = m_as_u2_section_a_branch.child_branches.create!(name: 'M2.2.5', label: 'M2.2.5 Statistical hypothesis testing')
 m2_2_5_branch.child_branches.create!(name: 'M2.2.5a', label: 'M2.2.5a Statistical hypothesis testing')
 
-m_as_u2_section_b_branch = m_as_u2_branch.child_branches.create!(label: 'Section B: Mechanics', topic_area: @mechanics)
+m_as_u2_section_b_branch = m_as_u2_branch.child_branches.create!(label: 'Section B:,Mechanics', display: 'node', topic_area: @mechanics)
 m2_2_6_branch = m_as_u2_section_b_branch.child_branches.create!(name: 'M2.2.6', label: 'M2.2.6 Quantities and units in mechanics')
 m2_2_6_branch.child_branches.create!(name: 'M2.2.6a', label: 'M2.2.6a Quantities and units in mechanics')
 

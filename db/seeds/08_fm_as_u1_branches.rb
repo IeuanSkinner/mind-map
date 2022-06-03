@@ -1,4 +1,4 @@
-fm_as_u1_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM AS U1', label: 'AS Unit 1: Futher Pure Mathematics', topic_area: @pure, position: 'l')
+fm_as_u1_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM AS U1', label: 'AS Unit 1:,Futher Pure,Mathematics', display: 'node', topic_area: @pure, position: 'l')
 
 fm2_1_1_branch = fm_as_u1_branch.child_branches.create!(name: 'FM2.1.1', label: 'FM2.1.1 Proof')
 fm2_1_1_branch.child_branches.create!(name: 'FM2.1.1a', label: 'FM2.1.1a Proof by Induction')

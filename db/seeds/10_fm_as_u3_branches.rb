@@ -1,4 +1,4 @@
-fm_as_u3_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM AS U3', label: 'AS Unit 3: Further Mechanics', topic_area: @mechanics, position: 'l')
+fm_as_u3_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM AS U3', label: 'AS Unit 3:,Further,Mechanics', display: 'node', topic_area: @mechanics, position: 'l')
 
 fm2_3_1_branch = fm_as_u3_branch.child_branches.create!(name: 'FM2.3.1', label: 'FM2.3.1 Momentum and Impulse')
 fm2_3_1a_branch = fm2_3_1_branch.child_branches.create!(name: 'FM2.3.1a', label: 'FM2.3.1a Momentum and Impulse')

@@ -14,8 +14,6 @@ export default class Node {
 
       const links = this.data.links().filter((l) => l.source === this.data);
       this.branches = links.map((data) => new Branch(this, data));
-
-      this.draw();
     } else {
       this.children = [];
       this.branches = [];
@@ -27,13 +25,11 @@ export default class Node {
   draw() {
     if (this.data.depth > 0 || this.side.side !== "r") return;
 
-    const text = [...this.data.data.label.split(" ")];
-    const nodeText = [text[0] + " " + text[1]].concat(text.slice(2));
-
+    const label = this.data.data.label;
     const width = 115;
-    const height = nodeText.length * 25;
+    const height = label.length * 25;
     const x = -(width / 2);
-    const y = (this.mindMap.app.getHeight() - height) / 2;
+    const y = this.mindMap.app.getHeight() - height / 2;
 
     this.$nodeGroup = this.side.$side.append("g");
 
@@ -48,9 +44,9 @@ export default class Node {
       .attr("stroke-width", 3)
       .attr("fill", "white");
 
-    nodeText.map((text, i) => {
+    label.map((text, i) => {
       const xOffset = 10;
-      const yOffset = 20 + (nodeText.length > 2 ? 3 : 0);
+      const yOffset = 20 + (label.length > 2 ? 3 : 0);
       const spacing = i * 20;
 
       return this.$nodeGroup

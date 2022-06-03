@@ -1,4 +1,4 @@
-fm_a2_u4_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U4', label: 'A2 Unit 4: Further Pure Mathematics', topic_area: @pure, position: 'r')
+fm_a2_u4_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U4', label: 'A2 Unit 4:,Further Pure,Mathematics', display: 'node', topic_area: @pure, position: 'r')
 
 fm2_4_1_branch = fm_a2_u4_branch.child_branches.create!(name: 'FM2.4.1', label: 'FM2.4.1 Complex Numbers')
 fm2_4_1_branch.child_branches.create!(name: "FM2.4.1a", label: "FM2.4.1a De Molvre's Theorem")

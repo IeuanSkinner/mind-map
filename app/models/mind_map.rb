@@ -9,7 +9,7 @@ class MindMap < ApplicationRecord
   def to_json
     {
       name: name,
-      label: label,
+      label: label.split(','),
       position: position,
       hours: hours,
       children: branches.where(parent_branch_id: nil).map(&:json)

@@ -1,4 +1,4 @@
-fm_a2_u6_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U6', label: 'A2 Unit 6: Further Mechanics', topic_area: @mechanics, position: 'r')
+fm_a2_u6_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM A2 U6', label: 'A2 Unit 6:,Further,Mechanics', display: 'node', topic_area: @mechanics, position: 'r')
 
 fm2_6_1_branch = fm_a2_u6_branch.child_branches.create!(name: 'FM2.6.1', label: 'FM2.6.1 Rectilinear motion')
 fm2_6_1_branch.child_branches.create!(name: 'FM2.6.1a', label: 'FM2.6.1a Rectilinear calculus')

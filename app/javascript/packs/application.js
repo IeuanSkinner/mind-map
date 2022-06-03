@@ -12,7 +12,7 @@ Turbolinks.start();
 ActiveStorage.start();
 
 class App {
-  constructor(gap = 300, sideWidth = 400) {
+  constructor(gap = 600, sideWidth = 800) {
     this.data = this.fetchData();
     this.$svg = d3.select("svg#visualization");
     this.sideWidth = sideWidth;
@@ -23,6 +23,9 @@ class App {
     this.data.forEach((data, i) =>
       this.mindMaps.push(new MindMap(this, data, i))
     );
+
+    window.nodes.forEach((node) => node.draw());
+    window.branches.forEach((branch) => branch.label());
 
     this.zoom = new Zoom(this);
   }

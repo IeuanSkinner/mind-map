@@ -1,4 +1,4 @@
-fm_as_u2_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM AS U2', label: 'AS Unit 2: Further Statistics', topic_area: @statistics, position: 'l')
+fm_as_u2_branch = @a_level_further_maths_mind_map.branches.create!(name: 'FM AS U2', label: 'AS Unit 2:,Further,Statistics', display: 'node', topic_area: @statistics, position: 'l')
 
 fm2_2_1_branch = fm_as_u2_branch.child_branches.create!(name: 'FM2.2.1', label: 'FM2.2.1 Random Variables and the Poisson Process')
 fm2_2_1_branch.child_branches.create!(name: 'FM2.2.1a', label: 'FM2.2.1a Meath and Variance of Independent Random Variables')
