@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import Label from "./label";
 import NodeLabel from "./node-label";
 
 export default class Branch {
@@ -46,30 +47,7 @@ export default class Branch {
     if (target.children) {
       this.$label = new NodeLabel(this.side, target.y, target.x, data);
     } else {
-      const labelPadding = 10;
-
-      this.$label = this.side.$side
-        .append("text")
-        .attr("y", target.x)
-        .text(data.label.join(" "));
-
-      if (this.side.side === "l") {
-        this.$label = this.$label
-          .attr("x", -(target.y + this.getLabelWidth() + labelPadding))
-          .attr("transform", "scale(-1, 1)");
-      } else {
-        this.$label = this.$label.attr("x", target.y + labelPadding);
-      }
+      this.$label = new Label(this.side, target.y, target.x, data);
     }
-  }
-
-  getLabelWidth() {
-    const $label = this.$label.node();
-
-    if (!$label) return 0;
-
-    const labelBoundingClientRect = $label.getBoundingClientRect();
-
-    return labelBoundingClientRect.width;
   }
 }

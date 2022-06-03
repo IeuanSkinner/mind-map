@@ -12,7 +12,7 @@ Turbolinks.start();
 ActiveStorage.start();
 
 class App {
-  constructor(gap = 600, sideWidth = 700) {
+  constructor(gap = 600, sideWidth = 200) {
     this.data = this.fetchData();
     this.$svg = d3.select("svg#visualization");
     this.sideWidth = sideWidth;
