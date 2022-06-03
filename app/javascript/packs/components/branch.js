@@ -13,13 +13,14 @@ export default class Branch {
     this.colour = this.data.target.data.colour;
 
     this.draw();
+    this.label();
 
     window.branches.push(this);
   }
 
   draw() {
     this.$branch = this.side.$side
-      .selectAll("g")
+      .selectAll(null)
       .data([this.data])
       .join("path")
       .attr("id", this.id)
@@ -51,8 +52,6 @@ export default class Branch {
         .append("text")
         .attr("y", target.x)
         .text(data.label.join(" "));
-
-      console.log(data.label);
 
       if (this.side.side === "l") {
         this.$label = this.$label

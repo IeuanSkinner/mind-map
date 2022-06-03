@@ -6,8 +6,6 @@ export default class NodeLabel {
 
     // TODO: Calculate more accurately?
     this.width = 150;
-    if (this.label.length > 1) console.log(this.label);
-
     this.height = this.label.length * 25;
     this.rx = 5;
     this.x = x - this.width / 2;
