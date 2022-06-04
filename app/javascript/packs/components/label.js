@@ -39,6 +39,10 @@ export default class Label {
     // Linked label is to the right
     if (_boundingClientRect.x >= boundingClientRect.x) {
       linkPosition.x += boundingClientRect.width;
+
+      if (_boundingClientRect.x === boundingClientRect.x) {
+        linkPosition.x += 15;
+      }
     } else {
       linkPosition.x -= this.sidePadding * 3;
     }
