@@ -68,4 +68,26 @@ export default class NodeLabel {
   hasYScroll() {
     return this.$html.scrollHeight > this.height;
   }
+
+  linkPosition(linkedLabel) {
+    const boundingClientRect = this.getBoundingClientRect();
+    const _boundingClientRect = linkedLabel.getBoundingClientRect();
+    const linkPosition = {
+      x: boundingClientRect.x - 15,
+      y: this.y + this.height / 2,
+    };
+
+    // Linked label is to the right
+    if (_boundingClientRect.x > boundingClientRect.x) {
+      linkPosition.x += boundingClientRect.width;
+    } else {
+      linkPosition.x -= 15;
+    }
+
+    return linkPosition;
+  }
+
+  getBoundingClientRect() {
+    return this.$shape.node().getBoundingClientRect();
+  }
 }

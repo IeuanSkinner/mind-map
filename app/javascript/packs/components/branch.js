@@ -48,14 +48,9 @@ export default class Branch {
     const data = this.target.data;
 
     if (this.target.children) {
-      this.$label = new NodeLabel(
-        this.side,
-        this.target.y,
-        this.target.x,
-        data
-      );
+      this.label = new NodeLabel(this.side, this.target.y, this.target.x, data);
     } else {
-      this.$label = new Label(this.side, this.target.y, this.target.x, data);
+      this.label = new Label(this.side, this.target.y, this.target.x, data);
     }
   }
 }

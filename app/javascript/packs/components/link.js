@@ -21,31 +21,21 @@ export default class Link {
     this.fromBranch.toLinks.push(this);
     this.toBranch.fromLinks.push(this);
 
-    console.log(this.fromBranch.target);
-    console.log(this.toBranch.target);
-
-    const fromBranch = this.fromBranch.$branch.node().getBoundingClientRect();
-    const toBranch = this.toBranch.$branch.node().getBoundingClientRect();
+    const fromPosition = this.fromBranch.label.linkPosition(
+      this.toBranch.label
+    );
+    const toPosition = this.toBranch.label.linkPosition(this.fromBranch.label);
 
     this.data = {
-      source: {
-        x: fromBranch.x + fromBranch.width,
-        y: fromBranch.y,
-      },
-      target: {
-        x: toBranch.x,
-        y: toBranch.y,
-      },
+      source: fromPosition,
+      target: toPosition,
     };
 
     this.draw();
   }
 
   draw() {
-    console.log(this.data);
     const colour = this.colour || this.defaultColour;
-
-    console.log(`url(#arrowhead-${colour.replace("#", "")})`);
 
     this.$link = this.app.$links
       .selectAll(null)

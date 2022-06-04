@@ -35,6 +35,7 @@ class App {
     this.$links = this.$svg.append("g");
     // this.links = this.linksData.map((data) => new Link(this, data));
     this.links = [this.linksData[0]].map((data) => new Link(this, data));
+    // console.log(this.linksData[12]);
 
     this.zoom = new Zoom(this);
   }
@@ -58,20 +59,23 @@ class App {
   }
 
   addMarkers(colour) {
-    const width = 8;
-    const height = 6;
+    const markerWidth = 8;
+    const markerHeight = 6;
 
     this.$defs
       .append("marker")
       .attr("id", `arrowhead-${colour.replace("#", "")}`)
-      .attr("markerWidth", width)
-      .attr("markerHeight", height)
+      .attr("markerWidth", markerWidth)
+      .attr("markerHeight", markerHeight)
       .attr("refX", 0)
-      .attr("refY", height / 2)
+      .attr("refY", markerHeight / 2)
       .attr("orient", "auto")
       .append("polygon")
       .attr("fill", colour)
-      .attr("points", `0 0, ${width} ${height / 2}, 0 ${height}`);
+      .attr(
+        "points",
+        `0 0, ${markerWidth} ${markerHeight / 2}, 0 ${markerHeight}`
+      );
   }
 
   getWidth() {

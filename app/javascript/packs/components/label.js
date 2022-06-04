@@ -28,6 +28,24 @@ export default class Label {
     this.$label = this.$label.attr("y", this.y + this.getHeight() / 4);
   }
 
+  linkPosition(linkedLabel) {
+    const boundingClientRect = this.getBoundingClientRect();
+    const _boundingClientRect = linkedLabel.getBoundingClientRect();
+    const linkPosition = {
+      x: boundingClientRect.x - this.sidePadding,
+      y: this.y,
+    };
+
+    // Linked label is to the right
+    if (_boundingClientRect.x > boundingClientRect.x) {
+      linkPosition.x += boundingClientRect.width;
+    } else {
+      linkPosition.x -= this.sidePadding * 3;
+    }
+
+    return linkPosition;
+  }
+
   getWidth() {
     if (!this.$label) return 0;
 
