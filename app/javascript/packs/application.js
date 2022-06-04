@@ -34,7 +34,7 @@ class App {
 
     this.$links = this.$svg.append("g");
     // this.links = this.linksData.map((data) => new Link(this, data));
-    this.links = [this.linksData[0]].map((data) => new Link(this, data));
+    this.links = [this.linksData[250]].map((data) => new Link(this, data));
     // console.log(this.linksData[12]);
 
     this.zoom = new Zoom(this);

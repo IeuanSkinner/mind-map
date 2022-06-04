@@ -1,4 +1,6 @@
 class Branch < ApplicationRecord
+  default_scope { order(id: :asc) }
+
   belongs_to :mind_map, optional: true
   belongs_to :parent_branch, class_name: 'Branch', optional: true
   has_many :child_branches, class_name: 'Branch', foreign_key: 'parent_branch_id'

@@ -78,7 +78,7 @@ export default class NodeLabel {
     };
 
     // Linked label is to the right
-    if (_boundingClientRect.x > boundingClientRect.x) {
+    if (_boundingClientRect.x >= boundingClientRect.x) {
       linkPosition.x += boundingClientRect.width;
     } else {
       linkPosition.x -= 15;
