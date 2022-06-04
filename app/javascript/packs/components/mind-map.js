@@ -9,11 +9,13 @@ export default class MindMap {
     this.$mindMap = this.app.$svg.append("g");
     this.left = new Side(this, this.data, "l");
     this.right = new Side(this, this.data, "r");
+    this.leftWidth = this.left.getWidth();
+    this.rightWidth = this.right.getWidth();
     window.sides.push(this.left, this.right);
     window.mindMaps.push(this);
 
     this.priorMindMap = index > 0 ? this.app.mindMaps[index - 1] : null;
-    this.$mindMap.attr("transform", `translate(${this.getX()}, 1)`);
+    this.$mindMap.attr("transform", `translate(${this.getX(1)}, 1)`);
   }
 
   hasSide(side) {
@@ -23,28 +25,36 @@ export default class MindMap {
   handleZoom(e) {
     this.$mindMap.attr(
       "transform",
-      `translate(${e.transform.x + this.getX()}, ${e.transform.y}) scale(${
-        e.transform.k
-      })`
+      `translate(${e.transform.x + this.getX(e.transform.k)}, ${
+        e.transform.y
+      }) scale(${e.transform.k})`
     );
   }
 
   getWidth() {
-    return this.left.getWidth() || this.right.getWidth();
+    if (!this.$mindMap) return 0;
+
+    return this.getBoundingClientRect().width;
   }
 
   getHeight() {
-    return this.left.getHeight() || this.right.getHeight();
+    if (!this.$mindMap) return 0;
+
+    return this.getBoundingClientRect().height;
   }
 
-  getX() {
+  getX(scale) {
     const x = this.priorMindMap
-      ? this.priorMindMap.getX() +
-        this.priorMindMap.getWidth() +
-        this.app.gap +
-        this.left.getWidth()
+      ? this.priorMindMap.getX(scale) +
+        this.priorMindMap.rightWidth * scale +
+        this.app.gap * scale +
+        this.leftWidth * scale
       : 0;
 
-    return Math.ceil(x);
+    return x;
+  }
+
+  getBoundingClientRect() {
+    return this.$mindMap.node().getBoundingClientRect();
   }
 }

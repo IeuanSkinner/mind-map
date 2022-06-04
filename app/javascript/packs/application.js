@@ -12,11 +12,10 @@ Turbolinks.start();
 ActiveStorage.start();
 
 class App {
-  constructor(gap = 600, sideWidth = 200) {
+  constructor(gap = 400, sideWidth = 200) {
     this.data = this.fetchData();
     this.$svg = d3.select("svg#visualization");
     this.sideWidth = sideWidth;
-    this.initGap = gap;
     this.gap = gap;
 
     this.mindMaps = [];
@@ -36,13 +35,13 @@ class App {
   getWidth() {
     if (!this.$svg) return 0;
 
-    return Math.ceil(this.getBoundingClientRect().width);
+    return this.getBoundingClientRect().width;
   }
 
   getHeight() {
     if (!this.$svg) return 0;
 
-    return Math.ceil(this.getBoundingClientRect().height);
+    return this.getBoundingClientRect().height;
   }
 
   getBoundingClientRect() {

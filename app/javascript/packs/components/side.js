@@ -37,13 +37,13 @@ export default class Side {
   getWidth() {
     if (!this.$side) return 0;
 
-    return Math.ceil(this.getBoundingClientRect().width);
+    return this.getBoundingClientRect().width;
   }
 
   getHeight() {
     if (!this.$side) return 0;
 
-    return Math.ceil(this.getBoundingClientRect().height);
+    return this.getBoundingClientRect().height;
   }
 
   getBoundingClientRect() {
