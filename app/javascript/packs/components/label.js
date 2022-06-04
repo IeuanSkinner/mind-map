@@ -6,7 +6,7 @@ export default class Label {
     this.x = x;
     this.y = y;
     this.data = data;
-    this.label = data.label.join(" ");
+    this.label = data.label;
     this.sidePadding = 10;
 
     this.draw();

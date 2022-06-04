@@ -22,7 +22,6 @@ export default class Side {
     this.$side.attr("transform", `${this.side === "l" ? "scale(-1, 1)" : ""}`);
 
     const hierarchy = d3.hierarchy(this.data);
-    console.log(hierarchy);
     d3
       .tree()
       .size([this.app.getHeight() * 2, this.app.sideWidth * hierarchy.height])(

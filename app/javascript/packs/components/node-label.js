@@ -3,13 +3,12 @@ export default class NodeLabel {
     this.side = side;
     this.data = data;
     this.label = data.label;
-
-    // TODO: Calculate more accurately?
-    this.width = 150;
-    this.height = this.label.length * 25;
+    this.id = `node_label_${data.id}`;
+    this.width = 175;
+    this.height = 0;
     this.rx = 5;
     this.x = x - this.width / 2;
-    this.y = y - this.height / 2;
+    this.y = y;
     this.stroke = data.colour || "black";
     this.strokeWidth = 3;
     this.fill = "white";
@@ -37,12 +36,36 @@ export default class NodeLabel {
       .attr("y", this.y)
       .attr("width", this.width)
       .attr("height", this.height)
-      .html(`<div class="node-label">${this.label.join(" ")}</div>`);
+      .html(`<div id="${this.id}" class="node-label">${this.label}</div>`);
+
+    this.$html = document.querySelector(`#${this.id}`);
 
     if (this.side.side === "l") {
       this.$text = this.$text
         .attr("x", -(this.x + this.width))
         .attr("transform", "scale(-1, 1)");
     }
+
+    while (this.hasYScroll()) this.setHeight(1);
+    this.setHeight(10); // Padding
+    this.positionY();
+  }
+
+  setHeight(add) {
+    this.height += add;
+
+    this.$shape.attr("height", this.height);
+    this.$text.attr("height", this.height);
+  }
+
+  positionY() {
+    this.y = this.y - this.height / 2;
+
+    this.$shape.attr("y", this.y);
+    this.$text.attr("y", this.y);
+  }
+
+  hasYScroll() {
+    return this.$html.scrollHeight > this.height;
   }
 }

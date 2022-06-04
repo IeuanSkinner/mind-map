@@ -1,6 +1,4 @@
 class Branch < ApplicationRecord
-  include Label
-
   belongs_to :mind_map, optional: true
   belongs_to :parent_branch, class_name: 'Branch', optional: true
   has_many :child_branches, class_name: 'Branch', foreign_key: 'parent_branch_id'
@@ -19,9 +17,9 @@ class Branch < ApplicationRecord
 
   def json
     {
-      id: id,
+      id: "branch_#{id}",
       name: name || label,
-      label: format_label(label),
+      label: label,
       hours: hours,
       position: position,
       colour: colour,
