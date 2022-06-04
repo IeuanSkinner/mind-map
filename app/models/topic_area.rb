@@ -4,4 +4,11 @@ class TopicArea < ApplicationRecord
 
   validates :name, presence: true
   validates :colour, presence: true
+
+  def json
+    {
+      name: name,
+      colour: colour
+    }.to_json
+  end
 end

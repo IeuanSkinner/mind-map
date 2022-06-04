@@ -4,7 +4,9 @@
 @purple = '#B07AA1'
 @brown = '#9C755F'
 
-@pure = TopicArea.create!(name: 'Pure', colour: @green) # Green 
-@statistics = TopicArea.create!(name: 'Statistics', colour: @blue) # Blue
-@mechanics = TopicArea.create!(name: 'Mechanics', colour: @orange) # Orange
+@pure = TopicArea.create!(name: 'Pure', colour: @green)
+@statistics = TopicArea.create!(name: 'Statistics', colour: @blue)
+@mechanics = TopicArea.create!(name: 'Mechanics', colour: @orange)
+@general = TopicArea.create!(name: 'General', colour: @purple)
+@geometry = TopicArea.create!(name: 'Geometry', colour: @brown)
 

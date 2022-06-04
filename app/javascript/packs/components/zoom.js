@@ -30,6 +30,10 @@ export default class Zoom {
     // console.log("x", e.transform.x, "y", e.transform.y, "k", e.transform.k);
 
     this.app.mindMaps.forEach((mindMap) => mindMap.handleZoom(e));
+    this.app.$links.attr(
+      "transform",
+      `translate(${e.transform.x}, ${e.transform.y}) scale(${e.transform.k})`
+    );
   }
 
   getMaxWidth() {

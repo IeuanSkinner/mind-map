@@ -3,9 +3,10 @@ class Branch < ApplicationRecord
   belongs_to :parent_branch, class_name: 'Branch', optional: true
   has_many :child_branches, class_name: 'Branch', foreign_key: 'parent_branch_id'
   belongs_to :topic_area, optional: true
-  has_many :links
-  has_many :from_branches, through: :links, foreign_key: 'to_branch_id'
-  has_many :to_branches, through: :links, foreign_key: 'from_branch_id'
+  has_many :from_branch_links, class_name: 'Link', foreign_key: 'to_branch_id'
+  has_many :to_branch_links, class_name: 'Link', foreign_key: 'from_branch_id'
+  has_many :from_branches, through: :from_branch_links
+  has_many :to_branches, through: :to_branch_links
   has_one :learning_objective
   has_many :resources
 
@@ -17,7 +18,7 @@ class Branch < ApplicationRecord
 
   def json
     {
-      id: "branch_#{id}",
+      id: format_id,
       name: name || label,
       label: label,
       hours: hours,
@@ -25,6 +26,10 @@ class Branch < ApplicationRecord
       colour: colour,
       children: child_branches.map(&:json)
     }
+  end
+
+  def format_id
+    "branch_#{id}"
   end
 
   private

@@ -7,5 +7,11 @@
 </svg>
 
 <% @mind_maps.each do |mind_map| %>
-  <div data-mind-map="<%= mind_map.to_json %>"></div>
+  <div data-mind-map="<%= mind_map.json %>"></div>
 <% end %>
+<% @links.each do |link| %>
+  <div data-link="<%= link.json %>"></div>
+<% end %>
+<% @topic_areas.each do |topic_area| %>
+  <div data-topic-area="<%= topic_area.json %>"></div>
+<% end%>

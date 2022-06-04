@@ -6,7 +6,7 @@ class MindMap < ApplicationRecord
   validates :position, presence: true
   validates :hours, presence: true
   
-  def to_json
+  def json
     {
       id: "mind_map_#{id}",
       name: name,
