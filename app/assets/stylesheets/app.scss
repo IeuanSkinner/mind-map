@@ -1,8 +1,7 @@
 $svg-margin: 1rem;
 
 body {
-  background: #eee;
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #eee;
 
   main {
     div { 
@@ -24,7 +23,6 @@ body {
 
       .link-label {
         color: #fff;
-        border-radius: 5px;
       }
 
       .node-label, .link-label {
