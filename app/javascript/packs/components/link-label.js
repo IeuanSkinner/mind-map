@@ -26,7 +26,7 @@ export default class LinkLabel {
     this.$html = document.querySelector(`#${this.id}`);
 
     while (this.hasYScroll()) this.setHeight(1);
-    this.setHeight(10); // Padding
+    this.setHeight(15); // Padding
     this.positionY();
   }
 

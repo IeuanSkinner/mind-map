@@ -79,7 +79,7 @@ export default class Zoom {
 
     this.app.$svg.call(
       this.zoom.transform,
-      d3.zoomIdentity.translate(-midX, -8).scale(this.fitRatio)
+      d3.zoomIdentity.translate(-midX, -4).scale(this.fitRatio)
     );
   }
 }
