@@ -26,11 +26,11 @@ export default class Link {
     this.toBranch.fromLinks.push(this);
 
     this.data = [];
-    this.lineCurve = d3
-      .line()
-      .x((d) => d.x)
-      .y((d) => d.y)
-      .curve(d3.curveMonotoneY);
+    // this.lineCurve = d3
+    //   .line()
+    //   .x((d) => d.x)
+    //   .y((d) => d.y)
+    //   .curve(d3.curveMonotoneY);
 
     this.path();
   }
@@ -80,14 +80,6 @@ export default class Link {
       this.data.push({ source: source, target: target });
     }
 
-    // if (this.data.length > 1) {
-    //   this.data[this.data.length - 1].x -= arrowHeadHeight;
-    // } else {
-    //   this.data[0].target.x -= arrowHeadHeight;
-    //   this.data[0].end = true;
-    // }
-
-    this.data[this.data.length - 1].target.x -= arrowHeadHeight;
     this.data[this.data.length - 1].end = true;
   }
 
@@ -106,19 +98,6 @@ export default class Link {
   draw() {
     const colour = this.colour || this.defaultColour;
 
-    // if (this.data.length > 1) {
-    // this.$link = this.app.$links
-    //   .append("path")
-    //   .attr("id", this.id)
-    //   .attr("fill", "none")
-    //   .attr("stroke", colour)
-    //   .attr("stroke-opacity", 1)
-    //   .attr("stroke-linecap", "round")
-    //   .attr("stroke-linejoin", "round")
-    //   .attr("stroke-width", 2)
-    //   .attr("marker-end", `url(#arrowhead-${colour.replace("#", "")})`)
-    //   .attr("d", this.lineCurve(this.data));
-    // } else {
     this.$link = this.app.$links
       .selectAll(null)
       .data(this.data)
@@ -140,7 +119,18 @@ export default class Link {
           .x((d) => d.x)
           .y((d) => d.y)
       );
-    // }
+
+    // this.$link = this.app.$links
+    //   .append("path")
+    //   .attr("id", this.id)
+    //   .attr("fill", "none")
+    //   .attr("stroke", colour)
+    //   .attr("stroke-opacity", 1)
+    //   .attr("stroke-linecap", "round")
+    //   .attr("stroke-linejoin", "round")
+    //   .attr("stroke-width", 2)
+    //   .attr("marker-end", `url(#arrowhead-${colour.replace("#", "")})`)
+    //   .attr("d", this.lineCurve(this.data));
   }
 
   remove() {

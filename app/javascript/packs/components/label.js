@@ -32,7 +32,7 @@ export default class Label {
     return {
       x: leftSide
         ? this.getX() - this.sidePadding * 2
-        : this.getX() + this.getWidth() - this.sidePadding,
+        : this.getX() + this.getWidth(),
       y: this.y,
     };
   }
