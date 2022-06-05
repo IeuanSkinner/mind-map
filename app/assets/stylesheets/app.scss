@@ -20,6 +20,14 @@ body {
 
       .node-label {
         cursor: pointer;
+      }
+
+      .link-label {
+        color: #fff;
+        border-radius: 5px;
+      }
+
+      .node-label, .link-label {
         display: flex;
         justify-content: center;
         align-items: center;

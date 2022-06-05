@@ -20,8 +20,6 @@ class Link < ApplicationRecord
   private
 
   def set_colour
-    puts from_branch.colour
-
     update!(colour: from_branch.colour)
   end
 end

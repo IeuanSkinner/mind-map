@@ -1,4 +1,6 @@
 import * as d3 from "d3";
+import e from "turbolinks";
+import LinkLabel from "./link-label";
 
 export default class Link {
   constructor(app, data) {
@@ -6,7 +8,7 @@ export default class Link {
     this.fromBranchId = data.from_branch_id;
     this.toBranchId = data.to_branch_id;
     this.id = `link_${this.fromBranchId}_${this.toBranchId}`;
-    this.label = data.label;
+    this.text = data.label;
     this.colour = data.colour || "#000000";
     this.hidden = true;
 
@@ -27,6 +29,7 @@ export default class Link {
     this.toBranch.fromLinks.push(this);
 
     this.data = [];
+    this.midPoint = {};
     // this.lineCurve = d3
     //   .line()
     //   .x((d) => d.x)
@@ -48,12 +51,12 @@ export default class Link {
         const leftSide = this.fromBranchSide.side === "l";
         const source = this.fromBranchLabel.position(leftSide);
         const target = this.toBranchLabel.position(leftSide);
-        const midPoint = this.getMidPoint(source, target, leftSide);
+        this.midPoint = this.getOffsetMidPoint(source, target, leftSide);
 
         // this.data.push(source, midPoint, target);
         this.data.push(
-          { source: source, target: midPoint },
-          { source: midPoint, target: target }
+          { source: source, target: this.midPoint },
+          { source: this.midPoint, target: target }
         );
         // Different side of same mind-map
       } else {
@@ -68,6 +71,7 @@ export default class Link {
           target = this.toBranchLabel.position(false);
         }
 
+        this.midPoint = this.getMidPoint(source, target);
         this.data.push({ source: source, target: target });
       }
       // Different mind-map
@@ -79,28 +83,41 @@ export default class Link {
       const source = this.fromBranchLabel.position(leftSide);
       const target = this.toBranchLabel.position(!leftSide);
 
+      this.midPoint = this.getMidPoint(source, target);
       this.data.push({ source: source, target: target });
     }
 
     this.data[this.data.length - 1].end = true;
   }
 
-  getMidPoint(source, target, leftSide) {
+  getMidPoint(source, target) {
     const diffX = target.x - source.x;
     const diffY = target.y - source.y;
+
+    return {
+      x: source.x + diffX / 2,
+      y: source.y + diffY / 2,
+    };
+  }
+
+  getOffsetMidPoint(source, target, leftSide) {
+    const midPoint = this.getMidPoint(source, target);
+    const diffY = target.y - source.y;
+
     const maxCurveExtent = 200;
     const curveExtent = diffY > maxCurveExtent ? maxCurveExtent : diffY;
 
-    return {
-      x: source.x + diffX / 2 + (leftSide ? -curveExtent : curveExtent),
-      y: source.y + diffY / 2,
-    };
+    midPoint.x += leftSide ? -curveExtent : curveExtent;
+
+    return midPoint;
   }
 
   draw() {
     const colour = this.colour || this.defaultColour;
 
-    this.$link = this.app.$links
+    this.$group = this.app.$links.append("g").attr("opacity", 0);
+
+    this.$link = this.$group
       .selectAll(null)
       .data(this.data)
       .join("path")
@@ -120,8 +137,16 @@ export default class Link {
           .link(d3.curveBumpX)
           .x((d) => d.x)
           .y((d) => d.y)
-      )
-      .attr("opacity", 0);
+      );
+
+    // this.$text = this.$group
+    //   .append("text")
+    //   .append("textPath")
+    //   .attr("xlink:href", `#${this.id}`)
+    //   .attr("startOffset", "50%")
+    //   .attr("text-anchor", "middle")
+    //   .text(this.label);
+    this.label = new LinkLabel(this, this.text, this.colour);
 
     // this.$link = this.app.$links
     //   .append("path")
@@ -139,14 +164,14 @@ export default class Link {
   show() {
     if (!this.$link) return;
 
-    this.$link.transition().duration(500).style("opacity", 1);
+    this.$group.transition().duration(500).style("opacity", 1);
     this.hidden = false;
   }
 
   hide() {
     if (!this.$link) return;
 
-    this.$link.transition().duration(500).style("opacity", 0);
+    this.$group.transition().duration(500).style("opacity", 0);
     this.hidden = true;
   }
 

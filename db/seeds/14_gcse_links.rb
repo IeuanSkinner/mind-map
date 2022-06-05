@@ -1,4 +1,4 @@
-create_link(@proof_branch, 'M2.2.1a', 'simple proofs; nature of proof')
+create_link(@proof_branch, 'M2.1.1a', 'simple proofs; nature of proof')
 
 create_link(@square_root_branch, 'FM2.1.2a', "'non-existence' of √(-1)")
 create_link(@indices_branch, 'M2.1.2a', 'integer exponents')

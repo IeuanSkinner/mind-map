@@ -21,11 +21,11 @@ class App {
     this.gap = gap;
     this.$svg = d3.select("svg#visualization");
     this.$defs = this.$svg.append("defs");
-    this.$links = this.$svg.append("g");
     this.mindMaps = [];
     this.data.forEach((data, i) =>
       this.mindMaps.push(new MindMap(this, data, i))
     );
+    this.$links = this.$svg.append("g");
     this.addMarkers("#000000"); // Default marker.
     this.topicAreasData.forEach((data) => this.addMarkers(data.colour));
     this.links = this.linksData.map((data) => new Link(this, data));
