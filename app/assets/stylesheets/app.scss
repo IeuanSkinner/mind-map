@@ -12,10 +12,11 @@ body {
     }
 
     svg#visualization {
-      height: calc(100% - #{2 * $svg-margin});
-      margin: $svg-margin;
+      // height: calc(100% - #{2 * $svg-margin});
+      // margin: $svg-margin;
+      // border: 1px solid red;
+      height: 100%;
       cursor: move;
-      border: 1px solid red;
 
       .node-label {
         display: flex;

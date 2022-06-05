@@ -1,5 +1,3 @@
-import { tickStep } from "d3";
-
 export default class Label {
   constructor(side, x, y, data) {
     this.id = `label_${data.id}`;
