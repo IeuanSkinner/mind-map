@@ -8,6 +8,7 @@ export default class Link {
     this.id = `link_${this.fromBranchId}_${this.toBranchId}`;
     this.label = data.label;
     this.colour = data.colour || "#000000";
+    this.hidden = true;
 
     this.fromBranch = window.branches.find(
       (branch) => branch.targetId === this.fromBranchId
@@ -33,6 +34,7 @@ export default class Link {
     //   .curve(d3.curveMonotoneY);
 
     this.path();
+    this.draw();
   }
 
   path() {
@@ -118,7 +120,8 @@ export default class Link {
           .link(d3.curveBumpX)
           .x((d) => d.x)
           .y((d) => d.y)
-      );
+      )
+      .attr("opacity", 0);
 
     // this.$link = this.app.$links
     //   .append("path")
@@ -131,6 +134,20 @@ export default class Link {
     //   .attr("stroke-width", 2)
     //   .attr("marker-end", `url(#arrowhead-${colour.replace("#", "")})`)
     //   .attr("d", this.lineCurve(this.data));
+  }
+
+  show() {
+    if (!this.$link) return;
+
+    this.$link.transition().duration(500).style("opacity", 1);
+    this.hidden = false;
+  }
+
+  hide() {
+    if (!this.$link) return;
+
+    this.$link.transition().duration(500).style("opacity", 0);
+    this.hidden = true;
   }
 
   remove() {

@@ -75,7 +75,7 @@ class App {
     let i = 0;
 
     this.drawLinksInterval = setInterval(() => {
-      window.app.links.forEach((link) => link.remove());
+      this.links.forEach((link) => link.remove());
       this.links[i].draw();
       i++;
 
@@ -85,10 +85,19 @@ class App {
     }, speed || 1000);
   }
 
+  hideLinks(branch) {
+    this.links.forEach((link) => {
+      if (link.fromBranch === branch || link.toBranch === branch) return;
+
+      link.hide();
+    });
+  }
+
   stopDrawLinks() {
     if (!this.drawLinksInterval) return;
 
     clearInterval(this.drawLinksInterval);
+    this.clearLinks();
   }
 
   getWidth() {

@@ -1,8 +1,10 @@
 export default class Label {
-  constructor(side, x, y, data) {
+  constructor(branch, x, y, data) {
     this.id = `label_${data.id}`;
     this.type = "Label";
-    this.side = side;
+    this.branch = branch;
+    this.side = branch.side;
+    this.app = this.side.app;
     this.x = x;
     this.y = y;
     this.data = data;
@@ -15,6 +17,7 @@ export default class Label {
   draw() {
     this.$label = this.side.$side
       .append("text")
+      .attr("class", "label")
       .attr("x", this.x + this.sidePadding)
       .attr("y", this.y)
       .text(this.label);
@@ -25,7 +28,9 @@ export default class Label {
         .attr("transform", "scale(-1, 1)");
     }
 
-    this.$label = this.$label.attr("y", this.y + this.getHeight() / 4);
+    this.$label = this.$label
+      .attr("y", this.y + this.getHeight() / 4)
+      .on("click", () => this.branch.toggleLinks());
   }
 
   position(leftSide) {

@@ -27,7 +27,7 @@ export default class Node {
     if (this.data.depth > 0 || this.side.side !== "r") return;
 
     this.$label = new NodeLabel(
-      this.side,
+      this,
       0,
       this.mindMap.app.getHeight(),
       this.data.data

@@ -19,6 +19,7 @@ body {
       cursor: move;
 
       .node-label {
+        cursor: pointer;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -27,6 +28,10 @@ body {
         font-size: 16px;
         padding: 0 10px;
         overflow: auto;
+      }
+
+      .label {
+        cursor: pointer;
       }
     }
   }

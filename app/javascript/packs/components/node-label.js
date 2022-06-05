@@ -1,8 +1,9 @@
 export default class NodeLabel {
-  constructor(side, x, y, data) {
+  constructor(branchOrNode, x, y, data) {
     this.id = `node_label_${data.id}`;
     this.type = "NodeLabel";
-    this.side = side;
+    this.branchOrNode = branchOrNode;
+    this.side = branchOrNode.side;
     this.data = data;
     this.label = data.label;
     this.width = 175;
@@ -37,7 +38,10 @@ export default class NodeLabel {
       .attr("y", this.y)
       .attr("width", this.width)
       .attr("height", this.height)
-      .html(`<div id="${this.id}" class="node-label">${this.label}</div>`);
+      .html(`<div id="${this.id}" class="node-label">${this.label}</div>`)
+      .on("click", () => {
+        if (this.branchOrNode.toggleLinks) this.branchOrNode.toggleLinks();
+      });
 
     this.$html = document.querySelector(`#${this.id}`);
 

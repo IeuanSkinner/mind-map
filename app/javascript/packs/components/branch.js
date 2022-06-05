@@ -17,6 +17,7 @@ export default class Branch {
     this.colour = this.target.data.colour || "#000000";
     this.fromLinks = [];
     this.toLinks = [];
+    this.linksHidden = true;
 
     this.draw();
     this.label();
@@ -49,9 +50,25 @@ export default class Branch {
     const data = this.target.data;
 
     if (this.target.children) {
-      this.label = new NodeLabel(this.side, this.target.y, this.target.x, data);
+      this.label = new NodeLabel(this, this.target.y, this.target.x, data);
     } else {
-      this.label = new Label(this.side, this.target.y, this.target.x, data);
+      this.label = new Label(this, this.target.y, this.target.x, data);
     }
+  }
+
+  toggleLink(links) {
+    links.forEach((link) => {
+      if (link.hidden) {
+        link.show();
+      } else {
+        link.hide();
+      }
+    });
+  }
+
+  toggleLinks() {
+    this.linksHidden = !this.linksHidden;
+
+    this.toggleLink(this.toLinks);
   }
 }
