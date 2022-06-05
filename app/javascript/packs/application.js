@@ -33,9 +33,8 @@ class App {
     );
 
     this.$links = this.$svg.append("g");
-    // this.links = this.linksData.map((data) => new Link(this, data));
-    this.links = [this.linksData[250]].map((data) => new Link(this, data));
-    // console.log(this.linksData[12]);
+
+    this.links = this.linksData.map((data) => new Link(this, data));
 
     this.zoom = new Zoom(this);
   }
@@ -78,16 +77,36 @@ class App {
       );
   }
 
+  drawLinks(speed) {
+    let i = 0;
+
+    this.drawLinksInterval = setInterval(() => {
+      window.app.links.forEach((link) => link.remove());
+      this.links[i].draw();
+      i++;
+
+      if (i < this.links.length) return;
+
+      this.stopDrawLinks();
+    }, speed || 1000);
+  }
+
+  stopDrawLinks() {
+    if (!this.drawLinksInterval) return;
+
+    clearInterval(this.drawLinksInterval);
+  }
+
   getWidth() {
     if (!this.$svg) return 0;
 
-    return this.getBoundingClientRect().width;
+    return Math.ceil(this.getBoundingClientRect().width);
   }
 
   getHeight() {
     if (!this.$svg) return 0;
 
-    return this.getBoundingClientRect().height;
+    return Math.ceil(this.getBoundingClientRect().height);
   }
 
   getBoundingClientRect() {

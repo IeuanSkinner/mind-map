@@ -6,6 +6,7 @@ export default class Branch {
   constructor(sourceNode, data) {
     this.sourceNode = sourceNode;
     this.side = this.sourceNode.side;
+    this.mindMap = this.sourceNode.mindMap;
     this.data = data;
     this.source = data.source;
     this.target = data.target;

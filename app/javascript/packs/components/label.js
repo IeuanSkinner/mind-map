@@ -2,6 +2,8 @@ import { tickStep } from "d3";
 
 export default class Label {
   constructor(side, x, y, data) {
+    this.id = `label_${data.id}`;
+    this.type = "Label";
     this.side = side;
     this.x = x;
     this.y = y;
@@ -28,38 +30,29 @@ export default class Label {
     this.$label = this.$label.attr("y", this.y + this.getHeight() / 4);
   }
 
-  linkPosition(linkedLabel) {
-    const boundingClientRect = this.getBoundingClientRect();
-    const _boundingClientRect = linkedLabel.getBoundingClientRect();
-    const linkPosition = {
-      x: boundingClientRect.x - this.sidePadding,
+  position(leftSide) {
+    return {
+      x: leftSide
+        ? this.getX() - this.sidePadding * 2
+        : this.getX() + this.getWidth() - this.sidePadding,
       y: this.y,
     };
+  }
 
-    // Linked label is to the right
-    if (_boundingClientRect.x >= boundingClientRect.x) {
-      linkPosition.x += boundingClientRect.width;
-
-      if (_boundingClientRect.x === boundingClientRect.x) {
-        linkPosition.x += 15;
-      }
-    } else {
-      linkPosition.x -= this.sidePadding * 3;
-    }
-
-    return linkPosition;
+  getX() {
+    return this.getBoundingClientRect().x;
   }
 
   getWidth() {
     if (!this.$label) return 0;
 
-    return this.getBoundingClientRect().width;
+    return Math.ceil(this.getBoundingClientRect().width);
   }
 
   getHeight() {
     if (!this.$label) return 0;
 
-    return this.getBoundingClientRect().height;
+    return Math.ceil(this.getBoundingClientRect().height);
   }
 
   getBoundingClientRect() {

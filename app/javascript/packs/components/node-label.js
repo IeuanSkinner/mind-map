@@ -1,9 +1,10 @@
 export default class NodeLabel {
   constructor(side, x, y, data) {
+    this.id = `node_label_${data.id}`;
+    this.type = "NodeLabel";
     this.side = side;
     this.data = data;
     this.label = data.label;
-    this.id = `node_label_${data.id}`;
     this.width = 175;
     this.height = 0;
     this.rx = 5;
@@ -69,26 +70,27 @@ export default class NodeLabel {
     return this.$html.scrollHeight > this.height;
   }
 
-  linkPosition(linkedLabel) {
-    const boundingClientRect = this.getBoundingClientRect();
-    const _boundingClientRect = linkedLabel.getBoundingClientRect();
-    const linkPosition = {
-      x: boundingClientRect.x - 15,
+  position(leftSide) {
+    return {
+      x: leftSide ? this.getX() - 15 : this.getX() + this.getWidth(),
       y: this.y + this.height / 2,
     };
+  }
 
-    // Linked label is to the right
-    if (_boundingClientRect.x >= boundingClientRect.x) {
-      linkPosition.x += boundingClientRect.width;
+  getX() {
+    return this.getBoundingClientRect().x;
+  }
 
-      if (_boundingClientRect.x === boundingClientRect.x) {
-        linkPosition.x += 15;
-      }
-    } else {
-      linkPosition.x -= 15;
-    }
+  getWidth() {
+    if (!this.$shape) return 0;
 
-    return linkPosition;
+    return Math.ceil(this.getBoundingClientRect().width);
+  }
+
+  getHeight() {
+    if (!this.$shape) return 0;
+
+    return Math.ceil(this.getBoundingClientRect().height);
   }
 
   getBoundingClientRect() {
