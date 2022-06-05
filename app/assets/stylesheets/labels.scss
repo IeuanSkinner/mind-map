@@ -1,0 +1,25 @@
+svg#visualization {
+  .node-label {
+    cursor: pointer;
+  }
+
+  .link-label {
+    border-radius: 5px;
+    color: #fff;
+  }
+
+  .node-label, .link-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    font-size: 16px;
+    padding: 0 10px;
+    overflow: auto;
+  }
+
+  .label {
+    cursor: pointer;
+  }
+}

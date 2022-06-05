@@ -1,0 +1,31 @@
+@import "variables";
+
+body, main {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body {
+  background-color: #eee;
+
+  main {
+    div { 
+      &[data-mind-map], &[data-link], &[data-topic-area] {
+        display: none;
+      }
+    }
+
+    svg#visualization {
+      // height: calc(100% - #{2 * $svg-margin});
+      // margin: $svg-margin;
+      // border: 1px solid red;
+      height: 100%;
+      cursor: move;
+    }
+  }
+}
