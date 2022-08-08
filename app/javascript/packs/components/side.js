@@ -27,7 +27,7 @@ export default class Side {
       .size([this.getAppHeight(), this.app.sideWidth * hierarchy.height])(
       hierarchy
     );
-    this.root = new Node(this.mindMap, this, hierarchy, 1);
+    this.root = new Node(this, hierarchy, null);
   }
 
   hasChildren() {

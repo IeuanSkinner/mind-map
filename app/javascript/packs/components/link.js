@@ -5,31 +5,23 @@ import LinkLabel from "./link-label";
 export default class Link {
   constructor(app, data) {
     this.app = app;
-    this.fromBranchId = data.from_branch_id;
-    this.toBranchId = data.to_branch_id;
-    this.id = `link_${this.fromBranchId}_${this.toBranchId}`;
+    this.fromNodeId = data.from_node_id;
+    this.toNodeId = data.to_node_id;
+    this.id = `link_${this.fromNodeId}_${this.toNodeId}`;
     this.text = data.label;
     this.colour = data.colour || "#000000";
     this.hidden = true;
-    this.fromBranch = window.branches.find(
-      (branch) => branch.targetId === this.fromBranchId
-    );
-    this.toBranch = window.branches.find(
-      (branch) => branch.targetId === this.toBranchId
-    );
-    this.fromNode = this.fromBranch.sourceNode;
-    this.toNode = this.toBranch.sourceNode;
+    this.fromNode = window.nodes.find((node) => node.id === this.fromNodeId);
+    this.toNode = window.nodes.find((node) => node.id === this.toNodeId);
     this.fromNodeMindMap = this.fromNode.mindMap;
     this.toNodeMindMap = this.toNode.mindMap;
     this.fromNodeSide = this.fromNode.side;
     this.toNodeSide = this.toNode.side;
-    this.fromBranchLabel = this.fromBranch.label;
-    this.toBranchLabel = this.toBranch.label;
+    this.fromNodeLabel = this.fromNode.label;
+    this.toNodeLabel = this.toNode.label;
 
     this.fromNode.toLinks.push(this);
     this.toNode.fromLinks.push(this);
-    this.fromBranch.toLinks.push(this);
-    this.toBranch.fromLinks.push(this);
 
     this.data = [];
     this.midPoint = {};
@@ -38,16 +30,13 @@ export default class Link {
   }
 
   path() {
-    const arrowHeadHeight =
-      10 + (this.toBranchLabel.type === "NodeLabel" ? 5 : 0);
-
     // Same mind-map
     if (this.fromNodeMindMap === this.toNodeMindMap) {
       // Same side of mind-map => requires mid-point
       if (this.fromNodeSide.side === this.toNodeSide.side) {
         const leftSide = this.fromNodeSide.side === "l";
-        const source = this.fromBranchLabel.position(leftSide);
-        const target = this.toBranchLabel.position(leftSide);
+        const source = this.fromNodeLabel.position(leftSide);
+        const target = this.toNodeLabel.position(leftSide);
         this.midPoint = this.getOffsetMidPoint(source, target, leftSide);
 
         // this.data.push(source, midPoint, target);
@@ -60,12 +49,12 @@ export default class Link {
         let source, target;
         // Right
         if (this.fromNodeSide.side === "l") {
-          source = this.fromBranchLabel.position(false);
-          target = this.toBranchLabel.position(true);
+          source = this.fromNodeLabel.position(false);
+          target = this.toNodeLabel.position(true);
           // Left
         } else {
-          source = this.fromBranchLabel.position(true);
-          target = this.toBranchLabel.position(false);
+          source = this.fromNodeLabel.position(true);
+          target = this.toNodeLabel.position(false);
         }
 
         this.midPoint = this.getMidPoint(source, target);
@@ -73,12 +62,12 @@ export default class Link {
       }
       // Different mind-map
     } else {
-      // If the from branch is on a higher-order mind-map then we connect from the labels
+      // If the from node is on a higher-order mind-map then we connect from the labels
       // Left edge to a right edge, otherwise this is inverted.
       const leftSide =
         this.fromNodeMindMap.index > this.toNodeMindMap.index;
-      const source = this.fromBranchLabel.position(leftSide);
-      const target = this.toBranchLabel.position(!leftSide);
+      const source = this.fromNodeLabel.position(leftSide);
+      const target = this.toNodeLabel.position(!leftSide);
 
       this.midPoint = this.getMidPoint(source, target);
       this.data.push({ source: source, target: target });

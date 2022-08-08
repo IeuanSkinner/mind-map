@@ -30,7 +30,7 @@ class App {
     this.$links = this.$svg.append("g");
     this.addMarkers("#000000"); // Default marker.
     this.topicAreasData.forEach((data) => this.addMarkers(data.colour));
-    this.links = this.linksData.map((data) => new Link(this, data));
+    // this.links = this.linksData.map((data) => new Link(this, data));
     this.contextMenu = new ContextMenu(this);
     this.zoom = new Zoom(this);
   }
@@ -88,9 +88,9 @@ class App {
     }, speed || 1000);
   }
 
-  hideLinks(branch) {
+  hideLinks(node) {
     this.links.forEach((link) => {
-      if (link.fromBranch === branch || link.toBranch === branch) return;
+      if (link.fromNode === node || link.toNode === node) return;
 
       link.hide();
     });
@@ -125,5 +125,4 @@ class App {
 window.nodes = [];
 window.mindMaps = [];
 window.sides = [];
-window.branches = [];
 window.app = new App();
