@@ -13,7 +13,6 @@ export default class Branch {
     this.sourceId = this.source.data.id;
     this.targetId = this.target.data.id;
     this.id = `branch_${this.sourceId}_${this.targetId}`;
-    this.midPoint = this.sourceNode.mindMap.app.getHeight();
     this.colour = this.target.data.colour || "#000000";
     this.fromLinks = [];
     this.toLinks = [];
@@ -42,7 +41,7 @@ export default class Branch {
         d3
           .link(d3.curveBumpX)
           .x((d) => d.y)
-          .y((d) => (!d.depth ? this.midPoint : d.x))
+          .y((d) => (!d.depth ? this.side.getMidPoint() : d.x))
       );
   }
 

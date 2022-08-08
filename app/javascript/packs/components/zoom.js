@@ -3,7 +3,7 @@ import * as d3 from "d3";
 export default class Zoom {
   constructor(app) {
     this.app = app;
-    this.scaleMin = 0.27;
+    this.scaleMin = 0.25;
     this.scaleMax = 1.5;
     this.fitRatio = this.getFitRatio();
 

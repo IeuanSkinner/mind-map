@@ -29,7 +29,7 @@ export default class Node {
     this.$label = new NodeLabel(
       this,
       0,
-      this.mindMap.app.getHeight(),
+      this.side.getMidPoint(),
       this.data.data
     );
   }

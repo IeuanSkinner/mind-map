@@ -24,7 +24,7 @@ export default class Side {
     const hierarchy = d3.hierarchy(this.data);
     d3
       .tree()
-      .size([this.app.getHeight() * 2, this.app.sideWidth * hierarchy.height])(
+      .size([this.getAppHeight(), this.app.sideWidth * hierarchy.height])(
       hierarchy
     );
     this.root = new Node(this.mindMap, this, hierarchy, 1);
@@ -44,6 +44,15 @@ export default class Side {
     if (!this.$side) return 0;
 
     return Math.ceil(this.getBoundingClientRect().height);
+  }
+
+  getAppHeight() {
+    return 2000; // this.app.getHeight() * 3 // Is it possible to calculate this given the number of leaf nodes in a given side?
+  }
+
+  getMidPoint() {
+    console.log(this.getAppHeight());
+    return this.getAppHeight() / 2;
   }
 
   getBoundingClientRect() {
