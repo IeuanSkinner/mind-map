@@ -8,6 +8,7 @@ import * as d3 from "d3";
 import MindMap from "./components/mind-map";
 import Zoom from "./components/zoom";
 import Link from "./components/link";
+import ContextMenu from "./components/context-menu";
 
 Rails.start();
 Turbolinks.start();
@@ -30,6 +31,7 @@ class App {
     this.addMarkers("#000000"); // Default marker.
     this.topicAreasData.forEach((data) => this.addMarkers(data.colour));
     this.links = this.linksData.map((data) => new Link(this, data));
+    this.contextMenu = new ContextMenu(this);
     this.zoom = new Zoom(this);
   }
 

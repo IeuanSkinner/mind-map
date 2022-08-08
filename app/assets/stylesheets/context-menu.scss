@@ -1,0 +1,7 @@
+#contextMenu {
+    position: absolute;
+
+    &.hidden {
+        visibility: hidden;
+    }
+}
