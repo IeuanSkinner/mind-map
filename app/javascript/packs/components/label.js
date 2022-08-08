@@ -17,6 +17,7 @@ export default class Label {
   draw() {
     this.$label = this.side.$side
       .append("text")
+      .attr("id", this.id)
       .attr("class", "label")
       .attr("x", this.x + this.sidePadding)
       .attr("y", this.y)

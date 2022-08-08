@@ -37,7 +37,7 @@ export default class Link {
     //   .curve(d3.curveMonotoneY);
 
     this.path();
-    this.draw();
+    // this.draw();
   }
 
   path() {
@@ -115,7 +115,7 @@ export default class Link {
   draw() {
     const colour = this.colour || this.defaultColour;
 
-    this.$group = this.app.$links.append("g").attr("opacity", 0);
+    this.$group = this.app.$links.append("g");
 
     this.$link = this.$group
       .selectAll(null)
@@ -162,18 +162,12 @@ export default class Link {
   }
 
   show() {
-    if (!this.$link) return;
-
-    this.$group.transition().duration(500).style("opacity", 1);
-    this.label.$html.classList.remove("hidden");
+    this.draw();
     this.hidden = false;
   }
 
   hide() {
-    if (!this.$link) return;
-
-    this.$group.transition().duration(500).style("opacity", 0);
-    this.label.$html.classList.add("hidden");
+    this.$group.remove();
     this.hidden = true;
   }
 

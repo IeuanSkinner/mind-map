@@ -78,8 +78,8 @@ class App {
     let i = 0;
 
     this.drawLinksInterval = setInterval(() => {
-      this.links.forEach((link) => link.remove());
-      this.links[i].draw();
+      this.links.forEach((link) => link.hide());
+      this.links[i].show();
       i++;
 
       if (i < this.links.length) return;

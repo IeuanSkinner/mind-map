@@ -8,7 +8,15 @@ export default class Node {
     this.data = data;
     this.children = [];
     this.branches = [];
+    this.fromLinks = [];
+    this.toLinks = [];
 
+    this.contextMenuActions = [
+      { name: "Hide", action: this.hide }, 
+      { name: "Show From Links", action: this.showFromLinks }, 
+      { name: "Show To Links", action: this.showToLinks }
+    ];
+    
     if (this.hasChildren()) {
       this.children = this.data.children.map(
         (data) => new Node(mindMap, side, data)
@@ -17,7 +25,6 @@ export default class Node {
       const links = this.data.links().filter((l) => l.source === this.data);
       this.branches = links.map((data) => new Branch(this, data));
     }
-
     this.label();
 
     window.nodes.push(this);

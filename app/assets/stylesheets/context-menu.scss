@@ -1,7 +1,23 @@
+@import "variables";
+
 #contextMenu {
     position: absolute;
 
     &.hidden {
         visibility: hidden;
+    }
+
+    .list-group-item {
+        background-color: $primary;
+        color: $white;
+        opacity: 0.8;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.75rem;
+
+        &:hover {
+            background-color: $primary-dark;
+            opacity: 1;
+            cursor: pointer;
+        }
     }
 }
