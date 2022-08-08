@@ -14,6 +14,10 @@
         font-size: 0.8rem;
         padding: 0.25rem 0.75rem;
 
+        i {
+            margin-right: 10px;
+        }
+
         &:hover {
             background-color: $primary-dark;
             opacity: 1;

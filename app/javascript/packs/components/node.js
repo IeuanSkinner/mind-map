@@ -12,9 +12,9 @@ export default class Node {
     this.toLinks = [];
 
     this.contextMenuActions = [
-      { name: "Hide", action: this.hide }, 
-      { name: "Show From Links", action: this.showFromLinks }, 
-      { name: "Show To Links", action: this.showToLinks }
+      { name: "Hide", action: this.hide, icon: "eye-slash" }, 
+      { name: "Show From Links", action: this.showFromLinks, icon: "arrow-left" }, 
+      { name: "Show To Links", action: this.showToLinks, icon: "arrow-right" }
     ];
     
     if (this.hasChildren()) {
