@@ -42,7 +42,7 @@ export default class ContextMenu {
                 const listItem = document.createElement('li');
                 listItem.classList.add("list-group-item", "list-group-item-action");
                 listItem.innerHTML = `<i class="fa fa-${action.icon}"></i> ${action.name}`;
-                listItem.addEventListener("click", action.action);
+                listItem.addEventListener("click", () => action.action.call(node));
 
                 this.list.append(listItem);
             })

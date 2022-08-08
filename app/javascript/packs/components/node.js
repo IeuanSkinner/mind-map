@@ -44,4 +44,22 @@ export default class Node {
   hasChildren() {
     return !!this.data.children;
   }
+
+  showFromLinks() {
+    this.toggleLinks(this.fromLinks);
+  }
+
+  showToLinks() {
+    this.toggleLinks(this.toLinks);
+  }
+
+  toggleLinks(links) {
+    links.forEach((link) => {
+      if (link.hidden) {
+        link.show();
+      } else {
+        link.hide();
+      }
+    });
+  }
 }

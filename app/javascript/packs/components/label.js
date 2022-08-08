@@ -31,7 +31,6 @@ export default class Label {
 
     this.$label = this.$label
       .attr("y", this.y + this.getHeight() / 4)
-      .on("click", () => this.branch.toggleLinks());
   }
 
   position(leftSide) {

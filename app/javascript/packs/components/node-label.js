@@ -39,9 +39,6 @@ export default class NodeLabel {
       .attr("width", this.width)
       .attr("height", this.height)
       .html(`<div id="${this.id}" class="node-label">${this.label}</div>`)
-      .on("click", () => {
-        if (this.branchOrNode.toggleLinks) this.branchOrNode.toggleLinks();
-      });
 
     this.$html = document.querySelector(`#${this.id}`);
 

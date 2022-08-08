@@ -11,33 +11,30 @@ export default class Link {
     this.text = data.label;
     this.colour = data.colour || "#000000";
     this.hidden = true;
-
     this.fromBranch = window.branches.find(
       (branch) => branch.targetId === this.fromBranchId
     );
     this.toBranch = window.branches.find(
       (branch) => branch.targetId === this.toBranchId
     );
-    this.fromBranchMindMap = this.fromBranch.mindMap;
-    this.toBranchMindMap = this.toBranch.mindMap;
-    this.fromBranchSide = this.fromBranch.side;
-    this.toBranchSide = this.toBranch.side;
+    this.fromNode = this.fromBranch.sourceNode;
+    this.toNode = this.toBranch.sourceNode;
+    this.fromNodeMindMap = this.fromNode.mindMap;
+    this.toNodeMindMap = this.toNode.mindMap;
+    this.fromNodeSide = this.fromNode.side;
+    this.toNodeSide = this.toNode.side;
     this.fromBranchLabel = this.fromBranch.label;
     this.toBranchLabel = this.toBranch.label;
 
+    this.fromNode.toLinks.push(this);
+    this.toNode.fromLinks.push(this);
     this.fromBranch.toLinks.push(this);
     this.toBranch.fromLinks.push(this);
 
     this.data = [];
     this.midPoint = {};
-    // this.lineCurve = d3
-    //   .line()
-    //   .x((d) => d.x)
-    //   .y((d) => d.y)
-    //   .curve(d3.curveMonotoneY);
 
     this.path();
-    // this.draw();
   }
 
   path() {
@@ -45,10 +42,10 @@ export default class Link {
       10 + (this.toBranchLabel.type === "NodeLabel" ? 5 : 0);
 
     // Same mind-map
-    if (this.fromBranchMindMap === this.toBranchMindMap) {
+    if (this.fromNodeMindMap === this.toNodeMindMap) {
       // Same side of mind-map => requires mid-point
-      if (this.fromBranchSide.side === this.toBranchSide.side) {
-        const leftSide = this.fromBranchSide.side === "l";
+      if (this.fromNodeSide.side === this.toNodeSide.side) {
+        const leftSide = this.fromNodeSide.side === "l";
         const source = this.fromBranchLabel.position(leftSide);
         const target = this.toBranchLabel.position(leftSide);
         this.midPoint = this.getOffsetMidPoint(source, target, leftSide);
@@ -62,7 +59,7 @@ export default class Link {
       } else {
         let source, target;
         // Right
-        if (this.fromBranchSide.side === "l") {
+        if (this.fromNodeSide.side === "l") {
           source = this.fromBranchLabel.position(false);
           target = this.toBranchLabel.position(true);
           // Left
@@ -79,7 +76,7 @@ export default class Link {
       // If the from branch is on a higher-order mind-map then we connect from the labels
       // Left edge to a right edge, otherwise this is inverted.
       const leftSide =
-        this.fromBranchMindMap.index > this.toBranchMindMap.index;
+        this.fromNodeMindMap.index > this.toNodeMindMap.index;
       const source = this.fromBranchLabel.position(leftSide);
       const target = this.toBranchLabel.position(!leftSide);
 
@@ -139,26 +136,7 @@ export default class Link {
           .y((d) => d.y)
       );
 
-    // this.$text = this.$group
-    //   .append("text")
-    //   .append("textPath")
-    //   .attr("xlink:href", `#${this.id}`)
-    //   .attr("startOffset", "50%")
-    //   .attr("text-anchor", "middle")
-    //   .text(this.label);
     this.label = new LinkLabel(this, this.text, this.colour);
-
-    // this.$link = this.app.$links
-    //   .append("path")
-    //   .attr("id", this.id)
-    //   .attr("fill", "none")
-    //   .attr("stroke", colour)
-    //   .attr("stroke-opacity", 1)
-    //   .attr("stroke-linecap", "round")
-    //   .attr("stroke-linejoin", "round")
-    //   .attr("stroke-width", 2)
-    //   .attr("marker-end", `url(#arrowhead-${colour.replace("#", "")})`)
-    //   .attr("d", this.lineCurve(this.data));
   }
 
   show() {
