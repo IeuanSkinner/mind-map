@@ -20,7 +20,7 @@ export default class LinkLabel {
       .attr("width", this.width)
       .attr("height", this.height)
       .html(
-        `<div id="${this.id}" class="link-label" style="background-color: ${this.colour};">${this.label}</div>`
+        `<div id="${this.id}" class="link-label hidden" style="background-color: ${this.colour};">${this.label}</div>`
       );
 
     this.$html = document.querySelector(`#${this.id}`);

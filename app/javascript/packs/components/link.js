@@ -165,6 +165,7 @@ export default class Link {
     if (!this.$link) return;
 
     this.$group.transition().duration(500).style("opacity", 1);
+    this.label.$html.classList.remove("hidden");
     this.hidden = false;
   }
 
@@ -172,6 +173,7 @@ export default class Link {
     if (!this.$link) return;
 
     this.$group.transition().duration(500).style("opacity", 0);
+    this.label.$html.classList.add("hidden");
     this.hidden = true;
   }
 
