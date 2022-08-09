@@ -1,0 +1,35 @@
+@import "variables";
+
+$size: 80px;
+$margin: 15px;
+$font-size: 2rem;
+
+.action-btn {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: $size;
+    height: $size;
+    font-size: $font-size;
+    bottom: 0;
+    margin: 0 $margin $margin 0;
+    border-radius: 50%;
+    color: $body-bg;
+    opacity: 0.3;
+
+    &:hover {
+        cursor: pointer;
+        opacity: 0.5;
+    }
+}
+
+#feedback.action-btn {
+    background-color: $primary;
+    right: 0;
+}
+
+#motivation-btn.action-btn {
+    background-color: $plain-blue;
+    right: $size + $margin;
+}

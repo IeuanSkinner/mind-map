@@ -15,9 +15,9 @@ ActiveStorage.start();
 
 class App {
   constructor(gap = 100, sideWidth = 200) {
-    this.data = this.fetchData();
-    this.linksData = this.fetchLinksData();
-    this.topicAreasData = this.fetchTopicAreasData();
+    this.data = this.fetchData("mind-maps");
+    this.linksData = this.fetchData("links");
+    this.topicAreasData = this.fetchData("topic-areas");
     this.sideWidth = sideWidth;
     this.gap = gap;
     this.$svg = d3.select("svg#visualization");
@@ -34,22 +34,11 @@ class App {
     this.zoom = new Zoom(this);
   }
 
-  fetchData() {
-    return [...document.querySelectorAll("[data-mind-map]")].map(($el) =>
-      JSON.parse($el.dataset.mindMap)
-    ); // fetch data from DOM || localStorage || remote?
-  }
+  fetchData(type) {
+    const dataNode = document.querySelector(`[data-${type}]`);
+    const data = JSON.parse(dataNode.getAttribute(`data-${type}`));
 
-  fetchLinksData() {
-    return [...document.querySelectorAll("[data-link]")].map(($el) =>
-      JSON.parse($el.dataset.link)
-    );
-  }
-
-  fetchTopicAreasData() {
-    return [...document.querySelectorAll("[data-topic-area]")].map(($el) =>
-      JSON.parse($el.dataset.topicArea)
-    );
+    return data.map(datum => JSON.parse(datum));
   }
 
   addMarkers(colour) {
@@ -70,36 +59,6 @@ class App {
         "points",
         `0 0, ${markerWidth} ${markerHeight / 2}, 0 ${markerHeight}`
       );
-  }
-
-  // Useful for debugging
-  drawLinks(speed) {
-    let i = 0;
-
-    this.drawLinksInterval = setInterval(() => {
-      this.links.forEach((link) => link.hide());
-      this.links[i].show();
-      i++;
-
-      if (i < this.links.length) return;
-
-      this.stopDrawLinks();
-    }, speed || 1000);
-  }
-
-  hideLinks(node) {
-    this.links.forEach((link) => {
-      if (link.fromNode === node || link.toNode === node) return;
-
-      link.hide();
-    });
-  }
-
-  stopDrawLinks() {
-    if (!this.drawLinksInterval) return;
-
-    clearInterval(this.drawLinksInterval);
-    this.clearLinks();
   }
 
   getWidth() {

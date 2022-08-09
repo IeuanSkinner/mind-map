@@ -14,7 +14,7 @@ class Link < ApplicationRecord
       to_node_id: to_node.format_id,
       label: label,
       colour: colour
-    }.to_json
+  }.to_json
   end
 
   private

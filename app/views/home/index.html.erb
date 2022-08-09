@@ -1,17 +1,5 @@
-<%# <div id="zoom">
-  <div id="in" class="button">+</div>
-  <div id="out" class="button">-</div>
-</div> %>
+<svg id="visualization"></svg>
 
-<svg id="visualization">
-</svg>
-
-<% @mind_maps.each do |mind_map| %>
-  <div data-mind-map="<%= mind_map.json %>"></div>
-<% end %>
-<% @links.each do |link| %>
-  <div data-link="<%= link.json %>"></div>
-<% end %>
-<% @topic_areas.each do |topic_area| %>
-  <div data-topic-area="<%= topic_area.json %>"></div>
-<% end %>
+<div data-mind-maps="<%= @mind_maps %>"></div>
+<div data-links="<%= @links %>"></div>
+<div data-topic-areas="<%= @topic_areas %>"></div>
