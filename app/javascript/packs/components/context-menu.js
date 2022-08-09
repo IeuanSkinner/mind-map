@@ -36,7 +36,7 @@ export default class ContextMenu {
 
         // Node
         if (targetClasses.includes("node-label") || targetClasses.includes("label")) {
-            const node = window.branches.find(branch => branch.label.id === id).sourceNode;
+            const node = window.nodes.find(node => node.id === id);
 
             node.contextMenuActions.forEach(action => {
                 const listItem = document.createElement('li');

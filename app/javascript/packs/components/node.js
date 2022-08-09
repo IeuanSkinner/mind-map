@@ -5,13 +5,13 @@ import NodeLabel from "./node-label";
 export default class Node {
   constructor(side, data, parentNode) {
     this.parentNode = parentNode;
-    this.id = !parentNode ? `${side.mindMap.id}_${side.side}_node_1`: data.id;
+    this.id = this.isRoot() ? `${side.mindMap.id}_${side.side}_node_1`: data.id;
     this.side = side;
     this.data = data;
 
     // Parent relationship
-    this.branch = !parentNode ? null : this.data.branch;
-    this.branchColour = !parentNode ? null : this.data.data.colour || "#000000";
+    this.branch = this.isRoot() ? null : this.data.branch;
+    this.branchColour = this.isRoot() ? null : this.data.data.colour || "#000000";
 
     // Child relationship
     this.children = []; // Should be an array of Node.
@@ -50,7 +50,6 @@ export default class Node {
       .selectAll(null)
       .data([this.branch])
       .join("path")
-      .attr("id", this.id)
       .attr("fill", "none")
       .attr("stroke", this.branchColour)
       .attr("stroke-opacity", 1)
@@ -67,17 +66,20 @@ export default class Node {
   }
 
   label() {
-    // Root node
-    if (!this.parentNode) {
-      this.label = new NodeLabel(this, 0, this.side.getMidPoint(), this.data.data);
+    if (this.isRoot() && this.side.side !== "r") return;
+
+    if (this.hasChildren()) {
+      this.label = new NodeLabel(this, 
+                                 this.isRoot() ? 0 : this.data.y, 
+                                 this.isRoot() ? this.side.getMidPoint() : this.data.x, 
+                                 this.data.data)
     } else {
-      if (this.hasChildren()) {
-        // Should this not be source?
-        this.label = new NodeLabel(this, this.data.y, this.data.x, this.data.data)
-      } else {
-        this.label = new Label(this, this.data.y, this.data.x, this.data.data);
-      }
+      this.label = new Label(this, this.data.y, this.data.x, this.data.data);
     }
+  }
+
+  isRoot() {
+    return !this.parentNode;
   }
 
   hasChildren() {

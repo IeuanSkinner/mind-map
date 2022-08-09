@@ -1,9 +1,8 @@
 export default class Label {
-  constructor(branch, x, y, data) {
-    this.id = `label_${data.id}`;
+  constructor(node, x, y, data) {
     this.type = "Label";
-    this.branch = branch;
-    this.side = branch.side;
+    this.node = node;
+    this.side = node.side;
     this.app = this.side.app;
     this.x = x;
     this.y = y;
@@ -17,7 +16,7 @@ export default class Label {
   draw() {
     this.$label = this.side.$side
       .append("text")
-      .attr("id", this.id)
+      .attr("id", this.node.id)
       .attr("class", "label")
       .attr("x", this.x + this.sidePadding)
       .attr("y", this.y)
