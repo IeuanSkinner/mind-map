@@ -5,18 +5,12 @@ import NodeLabel from "./node-label";
 export default class Node {
   constructor(side, data, parentNode) {
     this.parentNode = parentNode;
-    this.id = this.isRoot() ? `${side.mindMap.id}_${side.side}_node_1`: data.id;
     this.side = side;
     this.data = data;
-
-    // Parent relationship
+    this.id = this.data.data.id;
+    this.colour = this.isRoot() ? null : this.data.data.colour || "#000000";
     this.branch = this.isRoot() ? null : this.data.branch;
-    this.branchColour = this.isRoot() ? null : this.data.data.colour || "#000000";
-
-    // Child relationship
-    this.children = []; // Should be an array of Node.
-
-    // Links
+    this.children = [];
     this.fromLinks = [];
     this.toLinks = [];
 
@@ -30,7 +24,6 @@ export default class Node {
       const childBranches = this.data.links().filter((l) => l.source === this.data);
 
       this.children = this.data.children.map((data, index) => {
-        data["id"] = `${this.id}_${index}`;
         data["branch"] = childBranches[index];
         return new Node(side, data, this);
       });
@@ -51,7 +44,7 @@ export default class Node {
       .data([this.branch])
       .join("path")
       .attr("fill", "none")
-      .attr("stroke", this.branchColour)
+      .attr("stroke", this.colour)
       .attr("stroke-opacity", 1)
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")

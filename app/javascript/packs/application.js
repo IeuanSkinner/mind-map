@@ -1,6 +1,5 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 import Rails from "@rails/ujs";
-import * as bootstrap from "bootstrap";
 import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
@@ -30,7 +29,7 @@ class App {
     this.$links = this.$svg.append("g");
     this.addMarkers("#000000"); // Default marker.
     this.topicAreasData.forEach((data) => this.addMarkers(data.colour));
-    // this.links = this.linksData.map((data) => new Link(this, data));
+    this.links = this.linksData.map((data) => new Link(this, data));
     this.contextMenu = new ContextMenu(this);
     this.zoom = new Zoom(this);
   }

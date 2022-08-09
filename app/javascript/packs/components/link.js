@@ -1,5 +1,4 @@
 import * as d3 from "d3";
-import e from "turbolinks";
 import LinkLabel from "./link-label";
 
 export default class Link {
@@ -13,10 +12,10 @@ export default class Link {
     this.hidden = true;
     this.fromNode = window.nodes.find((node) => node.id === this.fromNodeId);
     this.toNode = window.nodes.find((node) => node.id === this.toNodeId);
-    this.fromNodeMindMap = this.fromNode.mindMap;
-    this.toNodeMindMap = this.toNode.mindMap;
     this.fromNodeSide = this.fromNode.side;
     this.toNodeSide = this.toNode.side;
+    this.fromNodeMindMap = this.fromNode.side.mindMap;
+    this.toNodeMindMap = this.toNode.side.mindMap;
     this.fromNodeLabel = this.fromNode.label;
     this.toNodeLabel = this.toNode.label;
 
@@ -30,11 +29,13 @@ export default class Link {
   }
 
   path() {
+    console.log(this.fromNodeMindMap, this.toNodeMindMap, this.fromNodeMindMap === this.toNodeMindMap);
+
     // Same mind-map
     if (this.fromNodeMindMap === this.toNodeMindMap) {
       // Same side of mind-map => requires mid-point
       if (this.fromNodeSide.side === this.toNodeSide.side) {
-        const leftSide = this.fromNodeSide.side === "l";
+        const leftSide = this.fromNodeSide.side.side === "l";
         const source = this.fromNodeLabel.position(leftSide);
         const target = this.toNodeLabel.position(leftSide);
         this.midPoint = this.getOffsetMidPoint(source, target, leftSide);
@@ -66,6 +67,9 @@ export default class Link {
       // Left edge to a right edge, otherwise this is inverted.
       const leftSide =
         this.fromNodeMindMap.index > this.toNodeMindMap.index;
+
+      console.log(this.id);
+
       const source = this.fromNodeLabel.position(leftSide);
       const target = this.toNodeLabel.position(!leftSide);
 

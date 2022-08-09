@@ -1,13 +1,13 @@
-def branch(name)
-  Branch.find_by_name(name)
+def node(name)
+  Node.find_by_name(name)
 end
 
-def create_link(from_branch, to_branch, label)
-  if from_branch.instance_of? String
-    from_branch = branch(from_branch)
+def create_link(from_node, to_node, label)
+  if from_node.instance_of? String
+    from_node = node(from_node)
   end
 
-  Link.create!(from_branch: from_branch, to_branch: branch(to_branch), label: label)
+  Link.create!(from_node: from_node, to_node: node(to_node), label: label)
 end
 
 Dir[File.join(Rails.root, 'db', 'seeds', '*.rb')].sort.each do |seed|
@@ -16,5 +16,5 @@ end
 
 puts "Topic Areas: #{TopicArea.count}"
 puts "Mind Maps: #{MindMap.count}"
-puts "Branches: #{Branch.count}"
+puts "Nodes: #{Node.count}"
 puts "Links: #{Link.count}"

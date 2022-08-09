@@ -1,5 +1,5 @@
 class MindMap < ApplicationRecord
-  has_many :branches
+  has_many :nodes
 
   validates :name, presence: true
   validates :label, presence: true
@@ -13,7 +13,7 @@ class MindMap < ApplicationRecord
       label: label,
       position: position,
       hours: hours,
-      children: branches.where(parent_branch_id: nil).map(&:json)
+      children: nodes.where(parent_node_id: nil).map(&:json)
     }.to_json
   end 
 end

@@ -1,14 +1,14 @@
-class Branch < ApplicationRecord
+class Node < ApplicationRecord
   default_scope { order(id: :asc) }
 
   belongs_to :mind_map, optional: true
-  belongs_to :parent_branch, class_name: 'Branch', optional: true
-  has_many :child_branches, class_name: 'Branch', foreign_key: 'parent_branch_id'
+  belongs_to :parent_node, class_name: 'Node', optional: true
+  has_many :child_nodes, class_name: 'Node', foreign_key: 'parent_node_id'
   belongs_to :topic_area, optional: true
-  has_many :from_branch_links, class_name: 'Link', foreign_key: 'to_branch_id'
-  has_many :to_branch_links, class_name: 'Link', foreign_key: 'from_branch_id'
-  has_many :from_branches, through: :from_branch_links
-  has_many :to_branches, through: :to_branch_links
+  has_many :from_node_links, class_name: 'Link', foreign_key: 'to_node_id'
+  has_many :to_node_links, class_name: 'Link', foreign_key: 'from_node_id'
+  has_many :from_nodes, through: :from_node_links
+  has_many :to_nodes, through: :to_node_links
   has_one :learning_objective
   has_many :resources
 
@@ -26,12 +26,12 @@ class Branch < ApplicationRecord
       hours: hours,
       position: position,
       colour: colour,
-      children: child_branches.map(&:json)
+      children: child_nodes.map(&:json)
     }
   end
 
   def format_id
-    "branch_#{id}"
+    "node_#{id}"
   end
 
   private
@@ -61,8 +61,8 @@ class Branch < ApplicationRecord
   def inherit_prop(prop)
     return if self[prop].present?
 
-    return unless parent_branch.present?
+    return unless parent_node.present?
 
-    update!({ "#{prop}": parent_branch[prop] })
+    update!({ "#{prop}": parent_node[prop] })
   end
 end
