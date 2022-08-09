@@ -29,8 +29,6 @@ export default class Link {
   }
 
   path() {
-    console.log(this.fromNodeMindMap, this.toNodeMindMap, this.fromNodeMindMap === this.toNodeMindMap);
-
     // Same mind-map
     if (this.fromNodeMindMap === this.toNodeMindMap) {
       // Same side of mind-map => requires mid-point
@@ -67,8 +65,6 @@ export default class Link {
       // Left edge to a right edge, otherwise this is inverted.
       const leftSide =
         this.fromNodeMindMap.index > this.toNodeMindMap.index;
-
-      console.log(this.id);
 
       const source = this.fromNodeLabel.position(leftSide);
       const target = this.toNodeLabel.position(!leftSide);
@@ -133,18 +129,16 @@ export default class Link {
   }
 
   show() {
-    this.draw();
+    if (!this.hidden) return;
+
     this.hidden = false;
+    this.draw();
   }
 
   hide() {
-    this.$group.remove();
+    if (this.hidden) return;
+
     this.hidden = true;
-  }
-
-  remove() {
-    if (!this.$link) return;
-
-    this.$link.remove();
+    this.$group.remove();
   }
 }

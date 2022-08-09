@@ -28,7 +28,7 @@ export default class Zoom {
   handleZoom(e) {
     // console.log("x", e.transform.x, "y", e.transform.y, "k", e.transform.k);
 
-    this.app.contextMenu.hide();
+    this.app.contextMenu.close();
 
     this.app.mindMaps.forEach((mindMap) => mindMap.handleZoom(e));
     this.app.$links.attr(

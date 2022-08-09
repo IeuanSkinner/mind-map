@@ -4,7 +4,7 @@ export default class ContextMenu {
         this.menu = document.getElementById("contextMenu");
         this.list = this.menu.querySelector("ul");
 
-        this.app.$svg.on("click", () => this.hide());
+        this.app.$svg.on("click", () => this.close());
 
         document.oncontextmenu = (e) => this.onRightClick(e);
     }
@@ -24,7 +24,7 @@ export default class ContextMenu {
             this.menu.classList.remove("hidden");
             this.menu.focus();
         } else {
-            this.hide();
+            this.close();
         }
     }
 
@@ -37,15 +37,7 @@ export default class ContextMenu {
         // Node
         if (targetClasses.includes("node-label") || targetClasses.includes("label")) {
             const node = window.nodes.find(node => node.id === id);
-
-            node.contextMenuActions.forEach(action => {
-                const listItem = document.createElement('li');
-                listItem.classList.add("list-group-item", "list-group-item-action");
-                listItem.innerHTML = `<i class="fa fa-${action.icon}"></i> ${action.name}`;
-                listItem.addEventListener("click", () => action.action.call(node));
-
-                this.list.append(listItem);
-            })
+            node.buildMenu(this);
         // Link
         } else if (targetClasses.includes("link-lable")) {
 
@@ -54,11 +46,29 @@ export default class ContextMenu {
         }
     }
 
-    clearMenu() {
-        [...this.list.children].forEach(child => child.remove());
+    newListItem() {
+        const listItem = document.createElement("li");
+        listItem.classList.add("list-group-item", "list-group-item-action");
+        return listItem;
     }
 
-    hide() {
-        this.menu.classList.add("hidden")
+    add(listItem) {
+        this.list.append(listItem);
+    }
+
+    addClick(context, listItem, action) {
+        listItem.addEventListener("click", () => {
+            action.call(context);
+            this.close();
+        });
+    }
+
+    close() {
+        this.clearMenu();
+        this.menu.classList.add("hidden");
+    }
+
+    clearMenu() {
+        [...this.list.children].forEach(child => child.remove());
     }
 }

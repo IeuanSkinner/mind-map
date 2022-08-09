@@ -14,12 +14,6 @@ export default class Node {
     this.fromLinks = [];
     this.toLinks = [];
 
-    this.contextMenuActions = [
-      { name: "Hide", action: this.hide, icon: "eye-slash" }, 
-      { name: "Show From Links", action: this.showFromLinks, icon: "arrow-left" }, 
-      { name: "Show To Links", action: this.showToLinks, icon: "arrow-right" }
-    ];
-    
     if (this.hasChildren()) {
       const childBranches = this.data.links().filter((l) => l.source === this.data);
 
@@ -79,21 +73,65 @@ export default class Node {
     return !!this.data.children;
   }
 
-  showFromLinks() {
-    this.toggleLinks(this.fromLinks);
+  buildMenu(contextMenu) {
+    if (!this.isRoot()) {
+      const hideListItem = contextMenu.newListItem();
+      hideListItem.innerHTML = '<i class="fa fa-eye-slash"></i> Hide';
+      contextMenu.add(hideListItem);
+    }
+    
+    if (this.hasChildren()) {
+      const hideChildrenListItem = contextMenu.newListItem();
+      hideChildrenListItem.innerHTML = '<i class="fa fa-eye-slash"></i> Hide Children';
+      contextMenu.add(hideChildrenListItem);
+    }
+
+    if (this.hasHiddenLinks(this.fromLinks)) {
+      const showFromLinksListItem = contextMenu.newListItem();
+      showFromLinksListItem.innerHTML = '<i class="fa fa-arrow-left"></i> Show From Links';
+      
+      contextMenu.addClick(this, showFromLinksListItem, () => this.showLinks(this.fromLinks));
+      contextMenu.add(showFromLinksListItem);
+    }
+
+    if (this.hasVisibleLinks(this.fromLinks)) {
+      const hideFromLinksListItem = contextMenu.newListItem();
+      hideFromLinksListItem.innerHTML = '<i class="fa fa-arrow-left"></i> Hide From Links';
+      
+      contextMenu.addClick(this, hideFromLinksListItem, () => this.hideLinks(this.fromLinks));
+      contextMenu.add(hideFromLinksListItem);
+    }
+
+    if (this.hasHiddenLinks(this.toLinks)) {
+      const showToLinksListItem = contextMenu.newListItem();
+      showToLinksListItem.innerHTML = '<i class="fa fa-arrow-right"></i> Show To Links';
+
+      contextMenu.addClick(this, showToLinksListItem, () => this.showLinks(this.toLinks));
+      contextMenu.add(showToLinksListItem);
+    }
+
+    if (this.hasVisibleLinks(this.toLinks)) {
+      const hideToLinksListItem = contextMenu.newListItem();
+      hideToLinksListItem.innerHTML = '<i class="fa fa-arrow-right"></i> Hide To Links';
+
+      contextMenu.addClick(this, hideToLinksListItem, () => this.hideLinks(this.toLinks));
+      contextMenu.add(hideToLinksListItem);
+    }
   }
 
-  showToLinks() {
-    this.toggleLinks(this.toLinks);
+  hasHiddenLinks(links) {
+    return !!links.find(link => link.hidden);
   }
 
-  toggleLinks(links) {
-    links.forEach((link) => {
-      if (link.hidden) {
-        link.show();
-      } else {
-        link.hide();
-      }
-    });
+  hasVisibleLinks(links) {
+    return !!links.find(link => !link.hidden);
+  }
+
+  showLinks(links) {
+    links.forEach(link => link.show());
+  }
+
+  hideLinks(links) {
+    links.forEach(link => link.hide());
   }
 }
