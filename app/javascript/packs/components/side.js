@@ -51,7 +51,6 @@ export default class Side {
   }
 
   getMidPoint() {
-    console.log(this.getAppHeight());
     return this.getAppHeight() / 2;
   }
 

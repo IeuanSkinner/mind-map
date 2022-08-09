@@ -41,9 +41,6 @@ export default class NodeLabel {
 
     this.$html = document.querySelector(`#${this.node.id}`);
 
-    console.log(this.node.id);
-    console.log(this.$html);
-
     if (this.side.side === "l") {
       this.$text = this.$text
         .attr("x", -(this.x + this.width))
