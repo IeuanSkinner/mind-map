@@ -1,6 +1,6 @@
 import * as d3 from "d3";
-import Label from "./label";
-import NodeLabel from "./node-label";
+import NodeLeafLabel from "./node-leaf-label";
+import NodeBoxLabel from "./node-box-label";
 import Component from "./component";
 
 export default class Node extends Component {
@@ -64,9 +64,9 @@ export default class Node extends Component {
       const x = this.isRoot() ? 0 : this.data.y;
       const y = this.isRoot() ? this.side.getMidPoint() : this.data.x;
 
-      this.label = new NodeLabel(this, x, y, this.data.data)
+      this.label = new NodeBoxLabel(this, x, y, this.data.data)
     } else {
-      this.label = new Label(this, this.data.y, this.data.x, this.data.data);
+      this.label = new NodeLeafLabel(this, this.data.y, this.data.x, this.data.data);
     }
   }
 
