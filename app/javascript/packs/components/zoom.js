@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import MindMap from "./mind-map";
 
 export default class Zoom {
   constructor(app) {
@@ -20,7 +21,7 @@ export default class Zoom {
       .translateExtent([this.translateMin, this.translateMax])
       .on("zoom", (e) => this.handleZoom(e));
 
-    this.app.$svg.call(this.zoom);
+    this.app.$el.call(this.zoom);
 
     this.init();
   }
@@ -44,7 +45,7 @@ export default class Zoom {
       width += mindMap.getWidth();
 
       if (i < this.app.mindMaps.length - 1) {
-        width += this.app.gap;
+        width += MindMap.GAP;
       }
     });
 
@@ -79,7 +80,7 @@ export default class Zoom {
     const x = centerMindMap.getX(this.fitRatio);
     const midX = x - halfWidth;
 
-    this.app.$svg.call(
+    this.app.$el.call(
       this.zoom.transform,
       d3.zoomIdentity.translate(-midX, -4).scale(this.fitRatio)
     );

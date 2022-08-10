@@ -14,7 +14,7 @@ export default class Label {
   }
 
   draw() {
-    this.$label = this.side.$side
+    this.$label = this.side.$el
       .append("text")
       .attr("id", this.node.id)
       .attr("class", "label")

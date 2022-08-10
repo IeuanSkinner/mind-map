@@ -18,7 +18,7 @@ export default class NodeLabel {
   }
 
   draw() {
-    this.$group = this.side.$side.append("g");
+    this.$group = this.side.$el.append("g");
 
     this.$shape = this.$group
       .append("rect")

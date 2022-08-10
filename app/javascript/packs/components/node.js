@@ -1,44 +1,37 @@
 import * as d3 from "d3";
 import Label from "./label";
 import NodeLabel from "./node-label";
+import Component from "./component";
 
-export default class Node {
+export default class Node extends Component {
+  static DEFAULT_COLOUR = "#000000";
+
   constructor(side, data, parentNode) {
-    this.parentNode = parentNode;
+    super();
     this.side = side;
     this.data = data;
-    this.id = this.data.data.id;
-    this.colour = this.isRoot() ? null : this.data.data.colour || "#000000";
-    this.branch = this.isRoot() ? null : this.data.branch;
+    this.parentNode = parentNode;
+    this.id = data.data.id;
     this.children = [];
     this.fromLinks = [];
     this.toLinks = [];
 
-    if (this.hasChildren()) {
-      const childBranches = this.data.links().filter((l) => l.source === this.data);
-
-      this.children = this.data.children.map((data, index) => {
-        data["branch"] = childBranches[index];
-        return new Node(side, data, this);
-      });
-    }
-
-    if (parentNode) {
-      this.drawBranch();
-    }
-
+    this.draw()
+    this.createChildren();
     this.label();
 
-    window.nodes.push(this);
+    window.nodes.push(this); // TODO: Remove this.
   }
 
-  drawBranch() {
-    this.$branch = this.side.$side
+  draw() {
+    if (this.isRoot()) return;
+
+    this.$el = this.side.$el
       .selectAll(null)
-      .data([this.branch])
+      .data([this.data.branch])
       .join("path")
       .attr("fill", "none")
-      .attr("stroke", this.colour)
+      .attr("stroke", this.data.data.colour || Node.DEFAULT_COLOUR)
       .attr("stroke-opacity", 1)
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")
@@ -52,14 +45,26 @@ export default class Node {
       );
   }
 
+  createChildren() {
+    if (!this.hasChildren()) return;
+
+    const childBranches = this.data.links().filter((l) => l.source === this.data);
+
+    this.children = this.data.children.map((data, index) => {
+      data["branch"] = childBranches[index];
+
+      return new Node(this.side, data, this);
+    });
+  }
+
   label() {
-    if (this.isRoot() && this.side.side !== "r") return;
+    if (this.isRoot() && this.side.isLeft()) return; // Hack
 
     if (this.hasChildren()) {
-      this.label = new NodeLabel(this, 
-                                 this.isRoot() ? 0 : this.data.y, 
-                                 this.isRoot() ? this.side.getMidPoint() : this.data.x, 
-                                 this.data.data)
+      const x = this.isRoot() ? 0 : this.data.y;
+      const y = this.isRoot() ? this.side.getMidPoint() : this.data.x;
+
+      this.label = new NodeLabel(this, x, y, this.data.data)
     } else {
       this.label = new Label(this, this.data.y, this.data.x, this.data.data);
     }

@@ -4,7 +4,7 @@ export default class ContextMenu {
         this.menu = document.getElementById("contextMenu");
         this.list = this.menu.querySelector("ul");
 
-        this.app.$svg.on("click", () => this.close());
+        this.app.$el.on("click", () => this.close());
 
         document.oncontextmenu = (e) => this.onRightClick(e);
     }

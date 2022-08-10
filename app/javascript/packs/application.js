@@ -8,28 +8,32 @@ import MindMap from "./components/mind-map";
 import Zoom from "./components/zoom";
 import Link from "./components/link";
 import ContextMenu from "./components/context-menu";
+import Component from "./components/component";
+import Marker from "./components/marker";
 
 Rails.start();
 Turbolinks.start();
 ActiveStorage.start();
 
-class App {
-  constructor(gap = 100, sideWidth = 200) {
-    this.data = this.fetchData("mind-maps");
+class App extends Component {
+  static GAP = 100;
+
+  constructor() {
+    super(d3.select("svg"));
+
+    this.mindMapsData = this.fetchData("mind-maps");
     this.linksData = this.fetchData("links");
     this.topicAreasData = this.fetchData("topic-areas");
-    this.sideWidth = sideWidth;
-    this.gap = gap;
-    this.$svg = d3.select("svg#visualization");
-    this.$defs = this.$svg.append("defs");
+
+    this.$defs = this.$el.append("defs");
+    this.$links = this.$el.append("g");
+
     this.mindMaps = [];
-    this.data.forEach((data, i) =>
-      this.mindMaps.push(new MindMap(this, data, i))
-    );
-    this.$links = this.$svg.append("g");
-    this.addMarkers("#000000"); // Default marker.
-    this.topicAreasData.forEach((data) => this.addMarkers(data.colour));
+    this.mindMapsData.forEach((data, index) => this.mindMaps.push(new MindMap(this, data, index)));
     this.links = this.linksData.map((data) => new Link(this, data));
+    this.markers = [new Marker(this.$defs, "#000000")]; // Default marker.
+    this.topicAreasData.forEach((data) => this.markers.push(new Marker(this.$defs, data.colour)));
+
     this.contextMenu = new ContextMenu(this);
     this.zoom = new Zoom(this);
   }
@@ -40,47 +44,7 @@ class App {
 
     return data.map(datum => JSON.parse(datum));
   }
-
-  addMarkers(colour) {
-    const markerWidth = 8;
-    const markerHeight = 6;
-
-    this.$defs
-      .append("marker")
-      .attr("id", `arrowhead-${colour.replace("#", "")}`)
-      .attr("markerWidth", markerWidth)
-      .attr("markerHeight", markerHeight)
-      .attr("refX", 0)
-      .attr("refY", markerHeight / 2)
-      .attr("orient", "auto")
-      .append("polygon")
-      .attr("fill", colour)
-      .attr(
-        "points",
-        `0 0, ${markerWidth} ${markerHeight / 2}, 0 ${markerHeight}`
-      );
-  }
-
-  getWidth() {
-    if (!this.$svg) return 0;
-
-    return Math.ceil(this.getBoundingClientRect().width);
-  }
-
-  getHeight() {
-    if (!this.$svg) return 0;
-
-    return Math.ceil(this.getBoundingClientRect().height);
-  }
-
-  getBoundingClientRect() {
-    if (!this.$svg) return;
-
-    return this.$svg.node().getBoundingClientRect();
-  }
 }
 
 window.nodes = [];
-window.mindMaps = [];
-window.sides = [];
 window.app = new App();

@@ -1,30 +1,32 @@
+import Component from "./component";
 import Side from "./side";
 
-export default class MindMap {
+export default class MindMap extends Component {
+  static GAP = 100;
+
   constructor(app, data, index) {
+    super(app.$el.append("g"));
+
     this.app = app;
     this.data = data;
     this.index = index;
     this.id = data.id;
+    this.priorMindMap = this.app.mindMaps[index - 1];
 
-    this.$mindMap = this.app.$svg.append("g");
-    this.left = new Side(this, this.data, "l");
-    this.right = new Side(this, this.data, "r");
+    this.left = new Side(this, this.data, Side.LEFT);
+    this.right = new Side(this, this.data, Side.RIGHT);
     this.leftWidth = this.left.getWidth();
     this.rightWidth = this.right.getWidth();
-    window.sides.push(this.left, this.right);
-    window.mindMaps.push(this);
 
-    this.priorMindMap = index > 0 ? this.app.mindMaps[index - 1] : null;
-    this.$mindMap.attr("transform", `translate(${this.getX(1)}, 1)`);
+    this.initMindMapPosition();
   }
 
-  hasSide(side) {
-    return (side === "l" ? this.left : this.right).hasChildren();
+  initMindMapPosition() {
+    this.$el.attr("transform", `translate(${this.getX()}, 1)`);
   }
 
   handleZoom(e) {
-    this.$mindMap.attr(
+    this.$el.attr(
       "transform",
       `translate(${e.transform.x + this.getX(e.transform.k)}, ${
         e.transform.y
@@ -32,30 +34,18 @@ export default class MindMap {
     );
   }
 
-  getWidth() {
-    if (!this.$mindMap) return 0;
-
-    return this.getBoundingClientRect().width;
+  // First mind-maps center is positioned at x=0.
+  // All other mind-maps centers are calculated.
+  getX(scale = 1) {
+    return this.priorMindMap ? this.getMidPoint(scale) : 0;
   }
 
-  getHeight() {
-    if (!this.$mindMap) return 0;
-
-    return this.getBoundingClientRect().height;
-  }
-
-  getX(scale) {
-    const x = this.priorMindMap
-      ? this.priorMindMap.getX(scale) +
-        this.priorMindMap.rightWidth * scale +
-        this.app.gap * scale +
-        this.leftWidth * scale
-      : 0;
-
-    return x;
-  }
-
-  getBoundingClientRect() {
-    return this.$mindMap.node().getBoundingClientRect();
+  getMidPoint(scale = 1) {
+    const priorMindMapX = this.priorMindMap.getX(scale);
+    const priorMindRightWidth = this.priorMindMap.rightWidth * scale;
+    const gap = MindMap.GAP * scale;
+    const leftWidth = this.leftWidth * scale;
+    
+    return priorMindMapX + priorMindRightWidth + gap + leftWidth;
   }
 }
