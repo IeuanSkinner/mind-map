@@ -33,7 +33,7 @@ export default class Link {
     if (this.fromNodeMindMap === this.toNodeMindMap) {
       // Same side of mind-map => requires mid-point
       if (this.fromNodeSide.side === this.toNodeSide.side) {
-        const leftSide = this.fromNodeSide.side.side === "l";
+        const leftSide = this.fromNodeSide.side === "l";
         const source = this.fromNodeLabel.position(leftSide);
         const target = this.toNodeLabel.position(leftSide);
         this.midPoint = this.getOffsetMidPoint(source, target, leftSide);
