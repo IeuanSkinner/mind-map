@@ -1,63 +1,41 @@
-export default class Label {
+import Component from "./component";
+
+export default class Label extends Component {
+  static PADDING = 10;
+  
   constructor(node, x, y, data) {
-    this.type = "Label";
+    super();
     this.node = node;
-    this.side = node.side;
-    this.app = this.side.app;
     this.x = x;
     this.y = y;
     this.data = data;
-    this.label = data.label;
-    this.sidePadding = 10;
+    this.type = "Label";
 
     this.draw();
   }
 
   draw() {
-    this.$label = this.side.$el
+    this.$el = this.node.side.$el
       .append("text")
       .attr("id", this.node.id)
       .attr("class", "label")
-      .attr("x", this.x + this.sidePadding)
+      .attr("x", this.x + Label.PADDING)
       .attr("y", this.y)
-      .text(this.label);
+      .text(this.data.label);
 
-    if (this.side.side === "l") {
-      this.$label = this.$label
-        .attr("x", -(this.x + this.sidePadding + this.getWidth()))
+    if (this.node.side.isLeft()) {
+      this.$el = this.$el
+        .attr("x", -(this.x + Label.PADDING + this.getWidth()))
         .attr("transform", "scale(-1, 1)");
     }
 
-    this.$label = this.$label
-      .attr("y", this.y + this.getHeight() / 4)
+    this.$el = this.$el.attr("y", this.y + this.getHeight() / 4)
   }
 
-  position(leftSide) {
+  position(onLeftSide) {
     return {
-      x: leftSide
-        ? this.getX() - this.sidePadding * 2
-        : this.getX() + this.getWidth(),
+      x: this.getX() + (onLeftSide ? -(Label.PADDING * 2) : this.getWidth()),
       y: this.y,
     };
-  }
-
-  getX() {
-    return this.getBoundingClientRect().x;
-  }
-
-  getWidth() {
-    if (!this.$label) return 0;
-
-    return Math.ceil(this.getBoundingClientRect().width);
-  }
-
-  getHeight() {
-    if (!this.$label) return 0;
-
-    return Math.ceil(this.getBoundingClientRect().height);
-  }
-
-  getBoundingClientRect() {
-    return this.$label.node().getBoundingClientRect();
   }
 }

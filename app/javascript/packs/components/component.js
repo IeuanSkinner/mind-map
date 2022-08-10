@@ -3,17 +3,23 @@ export default class Component {
     constructor($el) {
         this.$el = $el;
     }
+
+    getX() {
+        if (!this.$el) return 0;
+
+        return this.getBoundingClientRect().x;
+    }
     
     getWidth() {
         if (!this.$el) return 0;
 
-        return Math.ceil(this.getBoundingClientRect().width);
+        return this.getBoundingClientRect().width;
     }
 
     getHeight() {
         if (!this.$el) return 0;
 
-        return Math.ceil(this.getBoundingClientRect().height);
+        return this.getBoundingClientRect().height;
     }
 
     getBoundingClientRect() {

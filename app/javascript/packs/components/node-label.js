@@ -1,54 +1,60 @@
-export default class NodeLabel {
+import Node from "./node";
+import Component from "./component";
+
+export default class NodeLabel extends Component {
+  static WIDTH = 175;
+  static BORDER_RADIUS = 5;
+  static BORDER_WIDTH = 3;
+  static FILL = "#FFFFFF";
+  static SIDE_PADDING = 15;
+  static BOX_PADDING = 10;
+
   constructor(node, x, y, data) {
-    this.type = "NodeLabel";
+    super(node.side.$el.append("g"));
     this.node = node;
-    this.side = node.side;
     this.data = data;
-    this.label = data.label;
-    this.width = 175;
+    this.type = "NodeLabel";
     this.height = 0;
-    this.rx = 5;
-    this.x = x - this.width / 2;
+    this.x = x - NodeLabel.WIDTH / 2;
     this.y = y;
-    this.stroke = data.colour || "black";
-    this.strokeWidth = 3;
-    this.fill = "white";
+
+    if (data.id === "node_1") {
+      console.log("HERE");
+    }
 
     this.draw();
   }
 
   draw() {
-    this.$group = this.side.$el.append("g");
-
-    this.$shape = this.$group
+    this.$shape = this.$el
       .append("rect")
-      .attr("width", this.width)
+      .attr("width", NodeLabel.WIDTH)
       .attr("height", this.height)
       .attr("x", this.x)
       .attr("y", this.y)
-      .attr("rx", this.rx)
-      .attr("stroke", this.stroke)
-      .attr("stroke-width", this.strokeWidth)
-      .attr("fill", this.fill);
+      .attr("rx", NodeLabel.BORDER_RADIUS)
+      .attr("stroke", this.data.colour || Node.DEFAULT_COLOUR)
+      .attr("stroke-width", NodeLabel.BORDER_WIDTH)
+      .attr("fill", NodeLabel.FILL);
 
-    this.$text = this.$group
+    this.$text = this.$el
       .append("foreignObject")
       .attr("x", this.x)
       .attr("y", this.y)
-      .attr("width", this.width)
+      .attr("width", NodeLabel.WIDTH)
       .attr("height", this.height)
-      .html(`<div id="${this.node.id}" class="node-label">${this.label}</div>`)
+      .html(`<div id="${this.node.id}" class="node-label">${this.data.label}</div>`)
 
     this.$html = document.querySelector(`#${this.node.id}`);
 
-    if (this.side.side === "l") {
+    if (this.node.side.isLeft()) {
       this.$text = this.$text
-        .attr("x", -(this.x + this.width))
+        .attr("x", -(this.x + NodeLabel.WIDTH))
         .attr("transform", "scale(-1, 1)");
     }
 
     while (this.hasYScroll()) this.setHeight(1);
-    this.setHeight(10); // Padding
+    this.setHeight(NodeLabel.BOX_PADDING);
     this.positionY();
   }
 
@@ -70,30 +76,10 @@ export default class NodeLabel {
     return this.$html.scrollHeight > this.height;
   }
 
-  position(leftSide) {
+  position(onLeftSide) {
     return {
-      x: leftSide ? this.getX() - 15 : this.getX() + this.getWidth(),
+      x: this.getX() + (onLeftSide ? -NodeLabel.SIDE_PADDING : this.getWidth()),
       y: this.y + this.height / 2,
     };
-  }
-
-  getX() {
-    return this.getBoundingClientRect().x;
-  }
-
-  getWidth() {
-    if (!this.$shape) return 0;
-
-    return Math.ceil(this.getBoundingClientRect().width);
-  }
-
-  getHeight() {
-    if (!this.$shape) return 0;
-
-    return Math.ceil(this.getBoundingClientRect().height);
-  }
-
-  getBoundingClientRect() {
-    return this.$shape.node().getBoundingClientRect();
   }
 }

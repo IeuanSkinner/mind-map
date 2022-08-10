@@ -34,6 +34,7 @@ export default class MindMap extends Component {
     );
   }
 
+  // @Override
   // First mind-maps center is positioned at x=0.
   // All other mind-maps centers are calculated.
   getX(scale = 1) {
