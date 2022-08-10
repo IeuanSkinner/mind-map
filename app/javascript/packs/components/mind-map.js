@@ -5,7 +5,7 @@ export default class MindMap {
     this.app = app;
     this.data = data;
     this.index = index;
-    this.id = `mind_map_${index}`;
+    this.id = data.id;
 
     this.$mindMap = this.app.$svg.append("g");
     this.left = new Side(this, this.data, "l");
