@@ -29,6 +29,7 @@ class App extends Component {
     this.$links = this.$el.append("g");
 
     this.mindMaps = [];
+    this.nodes = [];
     this.mindMapsData.forEach((data, index) => this.mindMaps.push(new MindMap(this, data, index)));
     this.links = this.linksData.map((data) => new Link(this, data));
     this.markers = [new Marker(this.$defs, "#000000")]; // Default marker.
@@ -46,5 +47,4 @@ class App extends Component {
   }
 }
 
-window.nodes = [];
 window.app = new App();

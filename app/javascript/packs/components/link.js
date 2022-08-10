@@ -1,79 +1,80 @@
 import * as d3 from "d3";
 import LinkLabel from "./link-label";
+import Component from "./component";
+import Node from "./node";
 
-export default class Link {
+export default class Link extends Component {
+  static MAX_CURVE_EXTENT = 200;
+
   constructor(app, data) {
+    super(app.$links.append("g"));
     this.app = app;
+    this.data = data;
+
     this.fromNodeId = data.from_node_id;
     this.toNodeId = data.to_node_id;
-    this.id = `link_${this.fromNodeId}_${this.toNodeId}`;
-    this.text = data.label;
-    this.colour = data.colour || "#000000";
-    this.hidden = true;
-    this.fromNode = window.nodes.find((node) => node.id === this.fromNodeId);
-    this.toNode = window.nodes.find((node) => node.id === this.toNodeId);
-    this.fromNodeSide = this.fromNode.side;
-    this.toNodeSide = this.toNode.side;
-    this.fromNodeMindMap = this.fromNode.side.mindMap;
-    this.toNodeMindMap = this.toNode.side.mindMap;
-    this.fromNodeLabel = this.fromNode.label;
-    this.toNodeLabel = this.toNode.label;
-
+    this.fromNode = app.nodes.find((node) => node.id === this.fromNodeId);
+    this.toNode = app.nodes.find((node) => node.id === this.toNodeId);
     this.fromNode.toLinks.push(this);
     this.toNode.fromLinks.push(this);
 
-    this.data = [];
+    this.id = `link_${this.fromNodeId}_${this.toNodeId}`;
+    this.linkData = [];
     this.midPoint = {};
+    this.hidden = true;
 
     this.path();
   }
 
   path() {
     // Same mind-map
-    if (this.fromNodeMindMap === this.toNodeMindMap) {
-      // Same side of mind-map => requires mid-point
-      if (this.fromNodeSide.side === this.toNodeSide.side) {
-        const leftSide = this.fromNodeSide.side === "l";
-        const source = this.fromNodeLabel.position(leftSide);
-        const target = this.toNodeLabel.position(leftSide);
-        this.midPoint = this.getOffsetMidPoint(source, target, leftSide);
+    if (this.fromNode.side.mindMap === this.toNode.side.mindMap) {
+      // Same side of same mind-map => requires mid-point
+      if (this.fromNode.side.side === this.toNode.side.side) {
+        // If the fromNode and toNode are on the left-side we attach
+        // the link at their labels left-side, otherwise this is inverted.
+        const onLeftSide = this.fromNode.side.isLeft();
+        const source = this.fromNode.label.position(onLeftSide);
+        const target = this.toNode.label.position(onLeftSide);
+        this.midPoint = this.getOffsetMidPoint(source, target, onLeftSide);
 
-        // this.data.push(source, midPoint, target);
-        this.data.push(
+        this.linkData.push(
           { source: source, target: this.midPoint },
           { source: this.midPoint, target: target }
         );
-        // Different side of same mind-map
+      // Different side of same mind-map
       } else {
         let source, target;
-        // Right
-        if (this.fromNodeSide.side === "l") {
-          source = this.fromNodeLabel.position(false);
-          target = this.toNodeLabel.position(true);
-          // Left
+        // Attach fromNode at right-side and toNode at left-side
+        if (this.fromNode.side.isLeft()) {
+          source = this.fromNode.label.position(false);
+          target = this.toNode.label.position(true);
+          // Attach fromNode at left-side and toNode at right-side
         } else {
-          source = this.fromNodeLabel.position(true);
-          target = this.toNodeLabel.position(false);
+          source = this.fromNode.label.position(true);
+          target = this.toNode.label.position(false);
         }
 
         this.midPoint = this.getMidPoint(source, target);
-        this.data.push({ source: source, target: target });
+        this.linkData.push({ source: source, target: target });
       }
-      // Different mind-map
+    // Different mind-maps
     } else {
-      // If the from node is on a higher-order mind-map then we connect from the labels
-      // Left edge to a right edge, otherwise this is inverted.
-      const leftSide =
-        this.fromNodeMindMap.index > this.toNodeMindMap.index;
-
-      const source = this.fromNodeLabel.position(leftSide);
-      const target = this.toNodeLabel.position(!leftSide);
+      // If the fromNode is on a higher-order mind-map then we connect from the labels
+      // left-side to the toNode labels right-side, otherwise this is inverted.
+      const onLeftSide = this.fromNode.side.mindMap.index > this.toNode.side.mindMap.index;
+      const source = this.fromNode.label.position(onLeftSide);
+      const target = this.toNode.label.position(!onLeftSide);
 
       this.midPoint = this.getMidPoint(source, target);
-      this.data.push({ source: source, target: target });
+      this.linkData.push({ source: source, target: target });
     }
 
-    this.data[this.data.length - 1].end = true;
+    this.getLastLinkData().end = true;
+  }
+
+  getLastLinkData() {
+    return this.linkData[this.linkData.length - 1]
   }
 
   getMidPoint(source, target) {
@@ -89,9 +90,7 @@ export default class Link {
   getOffsetMidPoint(source, target, leftSide) {
     const midPoint = this.getMidPoint(source, target);
     const diffY = target.y - source.y;
-
-    const maxCurveExtent = 200;
-    const curveExtent = diffY > maxCurveExtent ? maxCurveExtent : diffY;
+    const curveExtent = diffY > Link.MAX_CURVE_EXTENT ? Link.MAX_CURVE_EXTENT : diffY;
 
     midPoint.x += leftSide ? -curveExtent : curveExtent;
 
@@ -99,13 +98,11 @@ export default class Link {
   }
 
   draw() {
-    const colour = this.colour || this.defaultColour;
+    const colour = this.data.colour || Node.DEFAULT_COLOUR;
 
-    this.$group = this.app.$links.append("g");
-
-    this.$link = this.$group
+    this.$link = this.$el
       .selectAll(null)
-      .data(this.data)
+      .data(this.linkData)
       .join("path")
       .attr("id", this.id)
       .attr("fill", "none")
@@ -114,9 +111,7 @@ export default class Link {
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")
       .attr("stroke-width", 2)
-      .attr("marker-end", (d) =>
-        d.end ? `url(#arrowhead-${colour.replace("#", "")})` : ""
-      )
+      .attr("marker-end", d => d.end ? `url(#arrowhead-${colour.replace("#", "")})` : "")
       .attr(
         "d",
         d3
@@ -125,7 +120,12 @@ export default class Link {
           .y((d) => d.y)
       );
 
-    this.label = new LinkLabel(this, this.text, this.colour);
+    this.label = new LinkLabel(this, this.data.label, colour);
+  }
+
+  erase() {
+    this.$link.remove();
+    this.label.$el.remove();
   }
 
   show() {
@@ -139,6 +139,6 @@ export default class Link {
     if (this.hidden) return;
 
     this.hidden = true;
-    this.$group.remove();
+    this.erase();
   }
 }

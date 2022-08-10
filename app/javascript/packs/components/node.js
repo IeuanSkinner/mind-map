@@ -20,7 +20,7 @@ export default class Node extends Component {
     this.createChildren();
     this.label();
 
-    window.nodes.push(this); // TODO: Remove this.
+    side.mindMap.app.nodes.push(this);
   }
 
   draw() {
