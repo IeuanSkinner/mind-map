@@ -11,12 +11,12 @@ class Application < Rails::Application
   config.load_defaults 7.0
 
   config.before_configuration do
-    return if Rails.env.production?
-
-    env_file = File.join(Rails.root, '.env')
-    File.foreach(env_file).each do |line|
-      env_var = line.split('=')
-      ENV[env_var.first] = env_var.last
+    unless Rails.env.production? do
+      env_file = File.join(Rails.root, '.env')
+      File.foreach(env_file).each do |line|
+        env_var = line.split('=')
+        ENV[env_var.first] = env_var.last
+      end
     end
   end
 
