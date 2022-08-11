@@ -14,11 +14,17 @@
 # Configure Using Gemfile
 # gem "pg"
 #
-development:
+default: &default
   adapter: postgresql
   encoding: unicode
+  # For details on connection pooling, see Rails configuration guide
+  # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  database: mind_map_dev
+
+development:
+  <<: *default
+  host: <%= ENV.fetch("DBHOST") %>
+  database: <%= ENV.fetch("DBNAME") %>
   username: <%= ENV.fetch("DBUSER") %>
   password: <%= ENV.fetch("DBPASS") %>
 
@@ -61,7 +67,8 @@ development:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  adapter: postgresql
-  encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  url: <%= ENV['DATABASE_URL'] %>
+  <<: *default
+  host: <%= ENV.fetch("DBHOST") %>
+  database: <%= ENV.fetch("DBNAME") %>
+  username: <%= ENV.fetch("DBUSER") %>
+  password: <%= ENV.fetch("DBPASS") %>
