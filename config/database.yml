@@ -14,24 +14,12 @@
 # Configure Using Gemfile
 # gem "pg"
 #
-default: &default
+development:
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see Rails configuration guide
-  # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-
-development:
-  <<: *default
   database: mind_map_dev
-
-  # The specified database role being used to connect to postgres.
-  # To create additional roles in postgres see `$ createuser --help`.
-  # When left blank, postgres will use the default role. This is
-  # the same name as the operating system user running Rails.
   username: <%= ENV.fetch("DBUSER") %>
-
-  # The password associated with the postgres role (username).
   password: <%= ENV.fetch("DBPASS") %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -73,4 +61,7 @@ development:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   url: <%= ENV['DATABASE_URL'] %>
