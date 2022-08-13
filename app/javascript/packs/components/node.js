@@ -79,12 +79,18 @@ export default class Node extends HideableComponent {
 
     if (this.isRoot()) {
       if (mindMap.hasVisibleChildren()) contextMenu.add("eye-slash", "Hide Children", () => mindMap.hideChildren());
-      if (mindMap.hasHiddenChildren()) contextMenu.add("eye", "Show Children", () => mindMap.showChildren());
+      if (mindMap.hasHiddenChildren()) { 
+        contextMenu.add("eye", "Show Children", () => mindMap.showChildren());
+        contextMenu.add("eye", "Show All Children", () => mindMap.showChildren(true));
+      }
     } else { 
       contextMenu.add("eye-slash", "Hide", () => this.hide());
 
       if (this.hasVisible(this.children)) contextMenu.add("eye-slash", "Hide Children", () => this.hideChildren());
-      if (this.hasHidden(this.children)) contextMenu.add("eye", "Show Children", () => this.showChildren());
+      if (this.hasHidden(this.children)) { 
+        contextMenu.add("eye", "Show Children", () => this.showChildren());
+        contextMenu.add("eye", "Show All Children", () => this.showChildren(true));
+      }
     }
 
     if (this.hasHidden(this.fromLinks)) contextMenu.add("arrow-left", "Show From Links", () => this.showComponents(this.fromLinks));
@@ -105,10 +111,12 @@ export default class Node extends HideableComponent {
     this.children.forEach(child => child.redrawLabel());
   }
 
-  show() {
+  show(bubble = false) {
     super.show();
     
     if (this.label) this.label.show();
+
+    if (bubble) this.showChildren(bubble);
   }
 
   hide() {
@@ -122,8 +130,8 @@ export default class Node extends HideableComponent {
     return !this.parentNode;
   }
 
-  showChildren() {
-    this.showComponents(this.children);
+  showChildren(bubble = false) {
+    this.showComponents(this.children, bubble);
     this.redrawLabel();
     this.redrawChildrenLabels();
   }
@@ -144,8 +152,8 @@ export default class Node extends HideableComponent {
     return !!hideableComponents.find(hideableComponent => !hideableComponent.hidden);
   }
 
-  showComponents(hideableComponents) {
-    hideableComponents.forEach(hideableComponent => hideableComponent.show());
+  showComponents(hideableComponents, bubble = false) {
+    hideableComponents.forEach(hideableComponent => hideableComponent.show(bubble));
   }
 
   hideComponents(hideableComponents) {

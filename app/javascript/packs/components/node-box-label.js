@@ -87,9 +87,9 @@ export default class NodeBoxLabel extends NodeLabel {
     const mindMap = this.node.side.mindMap;
 
     if (node.isRoot()) {
-      mindMap.hasHiddenChildren() ? mindMap.showChildren() : mindMap.hideChildren();
+      mindMap.hasHiddenChildren() ? mindMap.showChildren(e.shiftKey) : mindMap.hideChildren();
     } else {
-      node.hasHidden(node.children) ? node.showChildren() : node.hideChildren();
+      node.hasHidden(node.children) ? node.showChildren(e.shiftKey) : node.hideChildren();
     }
   }
 }

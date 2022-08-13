@@ -84,11 +84,11 @@ export default class MindMap extends Component {
     if (rightRoot) rightRoot.hideChildren();
   }
 
-  showChildren() {
+  showChildren(bubble = false) {
     const leftRoot = this.left.root;
     const rightRoot = this.right.root;
 
-    if (leftRoot) leftRoot.showChildren();
-    if (rightRoot) rightRoot.showChildren();
+    if (leftRoot) leftRoot.showChildren(bubble);
+    if (rightRoot) rightRoot.showChildren(bubble);
   }
 }
