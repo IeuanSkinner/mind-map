@@ -76,10 +76,6 @@ export default class NodeBoxLabel extends NodeLabel {
     return onLeftSide ? -NodeBoxLabel.SIDE_PADDING : this.getWidth();
   }
 
-  yOffset() {
-    return this.height / 2;
-  }
-
   erase() {
     this.height = 0;
     this.$html = null;

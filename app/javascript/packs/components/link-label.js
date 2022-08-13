@@ -1,10 +1,10 @@
-import Component from "./component";
+import HideableComponent from "./hideable-component";
 
-export default class LinkLabel extends Component {
+export default class LinkLabel extends HideableComponent {
   static WIDTH = 175;
 
   constructor(link, label, colour) {
-    super(link.$el.append("foreignObject"));
+    super(true);
     this.link = link;
     this.label = label;
     this.colour = colour;
@@ -12,11 +12,11 @@ export default class LinkLabel extends Component {
     this.x = link.midPoint.x - LinkLabel.WIDTH / 2;
     this.y = link.midPoint.y;
     this.height = 0;
-
-    this.draw();
   }
 
   draw() {
+    this.$el = this.link.$el.append("foreignObject");
+    
     this.$el
       .attr("x", this.x)
       .attr("y", this.y)
@@ -40,12 +40,18 @@ export default class LinkLabel extends Component {
   }
 
   positionY() {
-    this.y = this.y - this.height / 2;
+    const y = this.y - this.height / 2;
 
-    this.$el.attr("y", this.y);
+    this.$el.attr("y", y);
   }
 
   hasYScroll() {
     return this.$html.scrollHeight > this.height;
+  }
+
+  erase() {
+    this.height = 0;
+    this.$html = null;
+    super.erase();
   }
 }

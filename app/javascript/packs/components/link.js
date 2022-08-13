@@ -21,8 +21,11 @@ export default class Link extends HideableComponent {
     this.id = `link_${this.fromNodeId}_${this.toNodeId}`;
     this.linkData = [];
     this.midPoint = {};
+    this.colour = this.data.colour || Node.DEFAULT_COLOUR;
 
     this.path();
+
+    this.label = new LinkLabel(this, this.data.label, this.colour);
   }
 
   path() {
@@ -73,7 +76,7 @@ export default class Link extends HideableComponent {
   }
 
   getLastLinkData() {
-    return this.linkData[this.linkData.length - 1]
+    return this.linkData[this.linkData.length - 1];
   }
 
   getMidPoint(source, target) {
@@ -98,8 +101,6 @@ export default class Link extends HideableComponent {
 
   draw() {
     this.$el = this.app.$links.append("g");
-    
-    const colour = this.data.colour || Node.DEFAULT_COLOUR;
 
     this.$link = this.$el
       .selectAll(null)
@@ -107,12 +108,12 @@ export default class Link extends HideableComponent {
       .join("path")
       .attr("id", this.id)
       .attr("fill", "none")
-      .attr("stroke", colour)
+      .attr("stroke", this.colour)
       .attr("stroke-opacity", 1)
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")
       .attr("stroke-width", 2)
-      .attr("marker-end", d => d.end ? `url(#arrowhead-${colour.replace("#", "")})` : "")
+      .attr("marker-end", d => d.end ? `url(#arrowhead-${this.colour.replace("#", "")})` : "")
       .attr(
         "d",
         d3
@@ -120,12 +121,15 @@ export default class Link extends HideableComponent {
           .x((d) => d.x)
           .y((d) => d.y)
       );
-
-    this.label = new LinkLabel(this, this.data.label, colour);
   }
 
-  erase() {
-    this.$link.remove();
-    this.label.$el.remove();
+  hide() {
+    super.hide();
+    this.label.hide();
+  }
+
+  show() {
+    super.show();
+    this.label.show();
   }
 }

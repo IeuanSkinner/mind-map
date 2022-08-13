@@ -25,15 +25,16 @@ class App extends Component {
     this.linksData = this.fetchData("links");
     this.topicAreasData = this.fetchData("topic-areas");
 
-    this.$defs = this.$el.append("defs");
-    this.$links = this.$el.append("g");
-
     this.mindMaps = [];
     this.nodes = [];
     this.mindMapsData.forEach((data, index) => this.mindMaps.push(new MindMap(this, data, index)));
-    this.links = this.linksData.map((data) => new Link(this, data));
+
+    this.$defs = this.$el.append("defs");
     this.markers = [new Marker(this.$defs, "#000000")]; // Default marker.
     this.topicAreasData.forEach((data) => this.markers.push(new Marker(this.$defs, data.colour)));
+
+    this.$links = this.$el.append("g");
+    this.links = this.linksData.map((data) => new Link(this, data));
 
     this.contextMenu = new ContextMenu(this);
     this.zoom = new Zoom(this);
