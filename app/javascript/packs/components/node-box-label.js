@@ -1,7 +1,7 @@
 import Node from "./node";
-import Component from "./component";
+import NodeLabel from "./node-label";
 
-export default class NodeBoxLabel extends Component {
+export default class NodeBoxLabel extends NodeLabel {
   static WIDTH = 175;
   static BORDER_RADIUS = 5;
   static BORDER_WIDTH = 3;
@@ -10,18 +10,16 @@ export default class NodeBoxLabel extends Component {
   static BOX_PADDING = 10;
 
   constructor(node, x, y, data) {
-    super(node.side.$el.append("g"));
-    this.node = node;
-    this.x = x - NodeBoxLabel.WIDTH / 2;
-    this.y = y;
-    this.data = data;
-    this.type = "NodeBoxLabel";
+    super(node, x, y, data);
+    this.x = this.x - NodeBoxLabel.WIDTH / 2;
     this.height = 0;
 
     this.draw();
   }
 
   draw() {
+    this.$el = this.node.side.$el.append("g");
+
     this.$shape = this.$el
       .append("rect")
       .attr("width", NodeBoxLabel.WIDTH)
@@ -52,6 +50,8 @@ export default class NodeBoxLabel extends Component {
     while (this.hasYScroll()) this.setHeight(1);
     this.setHeight(NodeBoxLabel.BOX_PADDING);
     this.positionY();
+
+    super.addClickListener();
   }
 
   setHeight(add) {
@@ -62,20 +62,38 @@ export default class NodeBoxLabel extends Component {
   }
 
   positionY() {
-    this.y = this.y - this.height / 2;
+    const y = this.y - this.height / 2;
 
-    this.$shape.attr("y", this.y);
-    this.$text.attr("y", this.y);
+    this.$shape.attr("y", y);
+    this.$text.attr("y", y);
   }
 
   hasYScroll() {
     return this.$html.scrollHeight > this.height;
   }
 
-  position(onLeftSide) {
-    return {
-      x: this.getX() + (onLeftSide ? -NodeBoxLabel.SIDE_PADDING : this.getWidth()),
-      y: this.y + this.height / 2,
-    };
+  xOffset(onLeftSide) {
+    return onLeftSide ? -NodeBoxLabel.SIDE_PADDING : this.getWidth();
+  }
+
+  yOffset() {
+    return this.height / 2;
+  }
+
+  erase() {
+    this.height = 0;
+    this.$html = null;
+    super.erase();
+  }
+
+  onCtrlClick(e) {
+    const node = this.node;
+    const mindMap = this.node.side.mindMap;
+
+    if (node.isRoot()) {
+      mindMap.hasHiddenChildren() ? mindMap.showChildren() : mindMap.hideChildren();
+    } else {
+      node.hasHidden(node.children) ? node.showChildren() : node.hideChildren();
+    }
   }
 }

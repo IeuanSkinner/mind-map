@@ -1,15 +1,12 @@
-import Component from "./component";
+import NodeLabel from "./node-label";
 
-export default class NodeLeafLabel extends Component {
+export default class NodeLeafLabel extends NodeLabel {
   static PADDING = 10;
+  static LEFTSIDE = -(NodeLeafLabel.PADDING) * 2
   
   constructor(node, x, y, data) {
-    super();
-    this.node = node;
-    this.x = x;
-    this.y = y;
-    this.data = data;
-    this.type = "NodeLeafLabel";
+    super(node, x, y, data);
+    this.initWidth; // Hack
 
     this.draw();
   }
@@ -21,21 +18,29 @@ export default class NodeLeafLabel extends Component {
       .attr("class", "label")
       .attr("x", this.x + NodeLeafLabel.PADDING)
       .attr("y", this.y)
-      .text(this.data.label);
+      .text(this.data.label)
+      .on("click", (e) => {
+        console.log("Click", e);
+      })
+
+    if (!this.initWidth) this.initWidth = this.getWidth();
 
     if (this.node.side.isLeft()) {
       this.$el = this.$el
-        .attr("x", -(this.x + NodeLeafLabel.PADDING + this.getWidth()))
+        .attr("x", -(this.x + NodeLeafLabel.PADDING + this.initWidth))
         .attr("transform", "scale(-1, 1)");
     }
 
-    this.$el = this.$el.attr("y", this.y + this.getHeight() / 4)
+    this.$el = this.$el.attr("y", this.y + this.getHeight() / 4);
+
+    super.addClickListener();
   }
 
-  position(onLeftSide) {
-    return {
-      x: this.getX() + (onLeftSide ? -NodeLeafLabel.PADDING * 2 : this.getWidth() + NodeLeafLabel.PADDING),
-      y: this.y,
-    };
+  onCtrlClick() {
+    this.node.hide();
+  }
+
+  xOffset(onLeftSide) {
+    return onLeftSide ? NodeLeafLabel.LEFTSIDE : this.initWidth + NodeLeafLabel.PADDING;
   }
 }

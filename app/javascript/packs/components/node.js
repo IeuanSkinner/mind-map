@@ -1,9 +1,9 @@
 import * as d3 from "d3";
 import NodeLeafLabel from "./node-leaf-label";
 import NodeBoxLabel from "./node-box-label";
-import Component from "./component";
+import HideableComponent from "./hideable-component";
 
-export default class Node extends Component {
+export default class Node extends HideableComponent {
   static DEFAULT_COLOUR = "#000000";
 
   constructor(side, data, parentNode) {
@@ -15,10 +15,11 @@ export default class Node extends Component {
     this.children = [];
     this.fromLinks = [];
     this.toLinks = [];
+    this.hidden = false;
 
     this.draw()
     this.createChildren();
-    this.label();
+    this.drawLabel();
 
     side.mindMap.app.nodes.push(this);
   }
@@ -42,7 +43,7 @@ export default class Node extends Component {
           .link(d3.curveBumpX)
           .x((d) => d.y)
           .y((d) => (!d.depth ? this.side.getMidPoint() : d.x))
-      );
+      )
   }
 
   createChildren() {
@@ -57,7 +58,7 @@ export default class Node extends Component {
     });
   }
 
-  label() {
+  drawLabel() {
     if (this.isRoot() && this.side.isLeft()) return; // Hack
 
     if (this.hasChildren()) {
@@ -70,38 +71,76 @@ export default class Node extends Component {
     }
   }
 
+  buildMenu() {
+    const mindMap = this.side.mindMap;
+    const contextMenu = mindMap.app.contextMenu;
+
+    if (this.isRoot()) {
+      if (mindMap.hasVisibleChildren()) contextMenu.add("eye-slash", "Hide Children", () => mindMap.hideChildren());
+      if (mindMap.hasHiddenChildren()) contextMenu.add("eye", "Show Children", () => mindMap.showChildren());
+    } else { 
+      contextMenu.add("eye-slash", "Hide", () => this.hide());
+
+      if (this.hasVisible(this.children)) contextMenu.add("eye-slash", "Hide Children", () => this.hideChildren());
+      if (this.hasHidden(this.children)) contextMenu.add("eye", "Show Children", () => this.showChildren());
+    }
+
+    if (this.hasHidden(this.fromLinks)) contextMenu.add("arrow-left", "Show From Links", () => this.showComponents(this.fromLinks));
+    if (this.hasVisible(this.fromLinks)) contextMenu.add("arrow-left", "Hide From Links", () => this.hideComponents(this.fromLinks));
+    if (this.hasHidden(this.toLinks)) contextMenu.add("arrow-right", "Show To Links", () => this.showComponents(this.toLinks));
+    if (this.hasVisible(this.toLinks)) contextMenu.add("arrow-right", "Hide To Links", () => this.hideComponents(this.toLinks));
+  }
+
+  redrawLabel() {
+    if (!this.label) return;
+
+    this.label.hide();
+    this.label.show();
+  }
+
+  show() {
+    super.show();
+    
+    if (this.label) this.label.show();
+  }
+
+  hide() {
+    if (this.label) this.label.hide();
+    this.hideChildren();
+
+    super.hide();
+  }
+
   isRoot() {
     return !this.parentNode;
+  }
+
+  showChildren() {
+    this.showComponents(this.children);
+    this.redrawLabel();
+  }
+
+  hideChildren() {
+    this.hideComponents(this.children);
   }
 
   hasChildren() {
     return !!this.data.children;
   }
 
-  buildMenu() {
-    const contextMenu = this.side.mindMap.app.contextMenu;
-
-    if (!this.isRoot()) contextMenu.add("eye-slash", "Hide", () => console.log("Hide Clicked!"));
-    if (this.hasChildren()) contextMenu.add("eye-slash", "Hide Children", () => console.log("Hide Children Clicked!"));
-    if (this.hasHiddenLinks(this.fromLinks)) contextMenu.add("arrow-left", "Show From Links", () => this.showLinks(this.fromLinks));
-    if (this.hasVisibleLinks(this.fromLinks)) contextMenu.add("arrow-left", "Hide From Links", () => this.hideLinks(this.fromLinks));
-    if (this.hasHiddenLinks(this.toLinks)) contextMenu.add("arrow-right", "Show To Links", () => this.showLinks(this.toLinks));
-    if (this.hasVisibleLinks(this.toLinks)) contextMenu.add("arrow-right", "Hide To Links", () => this.hideLinks(this.toLinks));
+  hasHidden(hideableComponents) {
+    return !!hideableComponents.find(hideableComponent => hideableComponent.hidden);
   }
 
-  hasHiddenLinks(links) {
-    return !!links.find(link => link.hidden);
+  hasVisible(hideableComponents) {
+    return !!hideableComponents.find(hideableComponent => !hideableComponent.hidden);
   }
 
-  hasVisibleLinks(links) {
-    return !!links.find(link => !link.hidden);
+  showComponents(hideableComponents) {
+    hideableComponents.forEach(hideableComponent => hideableComponent.show());
   }
 
-  showLinks(links) {
-    links.forEach(link => link.show());
-  }
-
-  hideLinks(links) {
-    links.forEach(link => link.hide());
+  hideComponents(hideableComponents) {
+    hideableComponents.forEach(hideableComponent => hideableComponent.hide());
   }
 }

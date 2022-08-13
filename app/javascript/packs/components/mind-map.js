@@ -49,4 +49,46 @@ export default class MindMap extends Component {
     
     return priorMindMapX + priorMindRightWidth + gap + leftWidth;
   }
+
+  // If the left side has a root node with children or the right side has
+  // a root node with children then this mind-map has some children.
+  hasChildren() {
+    const leftRoot = this.left.root;
+    const rightRoot = this.right.root;
+
+    return (leftRoot && leftRoot.hasChildren()) || 
+            (rightRoot && rightRoot.hasChildren());
+  }
+
+  hasVisibleChildren() {
+    const leftRoot = this.left.root;
+    const rightRoot = this.right.root;
+
+    return (leftRoot && leftRoot.hasVisible(leftRoot.children)) || 
+            (rightRoot && rightRoot.hasVisible(rightRoot.children));
+  }
+
+  hasHiddenChildren() {
+    const leftRoot = this.left.root;
+    const rightRoot = this.right.root;
+
+    return (leftRoot && leftRoot.hasHidden(leftRoot.children)) || 
+            (rightRoot && rightRoot.hasHidden(rightRoot.children));
+  }
+
+  hideChildren() {
+    const leftRoot = this.left.root;
+    const rightRoot = this.right.root;
+
+    if (leftRoot) leftRoot.hideChildren();
+    if (rightRoot) rightRoot.hideChildren();
+  }
+
+  showChildren() {
+    const leftRoot = this.left.root;
+    const rightRoot = this.right.root;
+
+    if (leftRoot) leftRoot.showChildren();
+    if (rightRoot) rightRoot.showChildren();
+  }
 }

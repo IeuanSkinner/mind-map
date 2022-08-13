@@ -27,4 +27,8 @@ export default class Component {
 
         return this.$el.node().getBoundingClientRect();
     }
+
+    overrideError(functionName) {
+        console.error(`${this.className} ${functionName}() function was not overridden!`, this);
+    }
 }

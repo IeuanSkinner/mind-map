@@ -1,13 +1,13 @@
 import * as d3 from "d3";
 import LinkLabel from "./link-label";
-import Component from "./component";
 import Node from "./node";
+import HideableComponent from "./hideable-component";
 
-export default class Link extends Component {
+export default class Link extends HideableComponent {
   static MAX_CURVE_EXTENT = 200;
 
   constructor(app, data) {
-    super(app.$links.append("g"));
+    super(true);
     this.app = app;
     this.data = data;
 
@@ -21,7 +21,6 @@ export default class Link extends Component {
     this.id = `link_${this.fromNodeId}_${this.toNodeId}`;
     this.linkData = [];
     this.midPoint = {};
-    this.hidden = true;
 
     this.path();
   }
@@ -34,8 +33,8 @@ export default class Link extends Component {
         // If the fromNode and toNode are on the left-side we attach
         // the link at their labels left-side, otherwise this is inverted.
         const onLeftSide = this.fromNode.side.isLeft();
-        const source = this.fromNode.label.position(onLeftSide);
-        const target = this.toNode.label.position(onLeftSide);
+        const source = this.fromNode.label.linkPosition(onLeftSide);
+        const target = this.toNode.label.linkPosition(onLeftSide);
         this.midPoint = this.getOffsetMidPoint(source, target, onLeftSide);
 
         this.linkData.push(
@@ -47,12 +46,12 @@ export default class Link extends Component {
         let source, target;
         // Attach fromNode at right-side and toNode at left-side
         if (this.fromNode.side.isLeft()) {
-          source = this.fromNode.label.position(false);
-          target = this.toNode.label.position(true);
+          source = this.fromNode.label.linkPosition(false);
+          target = this.toNode.label.linkPosition(true);
           // Attach fromNode at left-side and toNode at right-side
         } else {
-          source = this.fromNode.label.position(true);
-          target = this.toNode.label.position(false);
+          source = this.fromNode.label.linkPosition(true);
+          target = this.toNode.label.linkPosition(false);
         }
 
         this.midPoint = this.getMidPoint(source, target);
@@ -63,8 +62,8 @@ export default class Link extends Component {
       // If the fromNode is on a higher-order mind-map then we connect from the labels
       // left-side to the toNode labels right-side, otherwise this is inverted.
       const onLeftSide = this.fromNode.side.mindMap.index > this.toNode.side.mindMap.index;
-      const source = this.fromNode.label.position(onLeftSide);
-      const target = this.toNode.label.position(!onLeftSide);
+      const source = this.fromNode.label.linkPosition(onLeftSide);
+      const target = this.toNode.label.linkPosition(!onLeftSide);
 
       this.midPoint = this.getMidPoint(source, target);
       this.linkData.push({ source: source, target: target });
@@ -98,6 +97,8 @@ export default class Link extends Component {
   }
 
   draw() {
+    this.$el = this.app.$links.append("g");
+    
     const colour = this.data.colour || Node.DEFAULT_COLOUR;
 
     this.$link = this.$el
@@ -126,19 +127,5 @@ export default class Link extends Component {
   erase() {
     this.$link.remove();
     this.label.$el.remove();
-  }
-
-  show() {
-    if (!this.hidden) return;
-
-    this.hidden = false;
-    this.draw();
-  }
-
-  hide() {
-    if (this.hidden) return;
-
-    this.hidden = true;
-    this.erase();
   }
 }
