@@ -7,19 +7,19 @@ export default class Component {
     getX() {
         if (!this.$el) return 0;
 
-        return this.getBoundingClientRect().x;
+        return Math.ceil(this.getBoundingClientRect().x);
     }
     
     getWidth() {
         if (!this.$el) return 0;
 
-        return this.getBoundingClientRect().width;
+        return Math.ceil(this.getBoundingClientRect().width);
     }
 
     getHeight() {
         if (!this.$el) return 0;
 
-        return this.getBoundingClientRect().height;
+        return Math.ceil(this.getBoundingClientRect().height);
     }
 
     getBoundingClientRect() {

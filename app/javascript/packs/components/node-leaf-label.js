@@ -34,7 +34,7 @@ export default class NodeLeafLabel extends Component {
 
   position(onLeftSide) {
     return {
-      x: this.getX() + (onLeftSide ? -(NodeLeafLabel.PADDING * 2) : this.getWidth()),
+      x: this.getX() + (onLeftSide ? -NodeLeafLabel.PADDING * 2 : this.getWidth() + NodeLeafLabel.PADDING),
       y: this.y,
     };
   }

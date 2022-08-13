@@ -37,7 +37,7 @@ export default class ContextMenu {
         // Node
         if (targetClasses.includes("node-label") || targetClasses.includes("label")) {
             const node = this.app.nodes.find(node => node.id === id);
-            node.buildMenu(this);
+            node.buildMenu();
         // Link
         } else if (targetClasses.includes("link-lable")) {
 
@@ -46,21 +46,16 @@ export default class ContextMenu {
         }
     }
 
-    newListItem() {
+    add(icon, text, action) {
         const listItem = document.createElement("li");
         listItem.classList.add("list-group-item", "list-group-item-action");
-        return listItem;
-    }
-
-    add(listItem) {
-        this.list.append(listItem);
-    }
-
-    addClick(context, listItem, action) {
+        listItem.innerHTML = `<i class="fa fa-${icon}"></i> ${text}`;
         listItem.addEventListener("click", () => {
-            action.call(context);
+            action.call();
             this.close();
         });
+
+        this.list.append(listItem);
     }
 
     close() {
