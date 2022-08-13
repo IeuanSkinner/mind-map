@@ -56,6 +56,9 @@ export default class Node extends HideableComponent {
 
       return new Node(this.side, data, this);
     });
+
+    // Redrawing the label prevents the branch paths overlapping the labels due to their draw order.
+    this.children.forEach(child => child.redrawLabel());
   }
 
   drawLabel() {
