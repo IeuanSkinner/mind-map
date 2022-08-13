@@ -1,13 +1,15 @@
 class ActionMenu {
     constructor() {
         this.$actionMenu = document.getElementById("action-menu");
-        this.$motivationBtn = this.$actionMenu.querySelector("#motivation-btn");
+        this.$motivationsBtn = this.$actionMenu.querySelector("#motivations-btn");
+        this.$instructionsBtn = this.$actionMenu.querySelector("#instructions-btn")
 
         this.addListeners();
     }
 
     addListeners() {
-        this.$motivationBtn.addEventListener("click", () => window.motivationsModal.show());
+        this.$motivationsBtn.addEventListener("click", () => window.motivationsModal.show());
+        this.$instructionsBtn.addEventListener("click", () => window.instructionsModal.show());
     }
 }
 
