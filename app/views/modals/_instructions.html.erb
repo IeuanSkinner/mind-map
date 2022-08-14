@@ -1,23 +1,80 @@
 <div class="modal fade" id="instructions" data-bs-backdrop="static" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Instructions</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Instructions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="instructions-carousel" class="carousel carousel-dark slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#instructions-carousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#instructions-carousel" data-bs-slide-to="1"></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="60000">
+              <h4>Introduction</h2>
+              <p>
+                The "Web-based mind-map of A-level maths topics" is an interactive data-visualisation tool
+                built as part of a dissertation project for the MSc Data Science course at Swansea University.
+              </p>
+              <p>
+                The aim of the project is to enhance a prototyped data-visualisation created by 
+                <a href="https://furthermaths.wales" target="_blank">Further Maths Support Programme Wales</a> 
+                by using web technology, layout algorithms and interactive elements.
+              </p>
+              <p>
+                It is strongly urged that users of this tool <strong class="highlight">please provide feedback</strong> when able. 
+                Any issues or bugs found can be flagged using the bug report button in the action menu 
+                and feedback surveys can be found by clicking on the red button in the bottom-right.
+              </p>
             </div>
-            <div class="modal-body">
-                Todo: Implement instructions.
+            <div class="carousel-item" data-bs-interval="60000">
+              <h4>Basics</h4>
+              <p>
+                In this data-visualisation the GCSE Maths, A-level Maths and A-level Further Maths curricula are represented as tree-diagrams 
+                that are analoagous to mind-maps. For each their center (or root) node is labelled with the curriculum name and then from this
+                central node branches to other nodes appear to the left and right.
+              </p>
+              <p>
+                In the case of the GCSE Maths mind-map the nodes represent more abstract conceps whereas in the A-level Maths and A-level Further
+                Maths mind-maps they represent concrete modules of work undertaken as part of those modules.
+              </p>
+              <p>
+                The data-visualisation has an implicit feature in its layout which is a left-to-right time series i.e., the mind-maps on the left
+                represent work that is typically done before the work represented in the mind-maps to their right. This implicit time series is also
+                present for the mind-maps themselves where the branches on the left side of the mind-map represent work that is typically done before
+                the work represented by the branches on the right-side.
+              </p>
+              <p>
+                Each branch and node is colour coded in this data-visualisation based on what "Topic Area" they belong too. The key for this
+                colour coding can be found by clicking on the key button in the action menu. 
+              </p>
+              <p>
+                Wherever a knowledge-relationship exists between nodes their exists a link between them to represent that relationship.
+              <p>
             </div>
-            <div class="modal-footer">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="showAgain">
-                    <label class="form-check-label" for="showAgain">
-                        Don't show again
-                    </label>
-                </div>
-            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#instructions-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#instructions-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
         </div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="showAgain">
+          <label class="form-check-label" for="showAgain">
+            Don't show again
+          </label>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <%= javascript_pack_tag "instructions" %>

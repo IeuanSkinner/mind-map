@@ -1,43 +1,89 @@
 @import "variables";
 
+$button-width: 75px;
+
 .modal {
-  .modal-content {
-    width: 500px;
-    height: 400px;
+  .modal-dialog {
+    width: 40vw;
+    max-width: 100%;
 
-    .modal-header, .modal-body {
-      font-weight: bold;
-    }
-
-    .carousel {
-      height: 100%;
-      padding-bottom: 1.5rem;
-
-      .highlight {
-        color: $red;
+    .modal-content {
+      height: 75vh;
+      
+      .modal-header {
+        font-weight: bold;
       }
 
-      .blockquote-footer {
-        margin-top: 0.5rem;
-        color: $green;
+      .modal-body {
+        padding: 0;
       }
 
-      .carousel-indicators {
-        margin-bottom: 0;
+      .carousel {
+        height: 100%;
 
-        button {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
+        .carousel-inner {
+          height: 100%;
+          overflow-y: auto;
+        }
+
+        .carousel-control-next, .carousel-control-prev {
+          width: $button-width;
+        }
+        
+        .carousel-item {
+          padding: 1rem $button-width;
+
+          a {
+            color: $blue;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .highlight {
+          color: $red;
+        }
+
+        .blockquote-footer {
+          margin-top: 0.5rem;
+          color: $green;
+        }
+
+        .carousel-indicators {
+          margin-bottom: 0;
+
+          button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+          }
+        }
+      }
+
+      .carousel-control-prev, .carousel-control-next {
+        color: $black;
+      }
+
+      .modal-footer {
+        justify-content: flex-start;
+
+        label, input {
+          cursor: pointer;
         }
       }
     }
+  }
 
-    .modal-footer {
-      justify-content: flex-start;
-
-      label, input {
-        cursor: pointer;
+  &#motivations {
+    .modal-content {
+      height: 55vh;
+      
+      .carousel-inner {
+        display: flex;
+        align-items: center;
       }
     }
   }
