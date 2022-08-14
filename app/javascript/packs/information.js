@@ -1,10 +1,10 @@
 import * as bootstrap from "bootstrap";
 
-class InstructionsModal {
-  static KEY = "hideInstructionsModal";
+class InformationModal {
+  static KEY = "hideInformationModal";
 
   constructor() {
-    this.$el = document.getElementById("instructions");
+    this.$el = document.getElementById("information");
     this.modal = new bootstrap.Modal(this.$el);
     this.$showAgain = this.$el.querySelector("#showAgain");
 
@@ -13,19 +13,19 @@ class InstructionsModal {
   }
 
   addListeners() {
-    this.$showAgain.addEventListener("change", () => localStorage.setItem(InstructionsModal.KEY, this.$showAgain.checked));
+    this.$showAgain.addEventListener("change", () => localStorage.setItem(InformationModal.KEY, this.$showAgain.checked));
   }
 
   // Check local storage to see if the "Don't show again" checkbox was selected.
   initShow() {
-    const hideInstructionsModal = localStorage.getItem(InstructionsModal.KEY);
-    if (!hideInstructionsModal || hideInstructionsModal === "false") this.show();
+    const hideInformationModal = localStorage.getItem(InformationModal.KEY);
+    if (!hideInformationModal || hideInformationModal === "false") this.show();
   }
 
   clearShowAgain() {
     this.$showAgain.checked = false;
     this.$showAgain.removeAttribute("checked");
-    localStorage.removeItem(InstructionsModal.KEY);
+    localStorage.removeItem(InformationModal.KEY);
   }
 
   show() {
@@ -34,4 +34,4 @@ class InstructionsModal {
   }
 }
 
-window.instructionsModal = new InstructionsModal();
+window.informationModal = new InformationModal();
