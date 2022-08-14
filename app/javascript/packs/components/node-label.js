@@ -14,13 +14,13 @@ export default class NodeLabel extends HideableComponent {
             if (e.ctrlKey) { 
                 this.onCtrlClick(e);
             } else if (e.shiftKey) {
-                this.node.hide();
+                this.onShiftClick(e);
             }
         });
     }
 
-    onShiftClick() {
-
+    onShiftClick(e) {
+        this.node.hide();
     }
 
     onCtrlClick(e) {

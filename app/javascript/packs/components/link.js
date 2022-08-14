@@ -129,6 +129,9 @@ export default class Link extends HideableComponent {
   }
 
   show() {
+    if (!this.hidden) return;
+    this.fromNode.show();
+    this.toNode.show();
     super.show();
     this.label.show();
   }

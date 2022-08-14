@@ -82,6 +82,12 @@ export default class NodeBoxLabel extends NodeLabel {
     super.erase();
   }
 
+  onShiftClick(e) {
+    if (this.node.isRoot()) return;
+
+    super.onShiftClick();
+  }
+
   onCtrlClick(e) {
     const node = this.node;
     const mindMap = this.node.side.mindMap;

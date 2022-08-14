@@ -104,24 +104,33 @@ export default class Node extends HideableComponent {
 
     this.label.hide();
     this.label.show();
-  }
 
+    this.redrawChildrenLabels();
+  }
+  
   // Redrawing the label prevents the branch paths overlapping the labels due to their draw order.
   redrawChildrenLabels() {
-    this.children.forEach(child => child.redrawLabel());
+    this.children.forEach(child => { if (!child.hidden) child.redrawLabel() });
   }
 
   show(bubble = false) {
     super.show();
     
+    if (bubble) this.showChildren(bubble);
     if (this.label) this.label.show();
 
-    if (bubble) this.showChildren(bubble);
+    if (!this.isRoot() && this.parentNode.hidden) {
+      this.parentNode.show(bubble);
+    }
+    
+    this.parentNode.redrawLabel();
   }
 
   hide() {
     if (this.label) this.label.hide();
     this.hideChildren();
+    this.hideComponents(this.fromLinks);
+    this.hideComponents(this.toLinks);
 
     super.hide();
   }
@@ -133,7 +142,6 @@ export default class Node extends HideableComponent {
   showChildren(bubble = false) {
     this.showComponents(this.children, bubble);
     this.redrawLabel();
-    this.redrawChildrenLabels();
   }
 
   hideChildren() {
