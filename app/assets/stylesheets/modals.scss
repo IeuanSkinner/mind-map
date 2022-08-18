@@ -8,8 +8,6 @@ $button-width: 75px;
     max-width: 100%;
 
     .modal-content {
-      height: 75vh;
-      
       .modal-header {
         font-weight: bold;
       }
@@ -19,13 +17,6 @@ $button-width: 75px;
       }
 
       .carousel {
-        height: 100%;
-
-        .carousel-inner {
-          height: 100%;
-          overflow-y: auto;
-        }
-
         .carousel-control-next, .carousel-control-prev {
           width: $button-width;
         }
@@ -73,17 +64,6 @@ $button-width: 75px;
         label, input {
           cursor: pointer;
         }
-      }
-    }
-  }
-
-  &#motivations {
-    .modal-content {
-      height: 55vh;
-      
-      .carousel-inner {
-        display: flex;
-        align-items: center;
       }
     }
   }
