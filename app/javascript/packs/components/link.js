@@ -106,7 +106,6 @@ export default class Link extends HideableComponent {
       .selectAll(null)
       .data(this.linkData)
       .join("path")
-      .attr("id", this.id)
       .attr("fill", "none")
       .attr("stroke", this.colour)
       .attr("stroke-opacity", 1)
@@ -121,6 +120,12 @@ export default class Link extends HideableComponent {
           .x((d) => d.x)
           .y((d) => d.y)
       )
+  }
+
+  buildMenu() {
+    const contextMenu = this.app.contextMenu;
+
+    contextMenu.add("eye-slash", "Hide", () => this.hide());
   }
 
   hide() {

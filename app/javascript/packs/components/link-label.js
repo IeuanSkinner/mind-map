@@ -6,9 +6,9 @@ export default class LinkLabel extends HideableComponent {
   constructor(link, label, colour) {
     super(true);
     this.link = link;
+    this.id = link.id;
     this.label = label;
     this.colour = colour;
-    this.id = `link_label_${link.id}`;
     this.x = link.midPoint.x - LinkLabel.WIDTH / 2;
     this.y = link.midPoint.y;
     this.height = 0;
