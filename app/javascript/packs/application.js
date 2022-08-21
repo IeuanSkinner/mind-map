@@ -10,6 +10,8 @@ import Link from "./components/link";
 import ContextMenu from "./components/context-menu";
 import Component from "./components/component";
 import Marker from "./components/marker";
+import NodeDetails from "./details/node";
+import LinkDetails from "./details/link";
 
 Rails.start();
 Turbolinks.start();
@@ -38,6 +40,8 @@ class App extends Component {
 
     this.contextMenu = new ContextMenu(this);
     this.zoom = new Zoom(this);
+    this.nodeDetails = new NodeDetails(this);
+    this.linkDetails = new LinkDetails(this);
   }
 
   fetchData(type) {
