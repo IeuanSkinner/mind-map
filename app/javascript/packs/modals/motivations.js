@@ -1,14 +1,3 @@
-import * as bootstrap from "bootstrap";
+import Modal from "./modal";
 
-class MotivationsModal {
-  constructor() {
-    this.$el = document.getElementById("motivations");
-    this.modal = new bootstrap.Modal(this.$el);
-  }
-
-  show() {
-    this.modal.show();
-  }
-}
-
-window.motivationsModal = new MotivationsModal();
+window.motivationsModal = new Modal("motivations");

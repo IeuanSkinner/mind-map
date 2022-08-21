@@ -1,11 +1,10 @@
-import * as bootstrap from "bootstrap";
+import Modal from "./modal";
 
-class InformationModal {
+class InformationModal extends Modal {
   static KEY = "hideInformationModal";
 
   constructor() {
-    this.$el = document.getElementById("information");
-    this.modal = new bootstrap.Modal(this.$el);
+    super("information");
     this.$showAgain = this.$el.querySelector("#showAgain");
 
     this.addListeners();
@@ -28,6 +27,7 @@ class InformationModal {
     localStorage.removeItem(InformationModal.KEY);
   }
 
+  // @Override
   show() {
     this.clearShowAgain();
     this.modal.show();

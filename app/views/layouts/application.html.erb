@@ -15,11 +15,8 @@
   <body>
     <main>
       <%= render partial: "home/contextMenu" %>
-      <%= render partial: "modals/motivations" %>
-      <%= render partial: "modals/information" %>
-      <%= render partial: "modals/shortcuts" %>
-      <%= render partial: "menu/actions" %>
       <%= yield %>
+      <%= render partial: "menu/actions" %>
     </main>
   </body>
 </html>
