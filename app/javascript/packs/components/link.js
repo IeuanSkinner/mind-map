@@ -120,7 +120,7 @@ export default class Link extends HideableComponent {
           .link(d3.curveBumpX)
           .x((d) => d.x)
           .y((d) => d.y)
-      );
+      )
   }
 
   hide() {

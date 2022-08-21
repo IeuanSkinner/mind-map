@@ -24,7 +24,8 @@ export default class LinkLabel extends HideableComponent {
       .attr("height", this.height)
       .html(
         `<div id="${this.id}" class="link-label" style="background-color: ${this.colour};">${this.label}</div>`
-      );
+      )
+      .on("click", e => { if (e.ctrlKey) this.link.hide(); });
 
     this.$html = document.querySelector(`#${this.id}`);
 
