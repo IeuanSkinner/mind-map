@@ -4,9 +4,6 @@ $button-width: 75px;
 
 .modal {
   .modal-dialog {
-    width: 40vw;
-    max-width: 100%;
-
     .modal-content {
       .modal-header {
         font-weight: bold;
@@ -64,6 +61,18 @@ $button-width: 75px;
         label, input {
           cursor: pointer;
         }
+      }
+    }
+  }
+
+  &#shortcuts {
+    .modal-body {
+      padding: 1rem;
+
+      p {
+        margin-top: 2rem;
+        margin-bottom: 0;
+        font-size: 0.75rem;
       }
     }
   }

@@ -11,20 +11,20 @@ export default class NodeLabel extends HideableComponent {
 
     addClickListener() {
         this.$el = this.$el.on("click", (e) => { 
-            if (e.ctrlKey) { 
-                this.onCtrlClick(e);
-            } else if (e.shiftKey) {
+            if (e.shiftKey) { 
                 this.onShiftClick(e);
+            } else if (e.ctrlKey) {
+                this.onCtrlClick(e);
             }
         });
     }
 
     onShiftClick(e) {
-        this.node.hide();
+        this.overrideError("onShiftClick");
     }
 
     onCtrlClick(e) {
-        this.overrideError("onCtrlClick");
+        this.node.hide();
     }
     
     xOffset(onLeftSide) {

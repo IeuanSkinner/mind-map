@@ -1,0 +1,42 @@
+<div class="modal fade" id="shortcuts" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Shortcuts</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">Element</th>
+              <th scope="col">Ctrl + Click</th>
+              <th scope="col">Shift + Click</th>
+              <th scope="col">Ctrl + Shift + Click</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Node (Leaf)</td>
+              <td>Hide</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Node</td>
+              <td>Hide</td>
+              <td>Show/Hide Immediate Children*</td>
+              <td>Show/Hide All Children*</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          *If any child nodes are hidden they will be made visible, 
+          otherwise if all child nodes are visible they will all be hidden.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag "modals/shortcuts" %>

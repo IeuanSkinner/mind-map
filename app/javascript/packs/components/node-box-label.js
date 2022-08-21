@@ -82,20 +82,20 @@ export default class NodeBoxLabel extends NodeLabel {
     super.erase();
   }
 
-  onShiftClick(e) {
+  onCtrlClick(e) {
     if (this.node.isRoot()) return;
 
-    super.onShiftClick();
+    super.onCtrlClick();
   }
 
-  onCtrlClick(e) {
+  onShiftClick(e) {
     const node = this.node;
     const mindMap = this.node.side.mindMap;
 
     if (node.isRoot()) {
-      mindMap.hasHiddenChildren() ? mindMap.showChildren(e.shiftKey) : mindMap.hideChildren();
+      mindMap.hasHiddenChildren() ? mindMap.showChildren(e.ctrlKey) : mindMap.hideChildren();
     } else {
-      node.hasHidden(node.children) ? node.showChildren(e.shiftKey) : node.hideChildren();
+      node.hasHidden(node.children) ? node.showChildren(e.ctrlKey) : node.hideChildren();
     }
   }
 }
