@@ -21,4 +21,35 @@
       margin-left: 0.5rem;
     }
   }
+
+  .offcanvas-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &#node-details {
+    .offcanvas-body {
+      .from-links, .to-links {
+        flex-grow: 1;
+
+        .title {
+          margin-bottom: 1rem;
+        }
+
+        ul {
+          padding-left: 0;
+
+          li {
+            font-size: 0.8rem;
+            list-style: none;
+            margin-bottom: 0.25rem;
+
+            .fa-long-arrow-right {
+              margin: 0 0.25rem;
+            }
+          }
+        }
+      }
+    }
+  }
 }

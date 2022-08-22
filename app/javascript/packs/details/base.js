@@ -2,6 +2,8 @@ import * as bootstrap from "bootstrap";
 import Node from "../components/node";
 
 export default class BaseDetails {
+  static RIGHT_ARROW = "<i class='fa fa-long-arrow-right'></i>";
+
   constructor(app, id) {
     this.app = app;
     this.id = id;
