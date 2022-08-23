@@ -1,15 +1,5 @@
 @import "variables";
 
-body, main {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 body {
   background-color: #eee;
 
@@ -24,7 +14,8 @@ body {
       // height: calc(100% - #{2 * $svg-margin});
       // margin: $svg-margin;
       // border: 1px solid red;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       cursor: move;
     }
   }
