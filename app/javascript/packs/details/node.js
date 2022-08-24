@@ -7,11 +7,19 @@ export default class NodeDetails extends BaseDetails {
     this.$fromLinks = this.$el.querySelector(".from-links");
     this.$toLinks = this.$el.querySelector(".to-links");
 
-    this.$el.addEventListener("shown.bs.offcanvas", () => this.app.setStyle("margin-left", `${super.getWidth()}px`));
-    this.$el.addEventListener("hidden.bs.offcanvas", () => this.app.setStyle("margin-left", 0));    
+    this.$el.addEventListener("shown.bs.offcanvas", () => app.setStyle("margin-left", `${super.getWidth()}px`));
+    this.$el.addEventListener("hidden.bs.offcanvas", () =>  { 
+      app.setStyle("margin-left", 0);
+      app.nodes.forEach(node => node.setInactive())
+    });
   }
 
   show(node) {
+    // Set all nodes to inactive.
+    this.app.nodes.forEach(node => node.setInactive());
+    // Set this node to active.
+    node.setActive();
+
     const data = node.data.data;
 
     this.setTitle(data.label);

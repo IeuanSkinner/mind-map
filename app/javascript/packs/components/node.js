@@ -170,4 +170,24 @@ export default class Node extends HideableComponent {
   hideComponents(hideableComponents) {
     hideableComponents.forEach(hideableComponent => hideableComponent.hide());
   }
+
+  setActive() {
+    if (!this.label) return;
+
+    if (this.$el) {
+      this.$el = this.$el.attr("stroke", HideableComponent.ACTIVE_COLOUR);
+    }
+
+    super.setActive();
+  }
+
+  setInactive() {
+    if (!this.label) return;
+
+    if (this.$el) {
+      this.$el = this.$el.attr("stroke", this.data.data.colour || Node.DEFAULT_COLOUR);
+    }
+
+    super.setInactive();
+  }
 }

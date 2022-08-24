@@ -1,11 +1,13 @@
+@import "variables";
+
 svg {
-  .node-label, .link-label {
+  .node-label, .link-label, .label {
     cursor: pointer;
   }
 
   .link-label {
     border-radius: 5px;
-    color: #fff;
+    color: $white;
   }
 
   .node-label, .link-label {
@@ -17,10 +19,15 @@ svg {
     font-size: 16px;
     padding: 0 10px;
     overflow: auto;
+
+    &.active {
+      background-color: $primary;
+      color: $white;
+    }
   }
 
-  .label {
-    cursor: pointer;
+  .label.active {
+    color: $primary;
   }
 
   .node-label, .link-label, .label {

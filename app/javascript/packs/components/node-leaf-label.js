@@ -1,4 +1,6 @@
+import HideableComponent from "./hideable-component";
 import NodeLabel from "./node-label";
+import Node from "./node";
 
 export default class NodeLeafLabel extends NodeLabel {
   static PADDING = 10;
@@ -42,5 +44,17 @@ export default class NodeLeafLabel extends NodeLabel {
 
   xOffset(onLeftSide) {
     return onLeftSide ? NodeLeafLabel.LEFTSIDE : this.initWidth + NodeLeafLabel.PADDING;
+  }
+
+  setActive() {
+    if (!this.$el) return;
+
+    this.$el = this.$el.attr("fill", HideableComponent.ACTIVE_COLOUR);
+  }
+
+  setInactive() {
+    if (!this.$el) return;
+
+    this.$el = this.$el.attr("fill", Node.DEFAULT_COLOUR);
   }
 }

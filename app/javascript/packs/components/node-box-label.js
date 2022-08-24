@@ -1,5 +1,6 @@
 import Node from "./node";
 import NodeLabel from "./node-label";
+import HideableComponent from "./hideable-component";
 
 export default class NodeBoxLabel extends NodeLabel {
   static WIDTH = 175;
@@ -97,5 +98,19 @@ export default class NodeBoxLabel extends NodeLabel {
     } else {
       node.hasHidden(node.children) ? node.showChildren(e.ctrlKey) : node.hideChildren();
     }
+  }
+
+  setActive() {
+    if (!this.$el) return;
+    
+    this.$shape = this.$shape.attr("stroke", HideableComponent.ACTIVE_COLOUR);
+    this.$html.classList.add("active");
+  }
+
+  setInactive() {
+    if (!this.$html) return;
+
+    this.$shape = this.$shape.attr("stroke", this.data.colour || Node.DEFAULT_COLOUR);
+    this.$html.classList.remove("active");
   }
 }

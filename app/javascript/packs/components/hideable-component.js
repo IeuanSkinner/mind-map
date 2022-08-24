@@ -1,32 +1,46 @@
 import Component from "./component";
 
 export default class HideableComponent extends Component {
-    constructor(hidden = false) {
-        super();
-        this.hidden = hidden;
-    }
+  static ACTIVE_COLOUR = "#D80303";
 
-    draw() {
-        this.overrideError("draw");
-    }
+  constructor(hidden = false) {
+    super();
+    this.hidden = hidden;
+  }
 
-    erase() {
-        if (!this.$el) return;
-        
-        this.$el.remove();
-    }
+  draw() {
+    this.overrideError("draw");
+  }
 
-    hide() {
-        if (this.hidden) return;
+  erase() {
+    if (!this.$el) return;
+    
+    this.$el.remove();
+  }
 
-        this.hidden = true;
-        this.erase();
-    }
+  hide() {
+    if (this.hidden) return;
 
-    show() {
-        if (!this.hidden) return;
+    this.hidden = true;
+    this.erase();
+  }
 
-        this.hidden = false;
-        this.draw();
-    }
+  show() {
+    if (!this.hidden) return;
+
+    this.hidden = false;
+    this.draw();
+  }
+
+  setActive() {
+    if (!this.label) return;
+
+    this.label.setActive();
+  }
+
+  setInactive() {
+    if (!this.label) return;
+
+    this.label.setInactive();
+  }
 }
