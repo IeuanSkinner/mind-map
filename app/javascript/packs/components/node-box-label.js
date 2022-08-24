@@ -103,14 +103,14 @@ export default class NodeBoxLabel extends NodeLabel {
   setActive() {
     if (!this.$el) return;
     
-    this.$shape = this.$shape.attr("stroke", HideableComponent.ACTIVE_COLOUR);
+    this.$shape.attr("stroke", HideableComponent.ACTIVE_COLOUR);
     this.$html.classList.add("active");
   }
 
   setInactive() {
     if (!this.$html) return;
 
-    this.$shape = this.$shape.attr("stroke", this.data.colour || Node.DEFAULT_COLOUR);
+    this.$shape.attr("stroke", this.data.colour || Node.DEFAULT_COLOUR);
     this.$html.classList.remove("active");
   }
 }

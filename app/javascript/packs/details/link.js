@@ -7,9 +7,16 @@ export default class LinkDetails extends BaseDetails {
     this.$sourceNode = this.$el.querySelector(".source-node");
     this.$targetNode = this.$el.querySelector(".target-node");
     this.$list = this.$el.querySelector(".list ul");
+
+    this.$el.addEventListener("hidden.bs.offcanvas", () => app.links.forEach(link => link.setInactive()));
   }
 
   show(link) {
+    // Set all links to inactive.
+    this.app.links.forEach(link => link.setInactive());
+    // Set this link to active.
+    link.setActive();
+
     const data = link.data;
 
     this.setTitle(data.label);

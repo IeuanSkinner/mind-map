@@ -49,12 +49,12 @@ export default class NodeLeafLabel extends NodeLabel {
   setActive() {
     if (!this.$el) return;
 
-    this.$el = this.$el.attr("fill", HideableComponent.ACTIVE_COLOUR);
+    this.$el.attr("fill", HideableComponent.ACTIVE_COLOUR);
   }
 
   setInactive() {
     if (!this.$el) return;
 
-    this.$el = this.$el.attr("fill", Node.DEFAULT_COLOUR);
+    this.$el.attr("fill", Node.DEFAULT_COLOUR);
   }
 }

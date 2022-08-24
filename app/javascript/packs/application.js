@@ -27,6 +27,9 @@ class App extends Component {
     this.linksData = this.fetchData("links");
     this.topicAreasData = this.fetchData("topic-areas");
 
+    this.nodeDetails = new NodeDetails(this);
+    this.linkDetails = new LinkDetails(this);
+
     this.mindMaps = [];
     this.nodes = [];
     this.mindMapsData.forEach((data, index) => this.mindMaps.push(new MindMap(this, data, index)));
@@ -40,8 +43,6 @@ class App extends Component {
 
     this.contextMenu = new ContextMenu(this);
     this.zoom = new Zoom(this);
-    this.nodeDetails = new NodeDetails(this);
-    this.linkDetails = new LinkDetails(this);
 
     this.width = this.getWidth();
   }

@@ -55,4 +55,16 @@ export default class LinkLabel extends HideableComponent {
     this.$html = null;
     super.erase();
   }
+
+  setActive() {
+    if (!this.$el) return;
+
+    this.$html.style.backgroundColor = HideableComponent.ACTIVE_COLOUR;
+  }
+
+  setInactive() {
+    if (!this.$el) return;
+
+    this.$html.style.backgroundColor = this.colour;
+  }
 }
