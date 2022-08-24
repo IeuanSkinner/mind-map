@@ -1,17 +1,21 @@
 import * as bootstrap from "bootstrap";
+import Component from "../components/component";
 import Node from "../components/node";
 
-export default class BaseDetails {
+export default class BaseDetails extends Component {
   static RIGHT_ARROW = "<i class='fa fa-long-arrow-right'></i>";
 
   constructor(app, id) {
+    super(document.getElementById(id));
     this.app = app;
     this.id = id;
-    this.$el = document.getElementById(id);
     this.$title = this.$el.querySelector(".offcanvas-title .text");
     this.$key = this.$el.querySelector(".offcanvas-title .key");
 
     this.offcanvas = new bootstrap.Offcanvas(this.$el);
+
+    this.$el.addEventListener("shown.bs.offcanvas", () => this.app.calcWidth());
+    this.$el.addEventListener("hidden.bs.offcanvas", () => this.app.calcWidth());    
   }
 
   setTitle(text) {
@@ -41,4 +45,12 @@ export default class BaseDetails {
       });
     });
   }
+
+  getWidth() {
+    return this.offcanvas._isShown ? super.getWidth() : 0;
+  }
+  
+  getBoundingClientRect() {
+    return this.$el.getBoundingClientRect();
+}
 }

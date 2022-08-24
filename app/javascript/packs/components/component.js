@@ -1,34 +1,40 @@
 
 export default class Component {
-    constructor($el) {
-        this.$el = $el;
-    }
+  constructor($el) {
+    this.$el = $el;
+  }
 
-    getX() {
-        if (!this.$el) return 0;
+  getX() {
+    if (!this.$el) return 0;
 
-        return Math.ceil(this.getBoundingClientRect().x);
-    }
-    
-    getWidth() {
-        if (!this.$el) return 0;
+    return Math.ceil(this.getBoundingClientRect().x);
+  }
+  
+  getWidth() {
+    if (!this.$el) return 0;
 
-        return Math.ceil(this.getBoundingClientRect().width);
-    }
+    return Math.ceil(this.getBoundingClientRect().width);
+  }
 
-    getHeight() {
-        if (!this.$el) return 0;
+  getHeight() {
+    if (!this.$el) return 0;
 
-        return Math.ceil(this.getBoundingClientRect().height);
-    }
+    return Math.ceil(this.getBoundingClientRect().height);
+  }
 
-    getBoundingClientRect() {
-        if (!this.$el) return;
+  getBoundingClientRect() {
+    if (!this.$el) return;
 
-        return this.$el.node().getBoundingClientRect();
-    }
+    return this.$el.node().getBoundingClientRect();
+  }
 
-    overrideError(functionName) {
-        console.error(`${this.className} ${functionName}() function was not overridden!`, this);
-    }
+  overrideError(functionName) {
+    console.error(`${this.className} ${functionName}() function was not overridden!`, this);
+  }
+
+  setStyle(key, value) {
+    if (!this.$el) return;
+
+    this.$el.node().style[key] = value;
+  }
 }

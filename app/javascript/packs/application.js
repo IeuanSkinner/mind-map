@@ -42,6 +42,8 @@ class App extends Component {
     this.zoom = new Zoom(this);
     this.nodeDetails = new NodeDetails(this);
     this.linkDetails = new LinkDetails(this);
+
+    this.width = this.getWidth();
   }
 
   fetchData(type) {
@@ -49,6 +51,12 @@ class App extends Component {
     const data = JSON.parse(dataNode.getAttribute(`data-${type}`));
 
     return data.map(datum => JSON.parse(datum));
+  }
+
+  calcWidth() {
+    const width = this.width - this.nodeDetails.getWidth() - this.linkDetails.getWidth();
+
+    this.setStyle("width", `${width}px`);
   }
 }
 

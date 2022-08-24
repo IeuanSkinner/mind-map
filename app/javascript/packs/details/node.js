@@ -6,6 +6,9 @@ export default class NodeDetails extends BaseDetails {
 
     this.$fromLinks = this.$el.querySelector(".from-links");
     this.$toLinks = this.$el.querySelector(".to-links");
+
+    this.$el.addEventListener("shown.bs.offcanvas", () => this.app.setStyle("margin-left", `${super.getWidth()}px`));
+    this.$el.addEventListener("hidden.bs.offcanvas", () => this.app.setStyle("margin-left", 0));    
   }
 
   show(node) {
