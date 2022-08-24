@@ -25,4 +25,20 @@ export default class BaseDetails {
   show() {
     this.offcanvas.show();
   }
+
+  buildLink(type, id, label) {
+    return `<span class="link" data-${type}-id="${id}" title="View ${label} Details">${label}</span>`;
+  }
+  
+  addListeners(type) {
+    const $links = [...this.$el.querySelectorAll(`[data-${type}-id]`)];
+
+    $links.forEach($link => {
+      $link.addEventListener("click", () => {
+        const link = this.app[`${type}s`].find(cmp => cmp.id === $link.dataset[`${type}Id`]);
+
+        this.app[`${type}Details`].show(link);
+      });
+    });
+  }
 }

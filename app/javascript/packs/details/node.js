@@ -14,25 +14,25 @@ export default class NodeDetails extends BaseDetails {
     this.setTitle(data.label);
     this.setColour(data.colour);
 
-    this.setFromLinks(node);
-    this.setToLinks(node);
+    this.setLinks("from", false, node);
+    this.setLinks("to", true, node);
+  
+    this.addListeners("node");
+    this.addListeners("link");
 
     super.show();
   }
 
-  setFromLinks(node) {
-    this.setLinksTitle(this.$fromLinks, false, node.fromLinks);
-    this.setLinksList(this.$fromLinks, false, node.fromLinks);
-  }
+  setLinks(type, isSource, node) {
+    const label = `${type}Links`;
 
-  setToLinks(node) {
-    this.setLinksTitle(this.$toLinks, true, node.toLinks);
-    this.setLinksList(this.$toLinks, true, node.toLinks);
+    this.setLinksTitle(this[`$${label}`], isSource, node[`${label}`]);
+    this.setLinksList(this[`$${label}`], isSource, node[`${label}`]);
   }
 
   setLinksTitle($el, isSource, links) {
     const $title = $el.querySelector(".title");
-    $title.innerHTML = `This node is the ${isSource ? "source" : "target"} of ${links.length} link${links.length === 1 ? "" : "s"}.`
+    $title.innerHTML = `This node is the <strong>${isSource ? "source" : "target"}</strong> of <strong>${links.length}</strong> link${links.length === 1 ? "" : "s"}.`
   }
 
   setLinksList($el, isSource, links) {
@@ -41,19 +41,21 @@ export default class NodeDetails extends BaseDetails {
 
     links.forEach(link => {
       const $listItem = document.createElement("li");
-      const linkLabel = link.data.label;
+      const linkLabel = this.buildLink("link", link.id, link.data.label);
       let sourceLabel = link.fromNode.data.data.label;
       let targetLabel = link.toNode.data.data.label;
 
       if (isSource) {
-        sourceLabel = `<strong>${sourceLabel}</strong>`
+        sourceLabel = `<strong>${sourceLabel}</strong>`;
+        targetLabel = this.buildLink("node", link.toNode.id, targetLabel);
       } else {
-        targetLabel = `<strong>${targetLabel}</strong>`
+        sourceLabel = this.buildLink("node", link.fromNode.id, sourceLabel);
+        targetLabel = `<strong>${targetLabel}</strong>`;
       }
 
       $listItem.innerHTML = `${sourceLabel} ${BaseDetails.RIGHT_ARROW} ${linkLabel} ${BaseDetails.RIGHT_ARROW} ${targetLabel}`;
 
       $list.append($listItem);
-    })
+    });
   }
 }

@@ -17,6 +17,8 @@ export default class LinkDetails extends BaseDetails {
 
     this.setNode(this.$sourceNode, true, link.fromNode);
     this.setNode(this.$targetNode, false, link.toNode);
+    
+    this.addListeners("node");
 
     this.setList(link);
 
@@ -24,7 +26,9 @@ export default class LinkDetails extends BaseDetails {
   }
 
   setNode($node, isSource, node) {
-    $node.innerHTML = `The ${isSource ? "source" : "target"} of this link is ${node.label.data.label}.`;
+    const label = this.buildLink("node", node.id, node.label.data.label);
+
+    $node.innerHTML = `The ${isSource ? "source" : "target"} of this link is ${label}.`;
   }
 
   setList(link) {
