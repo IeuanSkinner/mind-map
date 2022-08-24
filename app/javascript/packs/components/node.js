@@ -10,6 +10,7 @@ export default class Node extends HideableComponent {
     super();
     this.side = side;
     this.data = data;
+    this.colour = data.data.colour || Node.DEFAULT_COLOUR;
     this.parentNode = parentNode;
     this.id = data.data.id;
     this.children = [];
@@ -32,7 +33,7 @@ export default class Node extends HideableComponent {
       .data([this.data.branch])
       .join("path")
       .attr("fill", "none")
-      .attr("stroke", this.data.data.colour || Node.DEFAULT_COLOUR)
+      .attr("stroke", this.colour)
       .attr("stroke-opacity", 1)
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")
@@ -173,10 +174,8 @@ export default class Node extends HideableComponent {
 
   setActive() {
     if (!this.label) return;
-
-    if (this.$el) {
-      this.$el = this.$el.attr("stroke", HideableComponent.ACTIVE_COLOUR);
-    }
+    if (this.parentNode) this.parentNode.setActive();
+    if (this.$el) this.$el = this.$el.attr("stroke", HideableComponent.ACTIVE_COLOUR);
 
     super.setActive();
   }
@@ -185,7 +184,7 @@ export default class Node extends HideableComponent {
     if (!this.label) return;
 
     if (this.$el) {
-      this.$el = this.$el.attr("stroke", this.data.data.colour || Node.DEFAULT_COLOUR);
+      this.$el = this.$el.attr("stroke", this.colour);
     }
 
     super.setInactive();
