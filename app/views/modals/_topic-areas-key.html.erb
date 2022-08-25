@@ -1,0 +1,27 @@
+<div class="modal fade" id="topic-areas-key" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Topic Areas Key</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body container">
+        <div class="row">
+          <% @topic_areas.each do |topic_area| %>
+            <% topic_area = JSON.parse(topic_area) %>
+            <div class="topic-area col-6">
+              <div class="box" style="background-color: <%= topic_area['colour'] %>"></div>
+              <div class="text"><%= topic_area["name"] %></div>
+            </div>
+          <% end %>
+          <div class="topic-area col-6">
+            <div class="box"></div>
+            <div class="text">None</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_pack_tag "modals/topic-areas-key" %>
