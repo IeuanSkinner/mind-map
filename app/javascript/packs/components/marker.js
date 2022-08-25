@@ -1,6 +1,7 @@
 export default class Marker {
-    constructor($defs, colour, markerHeight = 8, markerWidth = 6) {
-        this.$defs = $defs;
+    constructor(app, colour, markerHeight = 8, markerWidth = 6) {
+        this.app = app;
+        this.$defs = app.$defs;
         this.colour = colour;
         this.markerWidth = markerWidth;
         this.markerHeight = markerHeight;

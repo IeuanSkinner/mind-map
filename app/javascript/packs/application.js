@@ -12,6 +12,8 @@ import Component from "./components/component";
 import Marker from "./components/marker";
 import NodeDetails from "./details/node";
 import LinkDetails from "./details/link";
+import HideableComponent from "./components/hideable-component";
+import Node from "./components/node"
 
 Rails.start();
 Turbolinks.start();
@@ -35,8 +37,11 @@ class App extends Component {
     this.mindMapsData.forEach((data, index) => this.mindMaps.push(new MindMap(this, data, index)));
 
     this.$defs = this.$el.append("defs");
-    this.markers = [new Marker(this.$defs, "#000000")]; // Default marker.
-    this.topicAreasData.forEach((data) => this.markers.push(new Marker(this.$defs, data.colour)));
+    this.markers = [
+      new Marker(this, Node.DEFAULT_COLOUR),  // Default marker.
+      new Marker(this, HideableComponent.ACTIVE_COLOUR) // Active marker.
+    ];
+    this.topicAreasData.forEach((data) => this.markers.push(new Marker(this, data.colour)));
 
     this.$links = this.$el.append("g");
     this.links = this.linksData.map((data) => new Link(this, data));

@@ -4,7 +4,9 @@ export default class ContextMenu {
     this.menu = document.getElementById("contextMenu");
     this.list = this.menu.querySelector("ul");
 
-    this.app.$el.on("click", () => this.close());
+    app.$el.on("click", () => this.close());
+    app.nodeDetails.$el.addEventListener("click", () => this.close());
+    app.linkDetails.$el.addEventListener("click", () => this.close());
 
     document.oncontextmenu = (e) => this.onRightClick(e);
   }

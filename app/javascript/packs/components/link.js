@@ -112,7 +112,7 @@ export default class Link extends HideableComponent {
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")
       .attr("stroke-width", 2)
-      .attr("marker-end", d => d.end ? `url(#arrowhead-${this.colour.replace("#", "")})` : "")
+      .attr("marker-end", d => d.end ? this.buildArrowHead(this.colour) : "")
       .attr(
         "d",
         d3
@@ -146,14 +146,26 @@ export default class Link extends HideableComponent {
 
   setActive() {
     if (this.hidden) this.show();
-    if (this.$link) this.$link.attr("stroke", HideableComponent.ACTIVE_COLOUR);
+    if (this.$link) {
+      this.$link.attr("stroke", HideableComponent.ACTIVE_COLOUR);
+
+      if (this.$link.attr("marker-end")) this.$link.attr("marker-end", this.buildArrowHead(HideableComponent.ACTIVE_COLOUR));
+    }
 
     super.setActive();
   }
 
   setInactive() {
-    if (this.$link) this.$link.attr("stroke", this.colour);
+    if (this.$link) { 
+      this.$link.attr("stroke", this.colour);
+
+      if (this.$link.attr("marker-end")) this.$link.attr("marker-end", this.buildArrowHead(this.colour));
+    }
 
     super.setInactive();
+  }
+
+  buildArrowHead(colour) {
+    return `url(#arrowhead-${colour.replace("#", "")})`;
   }
 }
