@@ -29,7 +29,7 @@ export default class NodeLeafLabel extends NodeLabel {
 
     if (this.node.side.isLeft()) {
       this.$el = this.$el
-        .attr("x", -(this.x + NodeLeafLabel.PADDING + this.initWidth))
+        .attr("x", -(this.x + (NodeLeafLabel.PADDING * 2) + this.initWidth))
         .attr("transform", "scale(-1, 1)");
     }
 
