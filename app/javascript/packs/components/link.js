@@ -148,7 +148,9 @@ export default class Link extends HideableComponent {
   }
 
   setActive() {
-    if (this.hidden) this.show();
+    if (!this.hidden) this.hide();
+    this.show();
+
     if (this.$link) {
       this.$link.attr("stroke", HideableComponent.ACTIVE_COLOUR);
 
