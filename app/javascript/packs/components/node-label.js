@@ -10,13 +10,15 @@ export default class NodeLabel extends HideableComponent {
   }
 
   addClickListener() {
-    this.$el = this.$el.on("click", (e) => { 
+    this.$el.on("click", (e) => { 
       if (e.shiftKey) { 
         this.onShiftClick(e);
       } else if (e.ctrlKey) {
         this.onCtrlClick(e);
       }
     });
+
+    this.$el.on("dblclick", () => this.node.showDetails());
   }
 
   onShiftClick(e) {

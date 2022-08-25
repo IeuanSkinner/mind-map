@@ -19,7 +19,10 @@ export default class Zoom {
       .scaleExtent([Zoom.SCALE_MIN, Zoom.SCALE_MAX])
       .translateExtent([Zoom.TRANSLATE_MIN, translateMax])
       .on("zoom", (e) => this.handleZoom(e));
-    this.app.$el.call(this.zoom);
+
+    this.app.$el
+      .call(this.zoom)
+      .on("dblclick.zoom", null);
 
     this.initZoomPosition();
   }

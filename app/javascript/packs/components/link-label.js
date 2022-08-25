@@ -25,7 +25,8 @@ export default class LinkLabel extends HideableComponent {
       .html(
         `<div id="${this.id}" class="link-label" style="background-color: ${this.colour};">${this.label}</div>`
       )
-      .on("click", e => { if (e.ctrlKey) this.link.hide(); });
+      .on("click", e => { if (e.ctrlKey) this.link.hide(); })
+      .on("dblclick", () => this.link.showDetails());
 
     this.$html = document.querySelector(`#${this.id}`);
 
@@ -57,13 +58,13 @@ export default class LinkLabel extends HideableComponent {
   }
 
   setActive() {
-    if (!this.$el) return;
+    if (!this.$html) return;
 
     this.$html.style.backgroundColor = HideableComponent.ACTIVE_COLOUR;
   }
 
   setInactive() {
-    if (!this.$el) return;
+    if (!this.$html) return;
 
     this.$html.style.backgroundColor = this.colour;
   }

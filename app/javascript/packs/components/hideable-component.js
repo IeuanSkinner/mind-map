@@ -32,6 +32,10 @@ export default class HideableComponent extends Component {
     this.draw();
   }
 
+  showDetails() {
+    this.overrideError("showDetails");
+  }
+
   setActive() {
     if (!this.label) return;
 

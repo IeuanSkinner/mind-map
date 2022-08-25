@@ -123,10 +123,9 @@ export default class Link extends HideableComponent {
   }
 
   buildMenu() {
-    const app = this.app;
-    const contextMenu = app.contextMenu;
+    const contextMenu = this.app.contextMenu;
 
-    contextMenu.add("info-circle", "Details", () => app.linkDetails.show(this));
+    contextMenu.add("info-circle", "Details", () => this.showDetails());
     contextMenu.add("eye-slash", "Hide", () => this.hide());
   }
 
@@ -142,6 +141,10 @@ export default class Link extends HideableComponent {
 
     super.show();
     this.label.show();
+  }
+
+  showDetails() {
+    this.app.linkDetails.show(this);
   }
 
   setActive() {

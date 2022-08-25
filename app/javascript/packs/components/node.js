@@ -76,10 +76,9 @@ export default class Node extends HideableComponent {
 
   buildMenu() {
     const mindMap = this.side.mindMap;
-    const app = mindMap.app;
-    const contextMenu = app.contextMenu;
+    const contextMenu = mindMap.app.contextMenu;
 
-    contextMenu.add("info-circle", "Details", () => app.nodeDetails.show(this));
+    contextMenu.add("info-circle", "Details", () => this.showDetails());
 
     if (this.isRoot()) {
       if (mindMap.hasVisibleChildren()) contextMenu.add("eye-slash", "Hide Children", () => mindMap.hideChildren());
@@ -128,6 +127,12 @@ export default class Node extends HideableComponent {
     }
     
     this.parentNode.redrawLabel();
+  }
+
+  showDetails() {
+    const app = this.side.mindMap.app;
+
+    app.nodeDetails.show(this);
   }
 
   hide() {

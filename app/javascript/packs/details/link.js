@@ -35,7 +35,7 @@ export default class LinkDetails extends BaseDetails {
   setNode($node, isSource, node) {
     const label = this.buildLink("node", node.id, node.label.data.label);
 
-    $node.innerHTML = `The ${isSource ? "source" : "target"} of this link is ${label}.`;
+    $node.innerHTML = `The <strong>${isSource ? "source" : "target"}</strong> of this link is ${label}.`;
   }
 
   setList(link) {
