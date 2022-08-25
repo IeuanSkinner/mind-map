@@ -23,7 +23,11 @@ export default class BaseDetails extends Component {
   }
 
   setColour(colour) {
-    this.$key.style.backgroundColor = colour || Node.DEFAULT_COLOUR;
+    const _colour = colour || Node.DEFAULT_COLOUR;
+    const topicArea = this.app.topicAreasData.find(topicArea => topicArea.colour === _colour);
+
+    this.$key.setAttribute("title", topicArea ? topicArea.name : "None");
+    this.$key.style.backgroundColor = _colour;
   }
 
   show() {
