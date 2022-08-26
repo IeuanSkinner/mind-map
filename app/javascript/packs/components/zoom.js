@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import ZoomControls from "../controls/zoom";
 import MindMap from "./mind-map";
 
 export default class Zoom {
@@ -12,23 +13,25 @@ export default class Zoom {
     this.app = app;
     this.fitRatio = this.getFitRatio();
     
-    const translateMax = [this.getMaxWidth() + Zoom.BUFFER, this.getMaxHeight() + Zoom.BUFFER];
+    this.translateMax = [this.getMaxWidth() + Zoom.BUFFER, this.getMaxHeight() + Zoom.BUFFER];
 
     this.zoom = d3
       .zoom()
       .scaleExtent([Zoom.SCALE_MIN, Zoom.SCALE_MAX])
-      .translateExtent([Zoom.TRANSLATE_MIN, translateMax])
+      .translateExtent([Zoom.TRANSLATE_MIN, this.translateMax])
       .on("zoom", (e) => this.handleZoom(e));
 
     this.app.$el
       .call(this.zoom)
       .on("dblclick.zoom", null);
 
+    this.controls = new ZoomControls(this);
+
     this.initZoomPosition();
   }
 
   handleZoom(e) {
-    // console.log("x", e.transform.x, "y", e.transform.y, "k", e.transform.k);
+    this.controls.update(e.transform);
 
     this.app.contextMenu.close();
 

@@ -1,9 +1,9 @@
 @import "variables";
 
 body {
-  background-color: #eee;
-
   main {
+    background-color: #eee;
+
     div { 
       &[data-mind-map], &[data-link], &[data-topic-area] {
         display: none;

@@ -8,7 +8,14 @@ export default class LinkDetails extends BaseDetails {
     this.$targetNode = this.$el.querySelector(".target-node");
     this.$list = this.$el.querySelector(".list ul");
 
-    this.$el.addEventListener("hidden.bs.offcanvas", () => app.links.forEach(link => link.setInactive()));
+    this.$el.addEventListener("shown.bs.offcanvas", () => {
+      window.actionMenu.setStyle("margin-right", `${super.getWidth() + 15}px`);
+    });
+
+    this.$el.addEventListener("hidden.bs.offcanvas", () => { 
+      app.links.forEach(link => link.setInactive());
+      window.actionMenu.setStyle("margin-right", "15px");
+    });
   }
 
   show(link) {

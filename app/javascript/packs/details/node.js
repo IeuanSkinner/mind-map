@@ -7,9 +7,13 @@ export default class NodeDetails extends BaseDetails {
     this.$fromLinks = this.$el.querySelector(".from-links");
     this.$toLinks = this.$el.querySelector(".to-links");
 
-    this.$el.addEventListener("shown.bs.offcanvas", () => app.setStyle("margin-left", `${super.getWidth()}px`));
+    this.$el.addEventListener("shown.bs.offcanvas", () => {
+      app.setStyle("margin-left", `${super.getWidth()}px`);
+      app.zoom.controls.setStyle("padding-left", `${super.getWidth() + 15}px`); // Found in SASS variables.
+    });
     this.$el.addEventListener("hidden.bs.offcanvas", () =>  {
       app.setStyle("margin-left", 0);
+      app.zoom.controls.setStyle("padding-left", "15px"); 
       app.nodes.forEach(node => node.setInactive());
     });
   }

@@ -1,0 +1,32 @@
+@import "variables";
+
+$opacity: 0.8;
+$sizeDiff: 32px;
+
+#zoom-controls {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 9999;
+  // padding: 0 0 ($controls-margin + ($sizeDiff / 2)) $controls-margin;
+  padding: 0 0 $controls-margin $controls-margin;
+
+  .input-group-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    width: 100px;
+    color: $secondary;
+    opacity: $opacity;
+    border-color: $secondary;
+  }
+  
+  button {
+    opacity: $opacity;
+
+    &:hover {
+      opacity: $hover-opacity;
+    }
+  }
+}
