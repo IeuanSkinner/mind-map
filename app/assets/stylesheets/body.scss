@@ -2,7 +2,7 @@
 
 body {
   main {
-    background-color: #eee;
+    background-color: $body-bg;
 
     div { 
       &[data-mind-map], &[data-link], &[data-topic-area] {

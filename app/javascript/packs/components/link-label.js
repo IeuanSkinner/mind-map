@@ -1,3 +1,4 @@
+import Colour from "../colour";
 import HideableComponent from "./hideable-component";
 
 export default class LinkLabel extends HideableComponent {
@@ -60,7 +61,7 @@ export default class LinkLabel extends HideableComponent {
   setActive() {
     if (!this.$html) return;
 
-    this.$html.style.backgroundColor = HideableComponent.ACTIVE_COLOUR;
+    this.$html.style.backgroundColor = Colour.ACTIVE;
   }
 
   setInactive() {

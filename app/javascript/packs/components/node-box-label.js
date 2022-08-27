@@ -1,12 +1,10 @@
-import Node from "./node";
 import NodeLabel from "./node-label";
-import HideableComponent from "./hideable-component";
+import Colour from "../colour";
 
 export default class NodeBoxLabel extends NodeLabel {
   static WIDTH = 175;
   static BORDER_RADIUS = 5;
   static BORDER_WIDTH = 3;
-  static FILL = "#FFFFFF";
   static SIDE_PADDING = 15;
   static BOX_PADDING = 10;
 
@@ -14,6 +12,7 @@ export default class NodeBoxLabel extends NodeLabel {
     super(node, x, y, data);
     this.x = this.x - NodeBoxLabel.WIDTH / 2;
     this.height = 0;
+    this.colour = colour.get(this.data.colour);
 
     this.draw();
   }
@@ -28,9 +27,9 @@ export default class NodeBoxLabel extends NodeLabel {
       .attr("x", this.x)
       .attr("y", this.y)
       .attr("rx", NodeBoxLabel.BORDER_RADIUS)
-      .attr("stroke", this.data.colour || Node.DEFAULT_COLOUR)
+      .attr("stroke", this.colour)
       .attr("stroke-width", NodeBoxLabel.BORDER_WIDTH)
-      .attr("fill", NodeBoxLabel.FILL);
+      .attr("fill", colour.brighten(this.colour));
 
     this.$text = this.$el
       .append("foreignObject")
@@ -103,14 +102,14 @@ export default class NodeBoxLabel extends NodeLabel {
   setActive() {
     if (!this.$el) return;
     
-    this.$shape.attr("stroke", HideableComponent.ACTIVE_COLOUR);
-    this.$html.classList.add("active");
+    this.$shape.attr("stroke", colour.get(Colour.ACTIVE));
+    this.$shape.attr("fill", colour.brighten(Colour.ACTIVE));
   }
 
   setInactive() {
     if (!this.$html) return;
 
-    this.$shape.attr("stroke", this.data.colour || Node.DEFAULT_COLOUR);
-    this.$html.classList.remove("active");
+    this.$shape.attr("stroke", colour.get(this.colour));
+    this.$shape.attr("fill", colour.brighten(this.colour));
   }
 }

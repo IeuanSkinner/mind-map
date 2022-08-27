@@ -12,8 +12,7 @@ import Component from "./components/component";
 import Marker from "./components/marker";
 import NodeDetails from "./details/node";
 import LinkDetails from "./details/link";
-import HideableComponent from "./components/hideable-component";
-import Node from "./components/node"
+import Colour from "./colour";
 
 Rails.start();
 Turbolinks.start();
@@ -38,8 +37,8 @@ class App extends Component {
 
     this.$defs = this.$el.append("defs");
     this.markers = [
-      new Marker(this, Node.DEFAULT_COLOUR),  // Default marker.
-      new Marker(this, HideableComponent.ACTIVE_COLOUR) // Active marker.
+      new Marker(this, colour.get()),  // Default marker.
+      new Marker(this, Colour.ACTIVE) // Active marker.
     ];
     this.topicAreasData.forEach((data) => this.markers.push(new Marker(this, data.colour)));
 

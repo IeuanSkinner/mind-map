@@ -1,8 +1,6 @@
 import Component from "./component";
 
 export default class HideableComponent extends Component {
-  static ACTIVE_COLOUR = "#D80303";
-
   constructor(hidden = false) {
     super();
     this.hidden = hidden;

@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import LinkLabel from "./link-label";
 import Node from "./node";
 import HideableComponent from "./hideable-component";
+import Colour from "../colour";
 
 export default class Link extends HideableComponent {
   static MAX_CURVE_EXTENT = 200;
@@ -21,7 +22,7 @@ export default class Link extends HideableComponent {
     this.id = `link_${this.fromNodeId}_${this.toNodeId}`;
     this.linkData = [];
     this.midPoint = {};
-    this.colour = this.data.colour || Node.DEFAULT_COLOUR;
+    this.colour = colour.get(this.data.colour);
 
     this.path();
 
@@ -152,9 +153,9 @@ export default class Link extends HideableComponent {
     this.show();
 
     if (this.$link) {
-      this.$link.attr("stroke", HideableComponent.ACTIVE_COLOUR);
+      this.$link.attr("stroke", Colour.ACTIVE);
 
-      if (this.$link.attr("marker-end")) this.$link.attr("marker-end", this.buildArrowHead(HideableComponent.ACTIVE_COLOUR));
+      if (this.$link.attr("marker-end")) this.$link.attr("marker-end", this.buildArrowHead(Colour.ACTIVE));
     }
 
     super.setActive();

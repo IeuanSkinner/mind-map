@@ -19,11 +19,6 @@ svg {
     font-size: 16px;
     padding: 0 10px;
     overflow: auto;
-
-    &.active {
-      background-color: $primary;
-      color: $white;
-    }
   }
 
   .label.active {

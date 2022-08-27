@@ -1,6 +1,5 @@
 import * as bootstrap from "bootstrap";
 import Component from "../components/component";
-import Node from "../components/node";
 
 export default class BaseDetails extends Component {
   static RIGHT_ARROW = "<i class='fa fa-long-arrow-right'></i>";
@@ -22,12 +21,13 @@ export default class BaseDetails extends Component {
     this.$title.innerHTML = text;
   }
 
-  setColour(colour) {
-    const _colour = colour || Node.DEFAULT_COLOUR;
+  setColour(__colour) {
+    const _colour = colour.get(__colour);
     const topicArea = this.app.topicAreasData.find(topicArea => topicArea.colour === _colour);
 
     this.$key.setAttribute("title", topicArea ? topicArea.name : "None");
-    this.$key.style.backgroundColor = _colour;
+    this.$key.style.backgroundColor = colour.brighten(_colour);
+    this.$key.style.borderColor = _colour;
   }
 
   show() {

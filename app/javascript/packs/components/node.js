@@ -1,16 +1,15 @@
 import * as d3 from "d3";
 import NodeLeafLabel from "./node-leaf-label";
 import NodeBoxLabel from "./node-box-label";
+import Colour from "../colour";
 import HideableComponent from "./hideable-component";
 
 export default class Node extends HideableComponent {
-  static DEFAULT_COLOUR = "#000000";
-
   constructor(side, data, parentNode) {
     super();
     this.side = side;
     this.data = data;
-    this.colour = data.data.colour || Node.DEFAULT_COLOUR;
+    this.colour = colour.get(data.data.colour);
     this.parentNode = parentNode;
     this.id = data.data.id;
     this.children = [];
@@ -37,7 +36,7 @@ export default class Node extends HideableComponent {
       .attr("stroke-opacity", 1)
       .attr("stroke-linecap", "round")
       .attr("stroke-linejoin", "round")
-      .attr("stroke-width", 2)
+      .attr("stroke-width", NodeBoxLabel.BORDER_WIDTH - 1)
       .attr(
         "d",
         d3
@@ -180,7 +179,7 @@ export default class Node extends HideableComponent {
   setActive() {
     if (!this.label) return;
     if (this.parentNode) this.parentNode.setActive();
-    if (this.$el) this.$el.attr("stroke", HideableComponent.ACTIVE_COLOUR);
+    if (this.$el) this.$el.attr("stroke", Colour.ACTIVE);
 
     super.setActive();
   }

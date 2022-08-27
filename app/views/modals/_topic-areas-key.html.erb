@@ -7,17 +7,6 @@
       </div>
       <div class="modal-body container">
         <div class="row">
-          <% @topic_areas.each do |topic_area| %>
-            <% topic_area = JSON.parse(topic_area) %>
-            <div class="topic-area col-6">
-              <div class="box" style="background-color: <%= topic_area['colour'] %>"></div>
-              <div class="text"><%= topic_area["name"] %></div>
-            </div>
-          <% end %>
-          <div class="topic-area col-6">
-            <div class="box"></div>
-            <div class="text">None</div>
-          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
-import HideableComponent from "./hideable-component";
 import NodeLabel from "./node-label";
-import Node from "./node";
+import Colour from "../colour";
 
 export default class NodeLeafLabel extends NodeLabel {
   static PADDING = 10;
@@ -20,10 +19,7 @@ export default class NodeLeafLabel extends NodeLabel {
       .attr("class", "label")
       .attr("x", this.x + NodeLeafLabel.PADDING)
       .attr("y", this.y)
-      .text(this.data.label)
-      .on("click", (e) => {
-        console.log("Click", e);
-      })
+      .text(this.data.label);
 
     if (!this.initWidth) this.initWidth = this.getWidth();
 
@@ -49,12 +45,12 @@ export default class NodeLeafLabel extends NodeLabel {
   setActive() {
     if (!this.$el) return;
 
-    this.$el.attr("fill", HideableComponent.ACTIVE_COLOUR);
+    this.$el.attr("fill", Colour.ACTIVE);
   }
 
   setInactive() {
     if (!this.$el) return;
 
-    this.$el.attr("fill", Node.DEFAULT_COLOUR);
+    this.$el.attr("fill", Colour.BLACK);
   }
 }
