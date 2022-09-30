@@ -18,7 +18,7 @@ export default class NodeLabel extends HideableComponent {
       }
     });
 
-    this.$el.on("dblclick", () => this.node.showDetails());
+    this.$el.on("dblclick", (e) => this.onDblClick(e));
   }
 
   onShiftClick(e) {
@@ -27,6 +27,10 @@ export default class NodeLabel extends HideableComponent {
 
   onCtrlClick(e) {
     this.node.hide();
+  }
+
+  onDblClick(e) {
+    this.node.showDetails();
   }
   
   xOffset(onLeftSide) {

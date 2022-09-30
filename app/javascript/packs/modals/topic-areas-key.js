@@ -9,8 +9,6 @@ class TopicAreasKeyModal extends Modal {
   show() {
     const data = app.topicAreasData;
 
-    console.log(data);
-
     if (!this.$row.children.length) {
       data.forEach(topicArea => this.addTopicArea(topicArea.colour, topicArea.name));
       this.addTopicArea(colour.get(), "None");

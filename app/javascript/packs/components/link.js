@@ -30,54 +30,28 @@ export default class Link extends HideableComponent {
   }
 
   path() {
-    // Same mind-map
-    if (this.fromNode.side.mindMap === this.toNode.side.mindMap) {
-      // Same side of same mind-map => requires mid-point
-      if (this.fromNode.side.side === this.toNode.side.side) {
-        // If the fromNode and toNode are on the left-side we attach
-        // the link at their labels left-side, otherwise this is inverted.
-        const onLeftSide = this.fromNode.side.isLeft();
-        const source = this.fromNode.label.linkPosition(onLeftSide);
-        const target = this.toNode.label.linkPosition(onLeftSide);
-        this.midPoint = this.getOffsetMidPoint(source, target, onLeftSide);
-
-        this.linkData.push(
-          { source: source, target: this.midPoint },
-          { source: this.midPoint, target: target }
-        );
-      // Different side of same mind-map
-      } else {
-        let source, target;
-        // Attach fromNode at right-side and toNode at left-side
-        if (this.fromNode.side.isLeft()) {
-          source = this.fromNode.label.linkPosition(false);
-          target = this.toNode.label.linkPosition(true);
-          // Attach fromNode at left-side and toNode at right-side
-        } else {
-          source = this.fromNode.label.linkPosition(true);
-          target = this.toNode.label.linkPosition(false);
-        }
-
-        this.midPoint = this.getMidPoint(source, target);
-        this.linkData.push({ source: source, target: target });
-      }
-    // Different mind-maps
-    } else {
-      // If the fromNode is on a higher-order mind-map then we connect from the labels
-      // left-side to the toNode labels right-side, otherwise this is inverted.
-      const onLeftSide = this.fromNode.side.mindMap.index > this.toNode.side.mindMap.index;
+    // Same mind-map and same side => requires mid-point
+    if (this.fromNode.side.mindMap === this.toNode.side.mindMap && 
+        this.fromNode.side.side === this.toNode.side.side) {
+      // If side if left mid-point should be offset to the left otherwise to the right.
+      const onLeftSide = this.fromNode.side.isLeft();
       const source = this.fromNode.label.linkPosition(onLeftSide);
-      const target = this.toNode.label.linkPosition(!onLeftSide);
+      const target = this.toNode.label.linkPosition(onLeftSide);
+      this.midPoint = this.getOffsetMidPoint(source, target, onLeftSide);
+
+      this.linkData.push(
+        { source: source, target: this.midPoint },
+        { source: this.midPoint, target: target }
+      );
+    } else {
+      const source = this.fromNode.label.linkPosition(false);
+      const target = this.toNode.label.linkPosition(true);
 
       this.midPoint = this.getMidPoint(source, target);
       this.linkData.push({ source: source, target: target });
     }
 
-    this.getLastLinkData().end = true;
-  }
-
-  getLastLinkData() {
-    return this.linkData[this.linkData.length - 1];
+    this.linkData[this.linkData.length - 1].end = true;
   }
 
   getMidPoint(source, target) {
